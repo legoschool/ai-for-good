@@ -1,0 +1,33 @@
+{
+  "rules": {
+    "wise": {
+      "$app": {
+        "$room": {
+          ".read": "$room.matches(/^[0-9]{6}$/) && $app.matches(/^[a-z][a-z0-9-]{1,23}$/)",
+
+          "meta": {
+            ".write": "$room.matches(/^[0-9]{6}$/) && $app.matches(/^[a-z][a-z0-9-]{1,23}$/)"
+          },
+
+          "state": {
+            ".write": "$room.matches(/^[0-9]{6}$/) && $app.matches(/^[a-z][a-z0-9-]{1,23}$/)"
+          },
+
+          "entries": {
+            "$entry": {
+              ".write": "$room.matches(/^[0-9]{6}$/) && $app.matches(/^[a-z][a-z0-9-]{1,23}$/) && newData.exists()",
+              ".validate": "newData.hasChildren(['nick', 'app', 'room', 'at']) && newData.child('nick').isString() && newData.child('nick').val().length <= 12 && newData.child('room').val() === $room && newData.child('app').val() === $app && newData.child('at').isNumber() && newData.child('at').val() <= now + 300000"
+            }
+          },
+
+          "votes": {
+            "$vote": {
+              ".write": "$room.matches(/^[0-9]{6}$/) && $app.matches(/^[a-z][a-z0-9-]{1,23}$/) && newData.exists()",
+              ".validate": "newData.hasChildren(['nick', 'at']) && newData.child('at').isNumber() && newData.child('at').val() <= now + 300000"
+            }
+          }
+        }
+      }
+    }
+  }
+}

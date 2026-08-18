@@ -1,0 +1,7 @@
+﻿* text=auto eol=lf
+
+*.hwpx binary
+*.pptx binary
+*.xlsx binary
+*.png binary
+*.bmp binary

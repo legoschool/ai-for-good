@@ -1,0 +1,12 @@
+# 의존성
+node_modules/
+
+# 파이썬
+__pycache__/
+*.pyc
+
+# 임시
+*.tmp
+out/preview.html
+.DS_Store
+Thumbs.db
