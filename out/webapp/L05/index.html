@@ -464,6 +464,7 @@ border:1px solid #fed7aa;color:#9a3412;font-size:14px}
       activityInit: activityInit,
       activityCollect: activityCollect,
       teacherSummary: teacherSummary,
+      activityAutofill: (typeof activityAutofill === "function") ? activityAutofill : null,
       setMe: function (v) { me = v; }
     };
   }

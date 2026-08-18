@@ -109,6 +109,19 @@ def check_lesson(l):
     if not w.get("teacherView"):
         err("%s : 웹앱에 교사 화면 설명이 없다" % tag)
 
+    # 단계를 적어 둔 차시는 40분에 맞아야 한다
+    steps = w.get("steps")
+    if steps:
+        total = sum(st.get("minutes", 0) for st in steps)
+        if total != 40:
+            err("%s : 웹앱 단계 시간 합이 %d분이다. 40분이어야 한다" % (tag, total))
+        for i, st in enumerate(steps, 1):
+            if st.get("no") != i:
+                err("%s : 웹앱 단계 번호가 %d 가 아니다" % (tag, i))
+            for key in ("title", "what", "ask", "expect"):
+                if not st.get(key):
+                    err("%s : %d단계의 %s 가 비어 있다" % (tag, i, key))
+
     # AI 미사용 대안과 유의점
     if not l.get("alternative"):
         err("%s : AI 미사용 대안 활동이 없다" % tag)

@@ -35,24 +35,30 @@ function makeElement(id) {
   return el;
 }
 
-function parsePicks(html) {
-  // data-c / data-b, data-i / data-v 를 가진 버튼을 뽑아 흉내 낸다
-  const out = [];
+function parseButtons(html) {
+  // data-* 를 가진 버튼을 클래스별로 모아 둔다
+  const picks = [];
+  const byClass = {};
   const re = /<button[^>]*class="([^"]*)"[^>]*>/g;
   let m;
   while ((m = re.exec(html))) {
     const tag = m[0];
-    if (!/[ ]class="[^"]*pick/.test(tag)) continue;
     const el = makeElement("");
     const attrs = tag.match(/data-([a-z]+)="([^"]*)"/g) || [];
+    if (!attrs.length) continue;
     attrs.forEach((a) => {
       const [, k, v] = a.match(/data-([a-z]+)="([^"]*)"/);
       el.setAttribute("data-" + k, v);
     });
     el.className = m[1];
-    out.push(el);
+    m[1].split(/[ ]+/).forEach((c) => {
+      if (!c) return;
+      if (!byClass[c]) byClass[c] = [];
+      byClass[c].push(el);
+    });
+    if (m[1].indexOf("pick") !== -1) picks.push(el);
   }
-  return out;
+  return { picks, byClass };
 }
 
 function buildSandbox() {
@@ -61,22 +67,26 @@ function buildSandbox() {
 
   const document = {
     _picks: [],
+    _byClass: {},
     getElementById(id) {
       if (!registry[id]) registry[id] = makeElement(id);
       return registry[id];
     },
     querySelectorAll(sel) {
+      // 마지막 낱말이 클래스 이름이다. 그 이름으로 모아 둔 목록을 돌려준다.
+      const cls = sel.trim().split(/[ ]+/).pop().replace(/^[.]/, "");
+      if (document._byClass[cls]) return document._byClass[cls];
       if (sel.indexOf("pick") !== -1) return document._picks;
-      if (sel.indexOf("vote") !== -1) return [];
       return [];
     },
     createElement() { return makeElement(""); },
     body: makeElement("body"),
   };
 
-  const win = {};
+  const win = { scrollTo: () => {} };
   const sandbox = {
     window: win,
+    scrollTo: () => {},
     document,
     navigator: { clipboard: null },
     localStorage: {
@@ -143,7 +153,9 @@ function main() {
   if (!markup || markup.length < 100) errors.push("활동 화면이 비어 있다");
 
   // 2. 초기화가 도는가
-  document._picks = parsePicks(markup);
+  const parsed = parseButtons(markup);
+  document._picks = parsed.picks;
+  document._byClass = parsed.byClass;
   try {
     t.activityInit(null);
   } catch (e) {
@@ -161,6 +173,9 @@ function main() {
 
   // 4. 채워 넣으면 제출이 되는가
   try {
+    // 활동이 자체 채우기를 제공하면 그것을 쓴다. 1차시처럼 단계가 여러 개인 앱용이다.
+    if (typeof t.activityAutofill === "function") t.activityAutofill();
+
     // 문항 묶음(data-c / data-i)마다 하나씩 골라 준다. 전부 답해야 통과하는 앱이 있다.
     const groups = new Map();
     document._picks.forEach((p) => {

@@ -320,11 +320,22 @@ def lesson_page(l, data):
     a(stage_html("정리", l["plan"]["close"]))
     a("</div>")
 
+    w = l["webapp"]
     a('<div class="panel"><h2>오늘 쓰는 웹앱</h2><h3>%s</h3><p>%s</p><ul>'
-      % (esc(l["webapp"]["name"]), esc(l["webapp"]["purpose"])))
-    for s in l["webapp"]["screens"]:
-        a("<li>%s</li>" % esc(s))
-    a("</ul></div>")
+      % (esc(w["name"]), esc(w["purpose"])))
+    for sc in w["screens"]:
+        a("<li>%s</li>" % esc(sc))
+    a("</ul>")
+    if w.get("steps"):
+        a('<h3>40분을 이렇게 씁니다</h3><div class="scroll"><table>'
+          "<tr><th>단계</th><th>시간</th><th>무엇을 하나</th><th>교사 발문</th></tr>")
+        for st in w["steps"]:
+            a("<tr><td><strong>%d. %s</strong></td><td>%d분</td><td>%s</td>"
+              "<td>%s<br><span style=\"color:var(--muted)\">%s</span></td></tr>"
+              % (st["no"], esc(st["title"]), st["minutes"], esc(st["what"]),
+                 esc(st["ask"]), esc(st["expect"])))
+        a("</table></div>")
+    a("</div>")
 
     a('<div class="panel"><h2>기기가 없어도 함께합니다</h2><p>%s</p></div>' % esc(l["alternative"]))
 

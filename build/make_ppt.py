@@ -142,6 +142,21 @@ def build(lesson, data):
              "혼자 체험 경로도 함께 안내한다.",
              "교사 화면 : " + w.get("teacherView", "")])
 
+    # 5-1. 웹앱 단계별 안내. steps 가 있는 차시만 만든다.
+    for st in w.get("steps", []):
+        s = blank(prs)
+        rect(s, 0, 0, Inches(0.22), H, accent)
+        rect(s, W - Inches(2.3), Inches(0.7), Inches(1.4), Inches(0.55), accent)
+        text(s, W - Inches(2.3), Inches(0.72), Inches(1.4), Inches(0.5),
+             "%d분" % st["minutes"], size=20, bold=True, color=PAPER, align=PP_ALIGN.CENTER)
+        text(s, M, Inches(0.8), CW - Inches(2.4), Inches(0.5),
+             "%d단계" % st["no"], size=18, color=accent, bold=True)
+        text(s, M, Inches(1.5), CW, Inches(0.9), st["title"], size=36, bold=True)
+        text(s, M, Inches(2.7), CW, Inches(1.6), st["what"], size=20, color=MUTED, spacing=1.5)
+        text(s, M, Inches(4.5), CW, Inches(1.2), st["ask"], size=26, bold=True)
+        note(s, ["%d단계 · %d분" % (st["no"], st["minutes"]),
+                 st["what"], "", "발문 : " + st["ask"], "예상 답변 : " + st["expect"]])
+
     # 6. AI 미사용 대안
     s = blank(prs)
     rect(s, 0, Inches(2.3), W, Inches(2.6), BAND)

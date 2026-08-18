@@ -13,7 +13,7 @@ T.setup_console()
 
 ERRORS = []
 FONT = "맑은 고딕"
-MIN_SLIDES, MAX_SLIDES = 10, 16
+MIN_SLIDES, MAX_SLIDES = 10, 24
 
 
 def err(m):
