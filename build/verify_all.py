@@ -52,6 +52,7 @@ def main():
         jobs.append((PY + ["build/validate_hwpx.py", "out/교구/%s.hwpx" % name], name))
     jobs.append((NODE + ["build/check_site.js", "out/site"], "통합 웹사이트"))
     jobs.append((PY + ["build/audit.py"], "전체 점검"))
+    jobs.append((PY + ["build/check_reading.py"], "학생 문장 수준"))
 
     failed = []
     for cmd, label in jobs:

@@ -16,65 +16,65 @@ ACTIVITY = u"""
   var ITEMS = [
     {
       id: 0,
-      q: "훈민정음은 언제 만들어졌나요?",
-      a: "훈민정음은 1443년에 창제되었고 1446년에 반포되었습니다.",
-      b: "훈민정음은 1420년에 만들어져 그해 바로 반포되었습니다.",
-      src: "초등 사회 교과서 발췌 : 훈민정음은 1443년(세종 25년)에 창제되어 1446년에 반포되었다.",
+      q: "세종대왕이 훈민정음을 만든 때는 언제인가요?",
+      a: "1443년에 만들었습니다. 널리 알린 것은 1446년입니다.",
+      b: "1420년에 만들어 그해 바로 널리 알렸습니다.",
+      src: "초등 사회 교과서에서 옮겨 온 글입니다.\\n훈민정음은 1443년에 만들어졌습니다.\\n널리 알린 것은 1446년입니다.",
       srcName: "초등 사회 교과서",
       verdict: "b",
-      kind: "연도를 지어냈다",
-      why: "가 쪽이 교과서와 같다. 나 쪽은 연도를 지어냈고 창제와 반포를 하나로 합쳤다."
+      kind: "연도를 지어냈어요",
+      why: "가 쪽이 교과서와 같아요. 나 쪽은 연도를 지어냈어요."
     },
     {
       id: 1,
       q: "우리나라에서 가장 긴 강은 무엇인가요?",
       a: "낙동강입니다. 길이는 약 510km입니다.",
       b: "압록강입니다. 길이는 약 790km입니다.",
-      src: "국가 지리 정보 누리집 발췌 : 한반도에서 가장 긴 강은 압록강으로 약 790km이다. 남한에서 가장 긴 강은 낙동강으로 약 510km이다.",
+      src: "나라에서 만든 지리 누리집에서 옮겨 온 글입니다.\\n한반도에서 가장 긴 강은 압록강입니다. 약 790km입니다.\\n남한에서 가장 긴 강은 낙동강입니다. 약 510km입니다.",
       srcName: "국가 지리 정보 누리집",
       verdict: "both",
-      kind: "질문이 흐릿해서 갈렸다",
-      why: "둘 다 틀리지 않았다. 한반도 전체를 묻는지 남한만 묻는지가 정해지지 않아 답이 갈렸다."
+      kind: "물음이 흐릿해서 갈렸어요",
+      why: "둘 다 틀리지 않았어요. 한반도 전체인지 남한만인지 정하지 않아서 갈렸어요."
     },
     {
       id: 2,
       q: "초등학생이 읽을 만한 밤하늘 관찰 책을 알려 주세요.",
       a: "여러 권이 있습니다. 도서관 검색으로 직접 확인해 보시기 바랍니다.",
       b: "『밤하늘의 지도』(하늘출판사, 2019)를 추천합니다. 초등 5학년 필독서입니다.",
-      src: "학교 도서관 검색 결과 : 『밤하늘의 지도』 검색 결과가 없습니다. 하늘출판사도 검색되지 않습니다.",
+      src: "학교 도서관에서 찾아본 결과입니다.\\n『밤하늘의 지도』는 나오지 않습니다.\\n하늘출판사도 나오지 않습니다.",
       srcName: "학교 도서관 검색",
       verdict: "b",
-      kind: "없는 책과 출판사를 지어냈다",
-      why: "나 쪽은 책 이름과 출판사와 연도까지 붙여서 아주 그럴듯하다. 그런데 검색하면 나오지 않는다."
+      kind: "없는 책을 지어냈어요",
+      why: "나 쪽은 책 이름과 연도까지 붙여서 아주 그럴듯해요. 그런데 찾아보면 없어요."
     },
     {
       id: 3,
       q: "우리 학교는 언제 문을 열었나요?",
-      a: "1952년 4월에 개교하였습니다.",
-      b: "1961년 4월에 개교하였습니다.",
-      src: "학교 누리집 연혁 발췌 : 1961년 4월 1일 개교. 1962년 2월 제1회 졸업식.",
+      a: "1952년 4월에 문을 열었습니다.",
+      b: "1961년 4월에 문을 열었습니다.",
+      src: "학교 누리집에서 옮겨 온 글입니다.\\n1961년 4월 1일에 문을 열었습니다.\\n1962년 2월에 첫 졸업식을 했습니다.",
       srcName: "학교 누리집",
       verdict: "a",
-      kind: "우리 지역 정보를 잘못 안다",
-      why: "나 쪽이 학교 누리집과 같다. 우리 동네 정보처럼 자료가 적은 것일수록 AI가 자주 틀린다."
+      kind: "우리 동네 일을 잘못 알아요",
+      why: "나 쪽이 학교 누리집과 같아요. 우리 동네 일은 자료가 적어서 AI가 자주 틀려요."
     },
     {
       id: 4,
       q: "지구에서 달까지의 거리는 얼마인가요?",
       a: "약 384,400km입니다.",
       b: "약 38,400km입니다.",
-      src: "초등 과학 교과서 발췌 : 지구에서 달까지의 평균 거리는 약 384,400km이다.",
+      src: "초등 과학 교과서에서 옮겨 온 글입니다.\\n지구에서 달까지는 약 384,400km입니다.",
       srcName: "초등 과학 교과서",
       verdict: "b",
-      kind: "자릿수를 틀렸다",
-      why: "가 쪽이 맞다. 나 쪽은 0 하나가 빠졌다. 숫자는 자릿수를 꼭 확인해야 한다."
+      kind: "자릿수를 틀렸어요",
+      why: "가 쪽이 맞아요. 나 쪽은 0 하나가 빠졌어요. 숫자는 자릿수를 꼭 봐야 해요."
     }
   ];
 
   /* 1단계에서 먼저 보여 주는 그럴듯한 답 */
   var HOOK = ITEMS[2];
 
-  var VERDICT_LABEL = {a: "가 쪽이 맞다", b: "나 쪽이 맞다", both: "둘 다 틀리지 않았다"};
+  var VERDICT_LABEL = {a: "가 쪽이 맞아요", b: "나 쪽이 맞아요", both: "둘 다 틀리지 않았어요"};
 
   /* ---------- 상태 ---------- */
 
@@ -82,9 +82,9 @@ ACTIVITY = u"""
   var STEPS = [
     {no:1, t:"나는 믿을까", m:5},
     {no:2, t:"같은 질문, 다른 답", m:11},
-    {no:3, t:"근거와 대조하기", m:12},
+    {no:3, t:"자료와 맞춰 보기", m:12},
     {no:4, t:"환각 사례 카드", m:7},
-    {no:5, t:"판정과 정리", m:5}
+    {no:5, t:"결과와 정리", m:5}
   ];
 
   var trust = null;      /* 1단계 투표 */
@@ -124,16 +124,16 @@ ACTIVITY = u"""
     var tips = ["",
       "확인하기 전에는 사람도 속습니다. 먼저 느낌으로 골라 보세요.",
       "두 도구가 내놓은 답입니다. 어디가 다른지 찾아보세요.",
-      "근거 자료가 이 안에 있어요. 실제로 대조해 봅시다.",
+      "자료가 이 안에 있어요. 직접 맞춰 봅시다.",
       "찾아낸 환각을 카드 두 장에 남깁니다.",
-      "실제 판정과 맞춰 보고 배운 것을 한 문장으로 씁니다."];
+      "맞았는지 보고 배운 것을 한 문장으로 씁니다."];
     $("steptip").textContent = tips[step];
   }
 
   function go(n) {
     if (n < 1 || n > 5) { return; }
     if (n >= 5 && judged() < 3) {
-      $("w-msg").innerHTML = '<span class="warn">문항을 3개 넘게 판정해야 결과를 볼 수 있어요. 지금 ' + judged() + '개예요.</span>';
+      $("w-msg").innerHTML = '<span class="warn">물음을 3개 넘게 골라야 결과를 볼 수 있어요. 지금 ' + judged() + '개예요.</span>';
       n = 3;
     }
     step = n;
@@ -181,7 +181,7 @@ ACTIVITY = u"""
 
   /* 2단계 */
   function build2() {
-    var h = '<div class="card"><h2>같은 질문에 두 도구가 이렇게 답했어요</h2>' +
+    var h = '<div class="card"><h2>같은 물음에 두 도구가 이렇게 답했어요</h2>' +
       '<p class="muted">도구 이름은 가와 나로만 적었습니다. 어느 회사인지가 아니라 답이 다르다는 점이 중요해요.</p></div>';
     for (var i = 0; i < ITEMS.length; i++) {
       var it = ITEMS[i];
@@ -218,8 +218,8 @@ ACTIVITY = u"""
 
   /* 3단계 */
   function build3() {
-    var h = '<div class="card"><h2>검증 3단계</h2>' +
-      '<p class="muted">① 출처 확인 → ② 교과서·공공 누리집과 대조 → ③ 내 말로 정리</p></div>';
+    var h = '<div class="card"><h2>확인하는 세 걸음</h2>' +
+      '<p class="muted">① 어디서 나온 말인지 보기<br>② 교과서와 맞춰 보기<br>③ 내 말로 정리하기</p></div>';
     for (var i = 0; i < ITEMS.length; i++) {
       var it = ITEMS[i];
       h += '<div class="card"><h3>' + (i + 1) + ". " + esc(it.q) + "</h3>" +
@@ -227,16 +227,16 @@ ACTIVITY = u"""
         '<div class="bucket"><h3>가</h3><p style="font-size:14px">' + esc(it.a) + "</p></div>" +
         '<div class="bucket"><h3>나</h3><p style="font-size:14px">' + esc(it.b) + "</p></div></div>" +
         '<div class="row" style="margin-top:12px">' +
-        '<button type="button" class="chip ck" data-i="' + i + '" data-k="0" style="width:auto;margin:0">① 출처를 확인했다</button>' +
-        '<button type="button" class="chip ck" data-i="' + i + '" data-k="1" style="width:auto;margin:0">② 자료와 대조했다</button>' +
+        '<button type="button" class="chip ck" data-i="' + i + '" data-k="0" style="width:auto;margin:0">① 어디서 나온 말인지 봤다</button>' +
+        '<button type="button" class="chip ck" data-i="' + i + '" data-k="1" style="width:auto;margin:0">② 자료와 맞춰 봤다</button>' +
         "</div>" +
-        '<button type="button" class="ghost srcBtn" data-i="' + i + '" style="margin-top:10px">근거 자료 열기 · ' +
+        '<button type="button" class="ghost srcBtn" data-i="' + i + '" style="margin-top:10px">자료 열기 · ' +
         esc(it.srcName) + "</button>" +
         '<div id="src' + i + '" class="safe" style="display:none">' + esc(it.src) + "</div>" +
-        '<label>대조해 보니 어느 쪽이 맞나요</label><div class="row">' +
-        '<button type="button" class="chip vd" data-i="' + i + '" data-v="a" style="width:auto;margin:0">가 쪽이 맞다</button>' +
-        '<button type="button" class="chip vd" data-i="' + i + '" data-v="b" style="width:auto;margin:0">나 쪽이 맞다</button>' +
-        '<button type="button" class="chip vd" data-i="' + i + '" data-v="both" style="width:auto;margin:0">둘 다 틀리지 않았다</button>' +
+        '<label>맞춰 보니 어느 쪽이 맞나요</label><div class="row">' +
+        '<button type="button" class="chip vd" data-i="' + i + '" data-v="a" style="width:auto;margin:0">가 쪽이 맞아요</button>' +
+        '<button type="button" class="chip vd" data-i="' + i + '" data-v="b" style="width:auto;margin:0">나 쪽이 맞아요</button>' +
+        '<button type="button" class="chip vd" data-i="' + i + '" data-v="both" style="width:auto;margin:0">둘 다 틀리지 않았어요</button>' +
         "</div>" +
         '<label for="w' + i + '">③ 내 말로 정리하기</label>' +
         '<input id="w' + i + '" maxlength="90" placeholder="확인한 내용을 한 줄로 써요">' +
@@ -251,7 +251,7 @@ ACTIVITY = u"""
         var box = $("src" + i);
         var open = box.style.display !== "none";
         box.style.display = open ? "none" : "block";
-        this.textContent = (open ? "근거 자료 열기 · " : "근거 자료 닫기 · ") + ITEMS[i].srcName;
+        this.textContent = (open ? "자료 열기 · " : "자료 닫기 · ") + ITEMS[i].srcName;
         if (!open) { checked[i + "-1"] = true; paint3(); }
       };
     }
@@ -315,8 +315,8 @@ ACTIVITY = u"""
   }
 
   function renderResult() {
-    var hit = 0, n = 0, h = '<div class="card"><h2>내 판정과 실제 판정</h2><div class="scroll"><table>' +
-      "<tr><th>질문</th><th>내 판정</th><th>실제</th><th>어떻게 틀렸나</th></tr>";
+    var hit = 0, n = 0, h = '<div class="card"><h2>내가 고른 것과 맞는 답</h2><div class="scroll"><table>' +
+      "<tr><th>물음</th><th>내가 고른 것</th><th>맞는 답</th><th>어떻게 틀렸나</th></tr>";
     for (var i = 0; i < ITEMS.length; i++) {
       var it = ITEMS[i], mine = verdict[i];
       if (!mine) {
@@ -334,7 +334,7 @@ ACTIVITY = u"""
     h += "</table></div>";
     h += '<p style="font-size:22px;font-weight:800;margin-top:12px">' + hit + " / " + n + " 맞음</p></div>";
 
-    h += '<div class="card"><h2>왜 그렇게 판정되나요</h2>';
+    h += '<div class="card"><h2>왜 그럴까요</h2>';
     for (var j = 0; j < ITEMS.length; j++) {
       h += '<p style="margin:10px 0"><b>' + esc(ITEMS[j].q) + "</b><br>" +
         '<span class="muted">' + esc(ITEMS[j].why) + "</span></p>";
@@ -398,7 +398,7 @@ ACTIVITY = u"""
   function activityCollect() {
     collectText();
     if (judged() < 3) {
-      $("w-msg").innerHTML = '<span class="warn">문항을 3개 넘게 판정해 주세요. 지금 ' + judged() + '개예요.</span>';
+      $("w-msg").innerHTML = '<span class="warn">물음을 3개 넘게 골라 주세요. 지금 ' + judged() + '개예요.</span>';
       go(3);
       return null;
     }
@@ -444,7 +444,7 @@ ACTIVITY = u"""
       checked[i + "-0"] = true;
       checked[i + "-1"] = true;
       if ($("d" + i)) { $("d" + i).value = "연도가 다릅니다."; }
-      if ($("w" + i)) { $("w" + i).value = "교과서와 대조해 확인했습니다."; }
+      if ($("w" + i)) { $("w" + i).value = "교과서와 맞춰 보았습니다."; }
     }
     if ($("cq0")) { $("cq0").value = "2"; }
     if ($("cw0")) { $("cw0").value = "없는 책 이름을 지어냈습니다."; }
@@ -479,7 +479,7 @@ ACTIVITY = u"""
 
     var h = '<p style="font-weight:700">제출 ' + n + '명 · 학급 정답률 ' +
       (of ? Math.round(sum * 100 / of) : 0) + "%</p>";
-    h += '<div class="scroll"><table><tr><th>질문</th><th>가</th><th>나</th><th>둘 다</th><th>실제</th></tr>';
+    h += '<div class="scroll"><table><tr><th>물음</th><th>가</th><th>나</th><th>둘 다</th><th>맞는 답</th></tr>';
     for (i = 0; i < ITEMS.length; i++) {
       h += "<tr><td>" + esc(ITEMS[i].q) + "</td><td>" + dist[i].a + "</td><td>" + dist[i].b +
         "</td><td>" + dist[i].both + "</td><td>" + esc(VERDICT_LABEL[ITEMS[i].verdict]) + "</td></tr>";

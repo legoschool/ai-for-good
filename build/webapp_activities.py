@@ -8,7 +8,7 @@ def js(value):
 
 
 def buckets(cards, buckets_, ask_reason=True):
-    """카드를 N칸으로 분류하고 근거를 쓴다. (4·5·6차시)"""
+    """카드를 N칸으로 나누고 까닭을 쓴다. (4·5·6차시)"""
     return u"""
   var CARDS = %s;
   var BUCKETS = %s;
