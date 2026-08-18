@@ -1,4 +1,18 @@
-/* WISE 통합 사이트 */
+# -*- coding: utf-8 -*-
+"""통합 사이트 공통 스타일.
+
+크림 바탕에 손그림 느낌의 검은 테두리, 왼쪽이 톱니로 파인 티켓 카드,
+형광 초록 버튼, 초록 점 타임라인, 파란 해시태그를 쓴다.
+단일 톤으로 못 박은 디자인이라 다크 모드를 만들지 않는다.
+교실 프로젝터에서 어두운 화면은 보이지 않기 때문이다.
+"""
+
+NOISE = ("url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' "
+         "width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence "
+         "type='fractalNoise' baseFrequency='0.85' numOctaves='4'/%3E%3C/filter%3E"
+         "%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")")
+
+CSS = u"""/* WISE 통합 사이트 */
 
 :root{
   --cream:#F4EEE0;
@@ -58,7 +72,7 @@ a:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
 .hero{position:relative;overflow:hidden;color:#fff;background:#2447C8;
   border-bottom:3px solid var(--line);padding:78px 0 86px}
 .hero::before{content:"";position:absolute;inset:0;opacity:.45;mix-blend-mode:overlay;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+  background-image:__NOISE__}
 .hero .wrap{position:relative;z-index:2;text-align:center}
 .hero .kicker{font-size:15px;font-weight:700;opacity:.86;margin-bottom:20px}
 .hero h1{color:#fff;font-size:clamp(30px,5.4vw,58px);font-weight:900;line-height:1.24}
@@ -105,7 +119,7 @@ section.band.tight{padding:44px 0}
   display:flex;flex-direction:column;justify-content:flex-end;padding:16px 18px;
   background:var(--kv,#2563EB);color:#fff;overflow:hidden}
 .keyvis::before{content:"";position:absolute;inset:0;opacity:.4;mix-blend-mode:overlay;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+  background-image:__NOISE__}
 .keyvis>*{position:relative;z-index:2}
 .kv-tag{position:absolute;top:12px;left:12px;background:var(--purple);color:#fff;
   font-size:12px;font-weight:800;padding:3px 9px;border:2px solid var(--line);z-index:3}
@@ -149,7 +163,7 @@ section.band.tight{padding:44px 0}
   background:var(--sc,#2563EB);overflow:hidden;display:block}
 .sticker:hover{text-decoration:none}
 .sticker::before{content:"";position:absolute;inset:0;opacity:.38;mix-blend-mode:overlay;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+  background-image:__NOISE__}
 .sticker::after{content:"";position:absolute;right:0;bottom:0;border-width:0 0 30px 30px;
   border-style:solid;border-color:transparent transparent var(--cream) transparent}
 .sticker>*{position:relative;z-index:2}
@@ -245,3 +259,40 @@ footer strong{color:var(--ink)}
 }
 
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+""".replace("__NOISE__", NOISE)
+
+
+# 손그림 느낌을 내는 필터와 장식. 모든 쪽 맨 위에 한 번 넣는다.
+DEFS = u"""<svg width="0" height="0" aria-hidden="true" focusable="false"
+  style="position:absolute;pointer-events:none">
+  <filter id="rough">
+    <feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="3" seed="9" result="n"/>
+    <feDisplacementMap in="SourceGraphic" in2="n" scale="4.5"
+      xChannelSelector="R" yChannelSelector="G"/>
+  </filter>
+</svg>"""
+
+RIBBON = (u'<svg class="ribbon" viewBox="0 0 26 34" aria-hidden="true">'
+          u'<path d="M2 2h22v30l-11-8-11 8z" fill="#00D45A" stroke="#111" stroke-width="2.5"'
+          u' stroke-linejoin="round"/></svg>')
+
+DOODLES = u"""
+<svg class="doodle a" viewBox="0 0 60 60" aria-hidden="true">
+  <circle cx="30" cy="30" r="22" fill="#00D45A" stroke="#111" stroke-width="3"/>
+  <circle cx="23" cy="27" r="4" fill="#fff"/><circle cx="37" cy="27" r="4" fill="#fff"/>
+  <circle cx="23" cy="28" r="2" fill="#111"/><circle cx="37" cy="28" r="2" fill="#111"/>
+</svg>
+<svg class="doodle b" viewBox="0 0 60 60" aria-hidden="true">
+  <path d="M8 40c8-26 20-26 26-14s16 10 18-8" fill="none" stroke="#FFE24B"
+    stroke-width="6" stroke-linecap="round"/>
+</svg>
+<svg class="doodle c" viewBox="0 0 60 60" aria-hidden="true">
+  <path d="M30 4l7 17 18 2-13 12 4 18-16-9-16 9 4-18L5 23l18-2z" fill="#fff"
+    stroke="#111" stroke-width="3" stroke-linejoin="round"/>
+</svg>
+<svg class="doodle d" viewBox="0 0 60 60" aria-hidden="true">
+  <path d="M6 44c0-18 12-30 24-30s24 12 24 30z" fill="#7B4FE8" stroke="#111" stroke-width="3"/>
+  <circle cx="22" cy="32" r="4" fill="#fff"/><circle cx="38" cy="32" r="4" fill="#fff"/>
+  <circle cx="22" cy="33" r="2" fill="#111"/><circle cx="38" cy="33" r="2" fill="#111"/>
+</svg>
+"""

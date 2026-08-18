@@ -8,11 +8,119 @@
 <link rel="stylesheet" href="../assets/style.css">
 </head>
 <body>
+<svg width="0" height="0" aria-hidden="true" focusable="false"
+  style="position:absolute;pointer-events:none">
+  <filter id="rough">
+    <feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="3" seed="9" result="n"/>
+    <feDisplacementMap in="SourceGraphic" in2="n" scale="4.5"
+      xChannelSelector="R" yChannelSelector="G"/>
+  </filter>
+</svg>
 <header class="top"><div class="wrap">
-  <a class="brand" href="../index.html">WISE <span>AI적정활용</span></a>
-  <nav class="nav"><a href="../index.html">홈</a><a href="../module/M1.html" aria-current="page">모듈1 발견</a><a href="../module/M2.html">모듈2 판단</a><a href="../module/M3.html">모듈3 실천</a><a href="../apps.html">12차시 웹앱</a><a href="../survey.html">자기인식 진단</a><a href="../about.html">소개</a></nav>
+  <a class="brand" href="../index.html">WISE <em>AI적정활용</em></a>
+  <nav class="nav"><a href="../index.html">홈</a><a href="../module/M1.html" aria-current="page">발견</a><a href="../module/M2.html">판단</a><a href="../module/M3.html">실천</a><a href="../skills.html">인간중심 사고</a><a href="../apps.html">12차시 웹앱</a><a href="../survey.html">자기인식 진단</a><a href="../about.html">소개</a></nav>
 </div></header>
-<section><div class="wrap"><div class="bar m1"></div><span class="tag m1">모듈1 · 1~4차시</span><h1>WISE 발견 : AI를 직접 만들고 겪어 본다</h1><p style="max-width:720px;margin-top:12px">학생이 데이터를 모아 모델을 학습시키고, 생성형 AI의 답을 검증하며 환각·편향·개인정보 문제를 몸으로 겪는다. 강의만으로는 대체할 수 없는 경험을 통해 판단의 재료를 쌓는다.</p><div class="panel" style="margin-top:24px"><h2>중심 휴먼스킬</h2><ul><li>비판적 사고</li><li>문제해결 사고</li><li>윤리적 사고</li><li>맥락적 사고</li><li>주체성</li></ul></div><div class="lessons"><a class="lesson-row" href="../lesson/L01.html"><span class="lesson-no" style="background:#2563eb">1차시</span><span><h3>AI는 어떻게 똑똑해질까</h3><p>AI가 어떻게 배우는지 알아보고, AI가 우리의 생각을 도와주는지 대신해 주는지 생각해 봅시다.</p></span></a><a class="lesson-row" href="../lesson/L02.html"><span class="lesson-no" style="background:#2563eb">2차시</span><span><h3>AI도 틀린다, 환각과 검증</h3><p>AI의 답이 정말 맞는지 확인하는 방법을 찾아봅시다.</p></span></a><a class="lesson-row" href="../lesson/L03.html"><span class="lesson-no" style="background:#2563eb">3차시</span><span><h3>AI도 편견을 가질까</h3><p>AI의 결과에 담긴 치우침을 찾고, 그 까닭을 데이터에서 찾아봅시다.</p></span></a><a class="lesson-row" href="../lesson/L04.html"><span class="lesson-no" style="background:#2563eb">4차시</span><span><h3>내 정보는 안전할까</h3><p>AI에 넣어도 되는 정보와 넣으면 안 되는 정보를 가려 봅시다.</p></span></a></div></div></section>
+<section class="band"><div class="wrap"><div class="band-head"><span class="band-note">모듈 01 · 1~4차시</span><h2>WISE 발견<br>AI를 직접 만들고 겪어 본다</h2><p style="max-width:720px;margin:14px auto 0">학생이 데이터를 모아 모델을 학습시키고, 생성형 AI의 답을 검증하며 환각·편향·개인정보 문제를 몸으로 겪는다. 강의만으로는 대체할 수 없는 경험을 통해 판단의 재료를 쌓는다.</p></div><div class="panel"><h2>이 모듈에서 기르는 힘</h2><p>비판적 사고 · 문제해결 사고 · 윤리적 사고 · 맥락적 사고 · 주체성</p></div><article class="ticket">
+  <svg class="ribbon" viewBox="0 0 26 34" aria-hidden="true"><path d="M2 2h22v30l-11-8-11 8z" fill="#00D45A" stroke="#111" stroke-width="2.5" stroke-linejoin="round"/></svg>
+  <div class="card-head">
+    <h2>1차시 AI는 어떻게 똑똑해질까</h2>
+    <p>AI가 어떻게 배우는지 알아보고, AI가 우리의 생각을 도와주는지 대신해 주는지 생각해 봅시다.</p>
+  </div>
+  <div class="split">
+    <div>
+      <div class="keyvis" style="--kv:#2563eb"><span class="kv-tag">비판적 사고</span><span class="kv-mark">WISE 1차시</span><p class="kv-cap">AI는 사람이 준 데이터로 배우며, <b>데이터가 치우치면 결과도 치우친다.</b></p></div>
+      <a class="btn-green" href="../webapp/L01/index.html">웹앱 열기 · 데이터 실험실</a>
+    </div>
+    <ol class="timeline"><li><h3>비판적 사고</h3><p>내가 넣은 데이터에 따라 AI의 분류 결과가 어떻게 달라지는지 관찰·분석하기</p><div class="tags"><span>#AI는 사람이 준 데이터로 배</span><span>#AI 결과를 무조건 신뢰하</span></div></li><li><h3>문제해결 사고</h3><p>AI로 해결할 수 있는 문제를 찾고, 데이터를 모아 해결 절차를 구상하기</p><div class="tags"><span>#문제의 성격을 파악하고 AI</span><span>#AI를 문제 해결의 도구로</span></div></li><li><h3>AI적정활용 기준</h3><p>⑤ 비판적 AI 리터러시와 검증 가능성</p><div class="tags"><span>#인간-AI 역할 경계 원칙</span></div></li></ol>
+  </div>
+  <div class="card-foot">
+    <p class="q">이 차시 수업 자료가 필요하다면?</p>
+    <div class="foot-row">
+      <span class="t">지도안 · 활동지 · 수업용 PPT</span>
+      <div class="pills">
+        <a class="pill" href="../files/WISE_L01_지도안.hwpx" download>지도안</a>
+        <a class="pill" href="../files/WISE_L01_활동지.hwpx" download>활동지</a>
+        <a class="pill" href="../files/WISE_L01_수업.pptx" download>PPT</a>
+        <a class="pill ghost" href="../webapp/L01/PROMPT.md" download>웹앱 프롬프트</a>
+      </div>
+    </div>
+  </div>
+</article><article class="ticket">
+  <svg class="ribbon" viewBox="0 0 26 34" aria-hidden="true"><path d="M2 2h22v30l-11-8-11 8z" fill="#00D45A" stroke="#111" stroke-width="2.5" stroke-linejoin="round"/></svg>
+  <div class="card-head">
+    <h2>2차시 AI도 틀린다, 환각과 검증</h2>
+    <p>AI의 답이 정말 맞는지 확인하는 방법을 찾아봅시다.</p>
+  </div>
+  <div class="split">
+    <div>
+      <div class="keyvis" style="--kv:#2563eb"><span class="kv-tag">비판적 사고</span><span class="kv-mark">WISE 2차시</span><p class="kv-cap">AI는 사실이 아닌 것을 사실처럼 만들어 낼 수 있고, <b>출처 확인과 교차 검증으로 이를 가려낼 수 있다.</b></p></div>
+      <a class="btn-green" href="../webapp/L02/index.html">웹앱 열기 · AI 검증 실험실</a>
+    </div>
+    <ol class="timeline"><li><h3>비판적 사고</h3><p>AI 답의 근거와 출처를 확인하고 다른 정보원과 비교하여 정확성 확인하기</p><div class="tags"><span>#AI는 사실이 아닌 것을 사실</span><span>#근거를 확인한 뒤에 판단하</span></div></li><li><h3>맥락적 사고</h3><p>AI의 일반적인 답이 우리 상황과 학년 수준에 맞는지 검토하기</p><div class="tags"><span>#같은 질문이라도 묻는 방식과</span><span>#일반적인 답을 그대로 적용</span></div></li><li><h3>AI적정활용 기준</h3><p>⑤ 비판적 AI 리터러시와 검증 가능성</p><div class="tags"><span>#검증 가능성과 투명성 원칙</span></div></li></ol>
+  </div>
+  <div class="card-foot">
+    <p class="q">이 차시 수업 자료가 필요하다면?</p>
+    <div class="foot-row">
+      <span class="t">지도안 · 활동지 · 수업용 PPT</span>
+      <div class="pills">
+        <a class="pill" href="../files/WISE_L02_지도안.hwpx" download>지도안</a>
+        <a class="pill" href="../files/WISE_L02_활동지.hwpx" download>활동지</a>
+        <a class="pill" href="../files/WISE_L02_수업.pptx" download>PPT</a>
+        <a class="pill ghost" href="../webapp/L02/PROMPT.md" download>웹앱 프롬프트</a>
+      </div>
+    </div>
+  </div>
+</article><article class="ticket">
+  <svg class="ribbon" viewBox="0 0 26 34" aria-hidden="true"><path d="M2 2h22v30l-11-8-11 8z" fill="#00D45A" stroke="#111" stroke-width="2.5" stroke-linejoin="round"/></svg>
+  <div class="card-head">
+    <h2>3차시 AI도 편견을 가질까</h2>
+    <p>AI의 결과에 담긴 치우침을 찾고, 그 까닭을 데이터에서 찾아봅시다.</p>
+  </div>
+  <div class="split">
+    <div>
+      <div class="keyvis" style="--kv:#2563eb"><span class="kv-tag">비판적 사고</span><span class="kv-mark">WISE 3차시</span><p class="kv-cap">AI의 편향은 사람이 만든 데이터에서 비롯되며, <b>사회적 편견을 더 키울 수 있다.</b></p></div>
+      <a class="btn-green" href="../webapp/L03/index.html">웹앱 열기 · 편향 관찰 갤러리</a>
+    </div>
+    <ol class="timeline"><li><h3>비판적 사고</h3><p>AI 결과에 담긴 편향을 찾고 그 원인을 학습 데이터와 연결해 설명하기</p><div class="tags"><span>#AI의 편향은 사람이 만든 데</span><span>#AI의 한계를 이해하고 인</span></div></li><li><h3>윤리적 사고</h3><p>AI 결과가 누구에게 불리하게 작동할 수 있는지 이해관계자를 짚어 보기</p><div class="tags"><span>#AI가 특정 집단에 불리한 결</span><span>#AI의 편리함보다 옳음을</span></div></li><li><h3>AI적정활용 기준</h3><p>⑤ 비판적 AI 리터러시와 검증 가능성 / ⑥ 윤리·책임성</p><div class="tags"><span>#윤리·책임성과 정보보호 원칙</span><span>#형평성과 포용성 원칙</span></div></li></ol>
+  </div>
+  <div class="card-foot">
+    <p class="q">이 차시 수업 자료가 필요하다면?</p>
+    <div class="foot-row">
+      <span class="t">지도안 · 활동지 · 수업용 PPT</span>
+      <div class="pills">
+        <a class="pill" href="../files/WISE_L03_지도안.hwpx" download>지도안</a>
+        <a class="pill" href="../files/WISE_L03_활동지.hwpx" download>활동지</a>
+        <a class="pill" href="../files/WISE_L03_수업.pptx" download>PPT</a>
+        <a class="pill ghost" href="../webapp/L03/PROMPT.md" download>웹앱 프롬프트</a>
+      </div>
+    </div>
+  </div>
+</article><article class="ticket">
+  <svg class="ribbon" viewBox="0 0 26 34" aria-hidden="true"><path d="M2 2h22v30l-11-8-11 8z" fill="#00D45A" stroke="#111" stroke-width="2.5" stroke-linejoin="round"/></svg>
+  <div class="card-head">
+    <h2>4차시 내 정보는 안전할까</h2>
+    <p>AI에 넣어도 되는 정보와 넣으면 안 되는 정보를 가려 봅시다.</p>
+  </div>
+  <div class="split">
+    <div>
+      <div class="keyvis" style="--kv:#2563eb"><span class="kv-tag">윤리적 사고</span><span class="kv-mark">WISE 4차시</span><p class="kv-cap">개인정보와 민감정보는 한 번 입력하면 되돌리기 어렵고, <b>AI 서비스에는 사용 가능 연령과 학교의 기준이 있다.</b></p></div>
+      <a class="btn-green" href="../webapp/L04/index.html">웹앱 열기 · 정보 분류 카드</a>
+    </div>
+    <ol class="timeline"><li><h3>윤리적 사고</h3><p>AI에 입력할 정보와 입력하면 안 되는 정보를 가려내고 주의 사항 지키기</p><div class="tags"><span>#개인정보와 민감정보는 한 번</span><span>#AI의 편리함보다 옳음을</span></div></li><li><h3>주체성</h3><p>AI 활용 전에 무엇을 넣고 무엇을 넣지 않을지 스스로 결정하기</p><div class="tags"><span>#AI 활용 여부와 방식을 스스</span><span>#AI 활용에서 자기 역할을</span></div></li><li><h3>AI적정활용 기준</h3><p>⑥ 윤리·책임성</p><div class="tags"><span>#윤리·책임성과 정보보호 원칙</span></div></li></ol>
+  </div>
+  <div class="card-foot">
+    <p class="q">이 차시 수업 자료가 필요하다면?</p>
+    <div class="foot-row">
+      <span class="t">지도안 · 활동지 · 수업용 PPT</span>
+      <div class="pills">
+        <a class="pill" href="../files/WISE_L04_지도안.hwpx" download>지도안</a>
+        <a class="pill" href="../files/WISE_L04_활동지.hwpx" download>활동지</a>
+        <a class="pill" href="../files/WISE_L04_수업.pptx" download>PPT</a>
+        <a class="pill ghost" href="../webapp/L04/PROMPT.md" download>웹앱 프롬프트</a>
+      </div>
+    </div>
+  </div>
+</article></div></section>
 <footer><div class="wrap">
   <p><strong>인간중심 사고를 기르는 AI적정활용 수업 WISE</strong></p>
   <p>이운희(진해신항초) · 윤희류(황산초) · 손혜림(용호초) · 최소은(방곡초)</p>

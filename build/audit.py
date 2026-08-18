@@ -37,8 +37,8 @@ print("  %s out/webapp     %d개 %s" % ("OK " if len(apps) == 13 else "NG ", len
 if len(apps) != 13: bad("웹앱이 %d개다. 13개여야 한다" % len(apps))
 
 pages = [p for p in walk(os.path.join(ROOT, "out", "site"), ".html") if "webapp" not in p]
-print("  %s out/site       %d쪽 (기대 19)" % ("OK " if len(pages) == 19 else "NG ", len(pages)))
-if len(pages) != 19: bad("사이트가 %d쪽이다. 19쪽이어야 한다" % len(pages))
+print("  %s out/site       %d쪽 (기대 20)" % ("OK " if len(pages) == 20 else "NG ", len(pages)))
+if len(pages) != 20: bad("사이트가 %d쪽이다. 20쪽이어야 한다" % len(pages))
 
 print()
 print("=" * 62)

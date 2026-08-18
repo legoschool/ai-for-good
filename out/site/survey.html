@@ -8,11 +8,19 @@
 <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
+<svg width="0" height="0" aria-hidden="true" focusable="false"
+  style="position:absolute;pointer-events:none">
+  <filter id="rough">
+    <feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="3" seed="9" result="n"/>
+    <feDisplacementMap in="SourceGraphic" in2="n" scale="4.5"
+      xChannelSelector="R" yChannelSelector="G"/>
+  </filter>
+</svg>
 <header class="top"><div class="wrap">
-  <a class="brand" href="index.html">WISE <span>AI적정활용</span></a>
-  <nav class="nav"><a href="index.html">홈</a><a href="module/M1.html">모듈1 발견</a><a href="module/M2.html">모듈2 판단</a><a href="module/M3.html">모듈3 실천</a><a href="apps.html">12차시 웹앱</a><a href="survey.html" aria-current="page">자기인식 진단</a><a href="about.html">소개</a></nav>
+  <a class="brand" href="index.html">WISE <em>AI적정활용</em></a>
+  <nav class="nav"><a href="index.html">홈</a><a href="module/M1.html">발견</a><a href="module/M2.html">판단</a><a href="module/M3.html">실천</a><a href="skills.html">인간중심 사고</a><a href="apps.html">12차시 웹앱</a><a href="survey.html" aria-current="page">자기인식 진단</a><a href="about.html">소개</a></nav>
 </div></header>
-<section><div class="wrap"><div class="sec-h"><h1>AI적정활용 자기인식 설문</h1><p>5점 리커트 8문항입니다. 1차시 전과 12차시 뒤에 같은 문항으로 묻습니다.</p></div><div class="panel"><div class="scroll"><table><tr><th>번호</th><th>문항</th><th>연계 휴먼스킬</th><th>채점</th></tr><tr><td>1</td><td>AI에게 과제를 시켜도 된다고 생각한다.</td><td>주체성</td><td>역채점</td></tr><tr><td>2</td><td>AI의 답이 틀릴 수 있다고 안다.</td><td>비판적 사고</td><td>정채점</td></tr><tr><td>3</td><td>내가 AI에 입력해도 되는 정보와 입력하면 안 되는 정보를 구별할 수 있다.</td><td>윤리적 사고</td><td>정채점</td></tr><tr><td>4</td><td>AI가 만든 결과를 그대로 쓰지 않고 내 말로 다시 정리해 본 적이 있다.</td><td>성찰적 사고</td><td>정채점</td></tr><tr><td>5</td><td>AI의 답을 무조건 믿지 않고 다른 자료와 비교해 보는 편이다.</td><td>비판적 사고</td><td>정채점</td></tr><tr><td>6</td><td>내 생각을 먼저 정리한 다음 AI를 쓰는 편이다.</td><td>주체성</td><td>정채점</td></tr><tr><td>7</td><td>AI를 쓰는 일이 친구·선생님과 이야기하는 시간을 줄이지 않도록 조절한다.</td><td>사회·관계적 사고</td><td>정채점</td></tr><tr><td>8</td><td>AI를 쓰고 나서 무엇이 좋았고 무엇이 아쉬웠는지 돌아본다.</td><td>성찰적 사고</td><td>정채점</td></tr></table></div><div class="note" style="margin-top:16px">1번 문항은 값이 낮아질수록 바람직한 변화이므로 분석 시 6에서 뺀 값으로 환산한다.</div></div><div class="panel"><h2>자유응답</h2><ul><li>우리 반 AI 약속 중 가장 잘 지킨 것과 가장 어려운 것을 하나씩 써 주세요. <span style='color:var(--muted)'>(사후)</span></li><li>12차시 전과 비교해 AI에 대한 내 생각을 한 문장으로 정리해 주세요. <span style='color:var(--muted)'>(사후)</span></li></ul></div><div class="panel"><h2>설문 웹앱</h2><div class="dl"><a href="../webapp/common/index.html">설문 웹앱 열기<small>사전·사후 공용</small></a></div></div></div></section>
+<section class="band"><div class="wrap"><div class="band-head"><span class="band-note">5점 리커트 여덟 문항</span><h2>AI적정활용 자기인식 설문</h2><p>1차시 전과 12차시 뒤에 같은 문항으로 묻습니다.</p></div><div class="panel"><div class="scroll"><table><tr><th>번호</th><th>문항</th><th>연계 휴먼스킬</th><th>채점</th></tr><tr><td>1</td><td>AI에게 과제를 시켜도 된다고 생각한다.</td><td>주체성</td><td>역채점</td></tr><tr><td>2</td><td>AI의 답이 틀릴 수 있다고 안다.</td><td>비판적 사고</td><td>정채점</td></tr><tr><td>3</td><td>내가 AI에 입력해도 되는 정보와 입력하면 안 되는 정보를 구별할 수 있다.</td><td>윤리적 사고</td><td>정채점</td></tr><tr><td>4</td><td>AI가 만든 결과를 그대로 쓰지 않고 내 말로 다시 정리해 본 적이 있다.</td><td>성찰적 사고</td><td>정채점</td></tr><tr><td>5</td><td>AI의 답을 무조건 믿지 않고 다른 자료와 비교해 보는 편이다.</td><td>비판적 사고</td><td>정채점</td></tr><tr><td>6</td><td>내 생각을 먼저 정리한 다음 AI를 쓰는 편이다.</td><td>주체성</td><td>정채점</td></tr><tr><td>7</td><td>AI를 쓰는 일이 친구·선생님과 이야기하는 시간을 줄이지 않도록 조절한다.</td><td>사회·관계적 사고</td><td>정채점</td></tr><tr><td>8</td><td>AI를 쓰고 나서 무엇이 좋았고 무엇이 아쉬웠는지 돌아본다.</td><td>성찰적 사고</td><td>정채점</td></tr></table></div><div class="note">1번 문항은 값이 낮아질수록 바람직한 변화이므로 분석 시 6에서 뺀 값으로 환산한다.</div></div><div class="panel"><h2>자유응답</h2><ul><li>우리 반 AI 약속 중 가장 잘 지킨 것과 가장 어려운 것을 하나씩 써 주세요. <span style='color:var(--muted)'>(사후)</span></li><li>12차시 전과 비교해 AI에 대한 내 생각을 한 문장으로 정리해 주세요. <span style='color:var(--muted)'>(사후)</span></li></ul></div><div class="panel"><h2>설문 웹앱</h2><div class="dl"><a href="webapp/common/index.html">설문 웹앱 열기<small>사전·사후 공용</small></a></div></div></div></section>
 <footer><div class="wrap">
   <p><strong>인간중심 사고를 기르는 AI적정활용 수업 WISE</strong></p>
   <p>이운희(진해신항초) · 윤희류(황산초) · 손혜림(용호초) · 최소은(방곡초)</p>
