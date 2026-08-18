@@ -234,7 +234,7 @@ border:2.5px solid var(--line);color:var(--ink);font-size:14.5px;font-weight:700
 
 
   /* ---------- 문항 세트 ----------
-     verdict 는 교사용 실제 판정이다. 5단계에서만 보여 준다.
+     verdict 는 어느 쪽이 맞는 답인가이다. 틀린 쪽이 아니다. 5단계에서만 보여 준다.
      kind 는 어떤 방식으로 틀렸는지를 나타낸다. */
 
   var ITEMS = [
@@ -245,7 +245,7 @@ border:2.5px solid var(--line);color:var(--ink);font-size:14.5px;font-weight:700
       b: "1420년에 만들어 그해 바로 널리 알렸습니다.",
       src: "초등 사회 교과서에서 옮겨 온 글입니다.\n훈민정음은 1443년에 만들어졌습니다.\n널리 알린 것은 1446년입니다.",
       srcName: "초등 사회 교과서",
-      verdict: "b",
+      verdict: "a",
       kind: "연도를 지어냈어요",
       why: "가 쪽이 교과서와 같아요. 나 쪽은 연도를 지어냈어요."
     },
@@ -267,7 +267,7 @@ border:2.5px solid var(--line);color:var(--ink);font-size:14.5px;font-weight:700
       b: "『밤하늘의 지도』(하늘출판사, 2019)를 추천합니다. 초등 5학년 필독서입니다.",
       src: "학교 도서관에서 찾아본 결과입니다.\n『밤하늘의 지도』는 나오지 않습니다.\n하늘출판사도 나오지 않습니다.",
       srcName: "학교 도서관 검색",
-      verdict: "b",
+      verdict: "a",
       kind: "없는 책을 지어냈어요",
       why: "나 쪽은 책 이름과 연도까지 붙여서 아주 그럴듯해요. 그런데 찾아보면 없어요."
     },
@@ -278,7 +278,7 @@ border:2.5px solid var(--line);color:var(--ink);font-size:14.5px;font-weight:700
       b: "1961년 4월에 문을 열었습니다.",
       src: "학교 누리집에서 옮겨 온 글입니다.\n1961년 4월 1일에 문을 열었습니다.\n1962년 2월에 첫 졸업식을 했습니다.",
       srcName: "학교 누리집",
-      verdict: "a",
+      verdict: "b",
       kind: "우리 동네 일을 잘못 알아요",
       why: "나 쪽이 학교 누리집과 같아요. 우리 동네 일은 자료가 적어서 AI가 자주 틀려요."
     },
@@ -289,7 +289,7 @@ border:2.5px solid var(--line);color:var(--ink);font-size:14.5px;font-weight:700
       b: "약 38,400km입니다.",
       src: "초등 과학 교과서에서 옮겨 온 글입니다.\n지구에서 달까지는 약 384,400km입니다.",
       srcName: "초등 과학 교과서",
-      verdict: "b",
+      verdict: "a",
       kind: "자릿수를 틀렸어요",
       why: "가 쪽이 맞아요. 나 쪽은 0 하나가 빠졌어요. 숫자는 자릿수를 꼭 봐야 해요."
     }

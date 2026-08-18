@@ -54,6 +54,8 @@ def main():
     jobs.append((NODE + ["build/check_site.js", "out/site"], "통합 웹사이트"))
     jobs.append((PY + ["build/audit.py"], "전체 점검"))
     jobs.append((PY + ["build/check_reading.py"], "학생 문장 수준"))
+    jobs.append((NODE + ["build/walkthrough.js", "L01"], "1차시 수업이 굴러가는가"))
+    jobs.append((NODE + ["build/walkthrough.js", "L02"], "2차시 수업이 굴러가는가"))
 
     failed = []
     for cmd, label in jobs:
