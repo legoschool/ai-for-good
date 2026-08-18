@@ -193,7 +193,8 @@ function main() {
       const r = document.getElementById("r" + i);
       if (r) r.value = "근거";
     }
-    ["claus", "mean", "cant", "human", "ai", "title", "body", "credit"].forEach((id) => {
+    ["claus", "mean", "cant", "human", "ai", "title", "body", "credit",
+      "why1", "why4", "learn"].forEach((id) => {
       const el = document.getElementById(id);
       if (el) el.value = "테스트 내용입니다.";
     });

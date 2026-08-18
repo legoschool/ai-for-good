@@ -10,6 +10,7 @@ import sys
 import tasks as T
 import webapp_activities as A
 from webapp_l01 import ACTIVITY as L01_ACTIVITY
+from webapp_l02 import ACTIVITY as L02_ACTIVITY
 from webapp_core import TEMPLATE
 
 T.setup_console()
@@ -88,6 +89,9 @@ def activity_for(lesson, data):
     if n == 1:
         # 1차시는 40분을 끌 수 있도록 브라우저 안에서 도는 분류기를 따로 만들었다.
         return L01_ACTIVITY
+    if n == 2:
+        # 2차시는 교사가 미리 검증한 답변 세트를 담아 생성형 AI 없이 돌아가게 했다.
+        return L02_ACTIVITY
     if n == 0:
         return A.form([
             {"label": "우리 모둠이 모은 데이터", "hint": "무엇을 몇 장 모았는지 써요.", "ph": "예: 강아지 사진 20장, 고양이 사진 20장"},
