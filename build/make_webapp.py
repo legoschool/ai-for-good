@@ -13,8 +13,26 @@ from webapp_core import TEMPLATE
 
 T.setup_console()
 
-SHEET_ENDPOINT = "PASTE_YOUR_APPS_SCRIPT_DEPLOY_URL"
 SHEET_ID = "1szLUD-hzMwQh7aaae5S9S7OS-hEXMEMj2Vhbd-hjjFM"
+
+# Apps Script 웹 앱 배포 주소. data/sheet_endpoint.txt 에 한 줄로 둔다.
+# 파일이 없으면 자리표시자를 쓰고, 앱은 시트 백업만 건너뛴다.
+# 이 주소는 학생 브라우저에서 호출하므로 감출 수 없다.
+# 이상한 기록은 Apps Script 쪽에서 모양을 검사해 걸러 낸다.
+ENDPOINT_FILE = os.path.join(T.ROOT, "data", "sheet_endpoint.txt")
+PLACEHOLDER = "PASTE_YOUR_APPS_SCRIPT_DEPLOY_URL"
+
+
+def sheet_endpoint():
+    if os.path.exists(ENDPOINT_FILE):
+        with io.open(ENDPOINT_FILE, encoding="utf-8") as f:
+            url = f.read().strip()
+        if url.startswith("https://"):
+            return url
+    return PLACEHOLDER
+
+
+SHEET_ENDPOINT = sheet_endpoint()
 
 SOFT = {"#2563eb": "#eff6ff", "#d97706": "#fffbeb", "#059669": "#ecfdf5"}
 
