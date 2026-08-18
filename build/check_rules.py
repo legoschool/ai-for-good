@@ -18,8 +18,14 @@ def main():
     print("JSON 문법 OK")
 
     rules = d["rules"]
-    root_flags = [k for k in rules if k.startswith(".")]
-    print("루트 .read/.write 선언 : %s" % (root_flags or "없음 (기존 규칙을 덮어쓰지 않는다)"))
+    bad = []
+
+    # 루트는 잠겨 있어야 한다. WISE 전용 프로젝트이므로 /wise 밖은 열 이유가 없다.
+    if rules.get(".read") is not False:
+        bad.append("루트 .read 가 false 가 아니다")
+    if rules.get(".write") is not False:
+        bad.append("루트 .write 가 false 가 아니다")
+    print("루트 잠김 : %s" % ("예" if not bad else "아니오 -> %s" % bad))
     print("최상위 키 : %s" % list(rules.keys()))
 
     room = rules["wise"]["$app"]["$room"]
@@ -37,14 +43,19 @@ def main():
     slugs = [l["webapp"]["slug"] for l in data["lessons"]] + ["survey"]
     import re
     pat = re.compile(r"^[a-z][a-z0-9-]{1,23}$")
-    bad = [s for s in slugs if not pat.match(s)]
+    badslug = [s for s in slugs if not pat.match(s)]
     print("")
-    print("앱 slug %d개 규칙 통과 : %s" % (len(slugs), "전부" if not bad else "실패 %s" % bad))
+    print("앱 slug %d개 규칙 통과 : %s" % (len(slugs), "전부" if not badslug else "실패 %s" % badslug))
 
     needed = ["meta", "state", "entries", "votes"]
     missing = [n for n in needed if n not in room]
     print("앱이 쓰는 경로 %s : %s" % (needed, "전부 있음" if not missing else "빠짐 %s" % missing))
-    return 1 if (bad or missing) else 0
+
+    if bad:
+        print("")
+        for b in bad:
+            print("실패  %s" % b)
+    return 1 if (bad or badslug or missing) else 0
 
 
 if __name__ == "__main__":
