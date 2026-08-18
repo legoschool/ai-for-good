@@ -51,6 +51,7 @@ def main():
     for name in ["WISE_정보_분류_카드", "WISE_AI_활용_장면_카드", "WISE_상황_카드"]:
         jobs.append((PY + ["build/validate_hwpx.py", "out/교구/%s.hwpx" % name], name))
     jobs.append((NODE + ["build/check_site.js", "out/site"], "통합 웹사이트"))
+    jobs.append((PY + ["build/audit.py"], "전체 점검"))
 
     failed = []
     for cmd, label in jobs:
