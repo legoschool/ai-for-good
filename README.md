@@ -25,7 +25,7 @@
 | 학생 활동지 12종 | [`out/활동지/`](out/활동지) |
 | 수업용 PPT 12세트 | [`out/ppt/`](out/ppt) |
 | 수업 활용 웹앱 12개 + 공통 설문 | [`out/webapp/`](out/webapp) |
-| 통합 웹사이트 19쪽 | [`out/site/`](out/site) |
+| 통합 웹사이트 20쪽 | [`out/site/`](out/site) |
 | 학교자율시간 진도표 | [`out/서류/`](out/서류) |
 | 카드 교구 3종 | [`out/교구/`](out/교구) |
 | 교사용 해설서 | [`out/해설서/`](out/해설서) |
@@ -109,7 +109,7 @@
 
 1. Firebase 콘솔 → Realtime Database → 규칙에 [`spec/firebase_rules.json`](spec/firebase_rules.json) 의 `wise` 블록을 넣습니다.
 2. 백업 시트 → 확장 프로그램 → Apps Script 에 [`spec/07_웹앱_공통사양.md`](spec/07_웹앱_공통사양.md) 4-3절 코드를 붙이고 웹 앱으로 배포합니다.
-3. 배포 URL을 `build/make_webapp.py` 의 `SHEET_ENDPOINT` 에 넣고 `py -3 build/make_webapp.py all` 을 다시 돌립니다.
+3. 배포 URL로 `py -3 build/set_sheet_endpoint.py <주소>` 를 돌립니다. 13개 앱에 한 번에 들어갑니다.
 
 ---
 
@@ -129,7 +129,7 @@ py -3 build/make_webapp.py all          # 웹앱 12개 + 공통 설문
 py -3 build/make_docs.py all            # 진도표 · 카드 교구 · 해설서
 py -3 build/make_site.py                # 통합 웹사이트
 
-py -3 build/verify_all.py               # 82개 검사 한 번에
+py -3 build/verify_all.py               # 87개 검사 한 번에
 ```
 
 필요한 것 : Python 3.12 (`python-pptx`, `openpyxl`, `lxml`), Node.js
@@ -142,11 +142,12 @@ py -3 build/verify_all.py               # 82개 검사 한 번에
 CLAUDE.md              프로젝트 헌법. 절대 규칙, 기술 제약, 사람에게 물어야 할 것
 RUN.md                 루프 돌리는 법
 STATE.md               진행 상태 보드 (92개 작업, 자동 갱신)
+HANDOFF.md             인수인계서. 이어받을 때 먼저 읽는다
 data/lessons.json      단일 진실 원천. 12차시 전체 내용
 loops/                 실행 루프 정의 + 산출물별 완료 정의 7종
 spec/                  산출물 규격, 디자인 시스템, 안전 규칙, 웹앱 사양, 결함 목록
 prompts/               도구별 실행 프롬프트 9종
-build/                 생성 스크립트 8종 + 검증 스크립트 9종 + 루프 엔진 2종
+build/                 생성 10종 + 검증 12종 + 루프 엔진 2종
 out/                   산출물
 ```
 
