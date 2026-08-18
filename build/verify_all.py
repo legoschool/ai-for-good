@@ -44,7 +44,8 @@ def main():
         jobs.append((NODE + ["build/run_webapp.js", "out/webapp/%s" % lid],
                      "%s 웹앱 실행" % lid))
 
-    jobs.append((NODE + ["build/run_webapp.js", "out/webapp/common"], "공통 설문 웹앱"))
+    jobs.append((NODE + ["build/smoke_webapp.js", "out/webapp/common"], "공통 설문 웹앱 구조"))
+    jobs.append((NODE + ["build/run_webapp.js", "out/webapp/common"], "공통 설문 웹앱 실행"))
     jobs.append((PY + ["build/check_core_same.py"], "웹앱 공통 골격 동일성"))
     jobs.append((PY + ["build/check_rules.py"], "Firebase 보안 규칙"))
     jobs.append((PY + ["build/validate_hwpx.py", "out/해설서/WISE_교사용_해설서.hwpx"], "교사용 해설서"))
