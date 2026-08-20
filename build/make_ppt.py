@@ -3,6 +3,8 @@
 
 사용법 : py -3 build/make_ppt.py 3
 """
+import io
+import json
 import os
 import sys
 
@@ -22,6 +24,41 @@ INK = RGBColor(0x1F, 0x29, 0x37)
 MUTED = RGBColor(0x6B, 0x72, 0x80)
 PAPER = RGBColor(0xFF, 0xFF, 0xFF)
 BAND = RGBColor(0xF3, 0xF4, 0xF6)
+
+
+SHOT_DIR = os.path.join("out", "site", "assets", "shots")
+QR_DIR = os.path.join("out", "site", "assets", "qr")
+SITE_BASE = "https://legoschool.github.io/wise-ai"
+
+
+def shots_of(lid):
+    """make_shots.js 가 찍어 둔 화면 목록. 없으면 빈 목록."""
+    path = os.path.join(T.ROOT, SHOT_DIR, "index.json")
+    if not os.path.exists(path):
+        return []
+    try:
+        with io.open(path, encoding="utf-8") as f:
+            return json.load(f).get(lid, [])
+    except Exception:
+        return []
+
+
+def shot_path(name):
+    return os.path.join(T.ROOT, SHOT_DIR, name)
+
+
+def qr_png(lid):
+    """QR 은 SVG 로 만들어 두었다. PPT 에는 PNG 가 필요하므로 그때그때 만든다."""
+    out = os.path.join(T.ROOT, QR_DIR, "%s.png" % lid)
+    if os.path.exists(out):
+        return out
+    try:
+        import segno
+        segno.make("%s/webapp/%s/index.html" % (SITE_BASE, lid), error="m").save(
+            out, kind="png", scale=6, border=2, dark="#111111", light="#ffffff")
+        return out
+    except Exception:
+        return None
 
 
 def hex_to_rgb(s):
@@ -175,6 +212,77 @@ def build(lesson, data):
         qs = [t["q"] for t in b.get("turns", [])]
         text(s, M, Inches(2.0), CW, Inches(3.6), qs, size=28, spacing=1.6)
         note(s, turn_lines(b) + ["", "준비물"] + close["materials"])
+
+    # 7-2. 웹앱 사용법. 캡처가 있을 때만 넣는다.
+    lid = lesson["id"]
+    shots = shots_of(lid)
+    gate = None
+    steps = []
+    for one in shots:
+        if one.get("name") == "입장":
+            gate = one
+        elif one.get("name") not in ("이야기",):
+            steps.append(one)
+
+    if gate or steps:
+        w = lesson["webapp"]
+
+        s = blank(prs)
+        rect(s, 0, 0, Inches(0.22), H, accent)
+        text(s, M, Inches(0.8), CW, Inches(0.6), "웹앱으로 합니다",
+             size=20, color=accent, bold=True)
+        text(s, M, Inches(1.6), Inches(7.4), Inches(1.2), w["name"], size=40, bold=True)
+        text(s, M, Inches(2.9), Inches(7.4), Inches(2.4),
+             [w["purpose"],
+              "수업 전에 선생님 화면 → 새 방 만들기 → 방 번호를 칠판에 적는다.",
+              "학생은 QR 을 찍거나 주소를 열고 방 번호와 닉네임을 넣는다.",
+              "%s/webapp/%s/" % (SITE_BASE, lid)],
+             size=18, spacing=1.5)
+        qr = qr_png(lid)
+        if qr:
+            s.shapes.add_picture(qr, Inches(9.2), Inches(2.0), height=Inches(3.0))
+        note(s, ["수업 시작 전에 방을 만들어 둔다.",
+                 "학생에게는 방 번호와 닉네임만 알려 준다. 이름을 묻지 않는다."])
+
+        if gate:
+            s = blank(prs)
+            rect(s, 0, 0, Inches(0.22), H, accent)
+            text(s, M, Inches(0.7), CW, Inches(0.6), "학생 입장 화면",
+                 size=20, color=accent, bold=True)
+            s.shapes.add_picture(shot_path(gate["file"]), M, Inches(1.4), height=Inches(5.4))
+            text(s, Inches(7.6), Inches(1.6), Inches(5.2), Inches(3.6),
+                 ["방 번호 여섯 자리와 닉네임만 넣는다.",
+                  "나만 아는 숫자 네 자리는 사전과 사후 설문을 잇는 데만 쓴다.",
+                  "기기가 없으면 둘러보기로 교사가 시연한다."],
+                 size=20, spacing=1.6)
+            note(s, ["학생 화면을 띄워 놓고 함께 입장한다."])
+
+        # 규격은 10~24장이다. 차시마다 활동 수가 달라 앞부분 장수가 다르므로,
+        # 남는 자리만큼만 화면을 넣는다. 1·2차시처럼 활동이 많은 차시는 화면이 줄어든다.
+        used = len(prs.slides.__iter__.__self__._sldIdLst)
+        room = 24 - used - 2            # 뒤에 교사 화면과 오늘의 배움 두 장이 더 온다
+        for i, one in enumerate(steps[:max(2, min(6, room))]):
+            screen = w["screens"][i] if i < len(w["screens"]) else one["name"]
+            s = blank(prs)
+            rect(s, 0, 0, Inches(0.22), H, accent)
+            text(s, M, Inches(0.7), CW, Inches(0.6),
+                 "웹앱 %d단계 · %s" % (i + 1, one["name"]), size=20, color=accent, bold=True)
+            s.shapes.add_picture(shot_path(one["file"]), M, Inches(1.4), height=Inches(5.4))
+            text(s, Inches(7.6), Inches(1.8), Inches(5.2), Inches(3.2),
+                 [screen, "학생이 여기서 남긴 것이 활동지와 이어진다."],
+                 size=22, spacing=1.6)
+            note(s, ["이 화면에서 학생이 무엇을 하는지 먼저 말해 준다.",
+                     "판단이 갈리는 자리에서 까닭을 묻는다."])
+
+        s = blank(prs)
+        rect(s, 0, 0, Inches(0.22), H, accent)
+        text(s, M, Inches(1.0), CW, Inches(0.6), "교사 화면", size=20, color=accent, bold=True)
+        text(s, M, Inches(2.0), CW, Inches(3.2),
+             [w.get("teacherView", "학급 집계를 본다."),
+              "결과 크게 띄우기를 누르면 학급 화면으로 함께 본다.",
+              "CSV 로 내려받고, 수업이 끝나면 방을 잠근다."],
+             size=24, spacing=1.6)
+        note(s, ["제출이 모이면 갈린 항목부터 함께 본다."])
 
     # 8. 오늘의 배움
     s = blank(prs)

@@ -7,6 +7,13 @@ const fs = require("fs");
 const path = require("path");
 
 const ROOT = path.dirname(__dirname);
+/* 임베드를 허용하는 곳. 여기 적힌 곳만 iframe 으로 끼울 수 있다.
+   늘리려면 사람이 정하고 인수인계서에 적는다. */
+const EMBED_OK = [
+  "www.youtube.com/embed/", "youtube.com/embed/", "www.youtube-nocookie.com/embed/",
+  "www.canva.com/design/", "canva.com/design/",
+];
+
 const errors = [];
 const err = (m) => errors.push(m);
 
@@ -18,6 +25,14 @@ function walk(dir, out = []) {
     else out.push(p);
   }
   return out;
+}
+
+// 그 참조가 <a ...> 안에 있는지 본다. 링크는 허용, script/link/img 는 금지.
+function isAnchorHref(html, match) {
+  const at = html.indexOf(match);
+  if (at < 0) return false;
+  const open = html.lastIndexOf("<", at);
+  return html.slice(open, at).toLowerCase().startsWith("<a ");
 }
 
 function main() {
@@ -52,9 +67,20 @@ function main() {
     if (!html.includes("CC BY-NC-SA")) err(`${rel} : 저작권 표기가 없다`);
     if (html.includes("—")) err(`${rel} : em dash(—) 를 쓰지 않는다`);
 
-    // 외부 리소스 금지 (학교망 차단)
-    const ext = html.match(/(src|href)[ ]*=[ ]*["'](https?:)?[/][/][^"']+["']/gi) || [];
+    // 외부 리소스 금지 (학교망 차단). 다만 아래 둘은 허용한다.
+    //  1) <a> 로 거는 참고 자료 링크
+    //  2) 영상과 카드뉴스 임베드 (아래 EMBED_OK 에 적은 곳만)
+    // 임베드는 학교망에서 막힐 수 있으므로 같은 자료의 링크를 반드시 함께 둔다.
+    const ext = (html.match(/(src|href)[ ]*=[ ]*["'](https?:)?[/][/][^"']+["']/gi) || [])
+      .filter((m) => !isAnchorHref(html, m))
+      .filter((m) => !EMBED_OK.some((host) => m.includes(host)));
     if (ext.length) err(`${rel} : 외부 리소스를 참조한다 : ${ext[0]}`);
+
+    // 임베드를 쓴 쪽은 같은 자료를 여는 링크도 함께 두어야 한다
+    const frames = html.match(/<iframe[^>]+src[ ]*=[ ]*["']([^"']+)["']/gi) || [];
+    if (frames.length && !/<a[^>]+href[ ]*=[ ]*["']https?:/i.test(html)) {
+      err(`${rel} : 임베드만 있고 여는 링크가 없다. 학교망에서 막히면 아무것도 안 보인다`);
+    }
 
     // 링크가 실제로 존재하는가
     const links = [...html.matchAll(/(?:href|src)[ ]*=[ ]*"([^"#?:]+)"/g)].map((m) => m[1]);

@@ -83,6 +83,77 @@ def replace_text(el, mapping):
     return changed
 
 
+def set_para_text(par, value):
+    """문단의 첫 hp:t 에 값을 넣고 나머지는 비운다."""
+    nodes = list(par.iter(P + "t"))
+    if not nodes:
+        return False
+    nodes[0].text = value
+    for n in nodes[1:]:
+        n.text = ""
+    return True
+
+
+def clone_para(template, value, para_pr=None):
+    """문단을 복제해 글을 갈아 넣는다. 표 안팎 모두에서 쓴다."""
+    import copy as _copy
+    par = _copy.deepcopy(template)
+    strip_linesegarray(par)
+    set_para_text(par, value)
+    if para_pr is not None:
+        par.set("paraPrIDRef", str(para_pr))
+    return par
+
+
+def cell_of(tbl, col, row):
+    """(열, 행) 주소로 셀을 찾는다. 병합된 셀은 시작 주소로 찾는다."""
+    for tr in tbl.findall(P + "tr"):
+        for tc in tr.findall(P + "tc"):
+            addr = tc.find(P + "cellAddr")
+            if addr is None:
+                continue
+            if int(addr.get("colAddr")) == col and int(addr.get("rowAddr")) == row:
+                return tc
+    return None
+
+
+def fill_cell(tc, lines):
+    """셀 안의 문단을 lines 로 다시 채운다.
+
+    lines 는 (paraPrIDRef, 글) 쌍이거나 문자열이다.
+    셀 안에서만 문단을 복제하므로 셀 주소가 어긋나지 않는다.
+    """
+    if tc is None:
+        return 0
+    sub = tc.find(P + "subList")
+    if sub is None:
+        return 0
+    paras = sub.findall(P + "p")
+    if not paras:
+        return 0
+    template = paras[0]
+    for extra in paras[1:]:
+        sub.remove(extra)
+
+    norm = []
+    for item in lines:
+        if isinstance(item, tuple):
+            norm.append(item)
+        else:
+            norm.append((None, item))
+    if not norm:
+        norm = [(None, "")]
+
+    first_pr, first_text = norm[0]
+    set_para_text(template, first_text)
+    strip_linesegarray(template)
+    if first_pr is not None:
+        template.set("paraPrIDRef", str(first_pr))
+    for pr, text in norm[1:]:
+        sub.append(clone_para(template, text, pr))
+    return len(norm)
+
+
 def load_section(path=BASE):
     register()
     with zipfile.ZipFile(path) as z:

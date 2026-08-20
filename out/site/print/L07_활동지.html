@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>7차시 활동지 · 우리 반 AI 약속 만들기 활동지</title>
+<style>
+:root{--cream:#F4EEE0;--cream-d:#EBE3D2;--paper:#fff;--ink:#101010;--ink2:#33312D;
+--muted:#6F6A61;--line:#111;--green:#00D45A;--blue:#2B59E0;--purple:#7B4FE8;--sun:#FFE24B;
+--sans:"Pretendard","Malgun Gothic","Apple SD Gothic Neo","Noto Sans KR",system-ui,sans-serif}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--cream);color:var(--ink2);font-family:var(--sans);line-height:1.7}
+h1,h2,h3,h4{margin:0;color:var(--ink);line-height:1.25;letter-spacing:-.03em;font-weight:800}
+p{margin:0}
+a{color:var(--blue)}
+.tag{display:inline-block;border:2.5px solid var(--line);border-radius:999px;padding:4px 14px;
+font-size:13px;font-weight:800;background:var(--sun)}
+.tag.g{background:var(--green)}
+.tag.b{background:var(--blue);color:#fff}
+.tag.p{background:var(--purple);color:#fff}
+.tag.w{background:#fff}
+
+body{background:var(--cream-d);padding:18px}
+.sheet{width:210mm;min-height:297mm;margin:0 auto 18px;background:#fff;border:3px solid var(--line);
+border-radius:8px;padding:16mm 14mm;font-size:13.5px}
+.sheet h1{font-size:26px}
+.sheet h2{font-size:18px;margin:22px 0 10px;padding-bottom:6px;border-bottom:3px solid var(--line)}
+.sheet h3{font-size:15px;margin:14px 0 6px}
+.head{display:flex;gap:16px;align-items:center;border:3px solid var(--line);border-radius:16px;
+padding:14px 18px;background:var(--cream)}
+.head .no{font-size:34px;font-weight:900;color:var(--green);-webkit-text-stroke:2px var(--line);
+line-height:1;min-width:96px}
+.head .art{width:150px;border:2.5px solid var(--line);border-radius:12px;overflow:hidden;background:#fff}
+.head .art svg{display:block;width:100%;height:84px}
+table{width:100%;border-collapse:collapse;margin-top:8px;font-size:12.5px}
+th,td{border:1.5px solid var(--line);padding:7px 9px;vertical-align:top;text-align:left}
+th{background:var(--cream);font-weight:800;color:var(--ink)}
+td.stage{background:var(--sun);font-weight:800;text-align:center;width:52px}
+.qa{margin:0 0 6px}
+.qa .q{font-weight:800;color:var(--ink)}
+.qa .a{color:var(--muted)}
+.note{border:2.5px solid var(--line);border-radius:12px;background:var(--sun);padding:12px 14px;
+margin-top:12px;font-size:12.5px}
+.note.g{background:#E6F7EC}
+.note.b{background:#EEF2FF}
+ul{margin:6px 0;padding-left:18px}
+li{margin:3px 0}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.foot{margin-top:22px;border-top:2px solid var(--line);padding-top:8px;color:var(--muted);font-size:11.5px}
+
+/* 활동지 */
+.ws .band{border:3px solid var(--line);border-radius:16px;padding:14px 16px;margin-top:14px;background:#fff}
+.ws .band.sun{background:#FFFBEA}
+.ws .band.green{background:#F0FCF5}
+.ws .band h3{display:flex;gap:8px;align-items:center;font-size:16px}
+.ws .band h3 span.n{background:var(--green);border:2.5px solid var(--line);border-radius:999px;
+width:28px;height:28px;display:inline-flex;align-items:center;justify-content:center;font-size:14px}
+.lines{margin-top:10px}
+.lines div{border-bottom:1.5px dashed var(--line);height:26px}
+.boxes{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));margin-top:10px}
+.boxes .b{border:2.5px solid var(--line);border-radius:12px;min-height:74px;padding:8px 10px;
+font-size:12px;color:var(--muted)}
+.checks{margin-top:10px;display:flex;flex-direction:column;gap:6px}
+.checks label{display:flex;gap:8px;align-items:flex-start;font-size:13px}
+.checks i{display:inline-block;width:16px;height:16px;border:2.5px solid var(--line);border-radius:4px;
+flex:none;margin-top:3px}
+.sample{margin-top:8px;border:2px dashed var(--line);border-radius:10px;background:var(--cream);
+padding:8px 10px;font-size:12.5px;color:var(--ink2)}
+.sample span{display:inline-block;background:var(--sun);border:2px solid var(--line);border-radius:999px;
+padding:1px 8px;font-size:11px;font-weight:800;margin-right:8px}
+.namebar{display:flex;gap:10px;margin-top:12px}
+.namebar div{flex:1;border:2.5px solid var(--line);border-radius:10px;padding:8px 10px;font-size:12px;
+color:var(--muted)}
+@media print{
+ body{background:#fff;padding:0}
+ .sheet{border:none;border-radius:0;margin:0;width:auto;min-height:auto;padding:10mm 8mm}
+ .sheet + .sheet{page-break-before:always}
+ .toolbar{display:none}
+}
+.toolbar{position:sticky;top:0;z-index:20;max-width:210mm;margin:0 auto 12px;display:flex;
+gap:8px;flex-wrap:wrap;background:var(--cream-d);padding:10px 0}
+.toolbar a,.toolbar button{font:inherit;font-size:14px;font-weight:800;border:2.5px solid var(--line);
+border-radius:10px;background:#fff;padding:9px 14px;cursor:pointer;text-decoration:none;color:var(--ink)}
+.toolbar a:hover,.toolbar button:hover{background:var(--sun)}
+
+.appuse{background:#EAF4FF;border:2px solid var(--line);border-radius:10px;padding:8px 10px;
+margin:0 0 8px;font-size:12.5px;font-weight:700;color:var(--ink)}
+.appuse-s{margin:4px 0 0;font-size:11.5px;font-weight:800;color:var(--blue)}
+/* 활동지는 학생이 본다. 초등 5·6학년이 읽을 크기로 키운다. */
+.sheet.ws{font-size:16.5px;line-height:1.85}
+.ws h1{font-size:32px}
+.ws .band{padding:18px 20px;margin-top:18px}
+.ws .band h3{font-size:21px;gap:10px}
+.ws .band h3 span.n{width:34px;height:34px;font-size:19px}
+.ws .band p{font-size:16.5px;line-height:1.8}
+.ws .lead{font-size:18px;font-weight:800;color:var(--ink);margin:2px 0 10px}
+.ws .sample{font-size:16px;background:#FFFBEA;border:2.5px solid var(--line);border-radius:12px;
+padding:10px 12px;margin:10px 0}
+.ws .sample span{display:inline-block;background:var(--sun);border:2px solid var(--line);
+border-radius:999px;padding:2px 10px;font-size:14px;font-weight:900;margin-right:8px}
+.ws .checks label{font-size:17px;gap:10px;align-items:center}
+.ws .checks i{width:22px;height:22px;border-radius:6px}
+.ws .namebar div{font-size:15px;padding:12px 12px}
+.ws .rule{margin:34px 0;border-bottom-width:2.5px}
+.ws .rule:first-of-type{margin-top:20px}
+.ws .boxes .b{font-size:15px;min-height:78px}
+.ws table{font-size:15px}
+.ws .appbox{padding:16px 18px}
+.ws .appbox p{font-size:14.5px}
+@media print{.sheet.ws{font-size:16px}.ws .band h3{font-size:20px}}
+
+.appbox{border:2px solid #111;border-radius:12px;padding:14px 16px;margin:12px 0;background:#FCFBF7}
+.appbox .row{display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.appbox img.qr{border:2px solid #111;border-radius:10px;background:#fff;padding:4px}
+.appshots{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:10px}
+.appshots figure{margin:0}
+.appshots img{width:100%;height:150px;object-fit:cover;object-position:top center;
+border:2px solid #111;border-radius:10px;background:#fff}
+.appshots figcaption{font-size:12px;font-weight:700;margin-top:4px;text-align:center}
+@media print{.appshots img{height:120px}}
+</style>
+</head>
+<body>
+<div class="toolbar"><a href="../index.html">WISE 홈</a><a href="../lesson/L07.html">7차시 페이지</a><a href="L07_지도안.html">지도안</a><a href="../deck/L07.html">수업 슬라이드</a><a href="../webapp/L07/index.html">웹앱</a><button onclick="window.print()">인쇄하기</button></div><div class="sheet ws"><div class="head"><div class="no">07</div><div style="flex:1"><h1>우리 반 AI 약속 만들기 활동지</h1><p style="margin-top:6px">우리 반이 함께 지킬 AI 약속 8조항을 만들어 봅시다.</p></div><div class="art"><svg class="art" viewBox="0 0 320 180" role="img" aria-hidden="true" preserveAspectRatio="xMidYMid slice"><rect width="320" height="180" fill="#F4EEE0"/><rect x="26" y="22" width="150" height="136" rx="10" fill="#FFFFFF" stroke="#111111" stroke-width="3"/><text x="44" y="52" font-size="17" font-weight="900" fill="#111111">우리 반 약속</text><circle cx="48" cy="70" r="6" fill="#00D45A" stroke="#111111" stroke-width="2.5"/><path d="M62 70 h96" stroke="#111111" stroke-width="5" stroke-linecap="round"/><circle cx="48" cy="92" r="6" fill="#00D45A" stroke="#111111" stroke-width="2.5"/><path d="M62 92 h96" stroke="#111111" stroke-width="5" stroke-linecap="round"/><circle cx="48" cy="114" r="6" fill="#00D45A" stroke="#111111" stroke-width="2.5"/><path d="M62 114 h96" stroke="#111111" stroke-width="5" stroke-linecap="round"/><circle cx="48" cy="136" r="6" fill="#00D45A" stroke="#111111" stroke-width="2.5"/><path d="M62 136 h96" stroke="#111111" stroke-width="5" stroke-linecap="round"/><path d="M212 108 v-34 a8 8 0 0 1 16 0 v34z" fill="#00D45A" stroke="#111111" stroke-width="3" stroke-linejoin="round"/><rect x="208" y="106" width="24" height="26" rx="8" fill="#00D45A" stroke="#111111" stroke-width="3"/><path d="M250 96 v-34 a8 8 0 0 1 16 0 v34z" fill="#2B59E0" stroke="#111111" stroke-width="3" stroke-linejoin="round"/><rect x="246" y="94" width="24" height="26" rx="8" fill="#2B59E0" stroke="#111111" stroke-width="3"/><path d="M288 112 v-34 a8 8 0 0 1 16 0 v34z" fill="#7B4FE8" stroke="#111111" stroke-width="3" stroke-linejoin="round"/><rect x="284" y="110" width="24" height="26" rx="8" fill="#7B4FE8" stroke="#111111" stroke-width="3"/></svg></div></div><div class="namebar"><div>학교</div><div>학년 반</div><div>번호</div><div>닉네임</div></div><div class="note"><strong>오늘의 약속</strong> 이름, 사진, 친구 이야기 같은 개인정보는 넣지 않아요. 웹앱에는 닉네임만 씁니다. 웹앱 이름은 <strong>우리 반 AI 약속</strong> 입니다.</div><div class="appbox"><div class="row"><img class="qr" src="../assets/qr/L07.svg" width="104" height="104" alt="L07 웹앱 QR 코드"><div style="flex:1;min-width:220px"><strong>★ 웹앱 우리 반 AI 약속</strong><p style="margin:4px 0">8가지 기준별로 모둠이 조항을 제안하고, 학급이 투표해 우리 반 AI 약속 8조항을 확정한다.</p><p style="margin:4px 0;font-size:13px">주소 : legoschool.github.io/wise-ai/webapp/L07/ · <a href="../webapp/L07/index.html">바로 열기</a> · <a href="../guide/L07.html">사용 안내</a></p><p style="margin:4px 0;font-size:13px">수업 전에 <b>선생님 화면 → 새 방 만들기</b>로 방 번호를 만들고 칠판에 적습니다. 학생은 QR 을 찍어 들어옵니다.</p></div></div><div class="appshots"><figure><img src="../assets/shots/L07_2_hub.png" alt="허브 화면"><figcaption>허브</figcaption></figure><figure><img src="../assets/shots/L07_3_sense.png" alt="sense 화면"><figcaption>sense</figcaption></figure></div></div><div class="band sun"><h3>오늘 할 일</h3><p class="lead">우리 반이 함께 지킬 AI 약속 8조항을 만들어 봅시다.</p><div class="checks"><label><i></i>[활동 1] 여덟 가지 기준 살펴보기</label><label><i></i>[활동 2] 모둠 조항 초안 쓰기</label><label><i></i>[활동 3] 학급 토의와 확정</label></div></div><div class="band "><h3><span class="n">1</span>우리 모둠이 맡은 기준</h3><p class="lead">어른들이 만든 여덟 가지 기준을 우리 말로 바꿔 봅시다. ‘학습자 주체성’은 무슨 뜻일까요?</p><p class="sample"><span>예시</span>내 생각을 먼저 만들고 나서 AI에게 물어보라는 뜻인 것 같습니다.</p><div class="lines"><div></div><div></div><div></div><div></div><div></div><div></div></div></div><div class="band green"><h3><span class="n">2</span>우리 말로 바꾼 뜻</h3><p class="lead">‘디지털 웰빙’은 우리 말로 무엇이라 할까요?</p><p class="sample"><span>예시</span>마음이 힘들 때는 AI 말고 사람에게 말하라는 뜻입니다.</p><div class="lines"><div></div><div></div><div></div><div></div><div></div><div></div></div></div><div class="band "><h3><span class="n">3</span>조항 초안</h3><p class="lead">모둠마다 두 가지 기준을 맡아 우리 반이 지킬 문장으로 써 봅시다.</p><p class="sample"><span>예시</span>‘이름과 사진은 넣지 않는다’로 정했습니다.</p><div class="lines"><div></div><div></div><div></div><div></div><div></div><div></div></div></div><div class="band sun"><h3><span class="n">4</span>‘하지 마라’를 ‘이렇게 하면 된다’로</h3><p class="lead">‘하지 마라’ 대신 ‘이렇게 하면 된다’로 바꿀 수 있을까요?</p><p class="sample"><span>예시</span>‘별명을 써서 물어본다’로 고쳤습니다.</p><div class="lines"><div></div><div></div><div></div><div></div><div></div><div></div></div></div><div class="band"><h3><span class="n">5</span>오늘의 되돌아보기</h3><div class="checks"><label><i></i>내 생각을 먼저 쓰고 나서 AI에게 물었다</label><label><i></i>AI가 알려 준 것을 확인했다</label><label><i></i>개인정보를 넣지 않았다</label><label><i></i>AI가 한 일과 내가 한 일을 밝힐 수 있다</label></div><div class="lines"><div></div><div></div></div></div><p class="foot">인간중심 사고를 기르는 AI적정활용 수업 WISE · 2026년 티처스랩 5기 교사연구회 A.N.D · CC BY-NC-SA</p></div>
+<script></script>
+</body>
+</html>

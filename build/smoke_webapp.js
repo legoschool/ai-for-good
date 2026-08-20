@@ -92,7 +92,7 @@ function main() {
   if (!/font-size:16px/.test(html) && !/font-size:1[6-9]px/.test(html)) {
     err("기본 글자 크기가 16px 이상인지 확인되지 않는다");
   }
-  if (!/min-height:48px/.test(html)) err("누르는 곳 최소 높이(48px) 지정이 없다");
+  if (!/min-height:(4[89]|[5-9][0-9]|[1-9][0-9]{2})px/.test(html)) err("누르는 곳 최소 높이(48px 이상) 지정이 없다");
   if (!/overflow-x:auto/.test(html)) err("넓은 표를 위한 가로 스크롤 상자가 없다");
   if (!/prefers-reduced-motion/.test(html)) err("prefers-reduced-motion 대응이 없다");
 

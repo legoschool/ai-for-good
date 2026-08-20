@@ -7,10 +7,22 @@ import io
 import os
 import sys
 
+import site_art as ART
+import webapp_art as WART
 import tasks as T
 import webapp_activities as A
 from webapp_l01 import ACTIVITY as L01_ACTIVITY
 from webapp_l02 import ACTIVITY as L02_ACTIVITY
+from webapp_l03 import ACTIVITY as L03_ACTIVITY
+from webapp_l04 import ACTIVITY as L04_ACTIVITY
+from webapp_l05 import ACTIVITY as L05_ACTIVITY
+from webapp_l06 import ACTIVITY as L06_ACTIVITY
+from webapp_l07 import ACTIVITY as L07_ACTIVITY
+from webapp_l08 import ACTIVITY as L08_ACTIVITY
+from webapp_l09 import ACTIVITY as L09_ACTIVITY
+from webapp_l10 import ACTIVITY as L10_ACTIVITY
+from webapp_l11 import ACTIVITY as L11_ACTIVITY
+from webapp_l12 import ACTIVITY as L12_ACTIVITY
 from webapp_core import TEMPLATE
 
 T.setup_console()
@@ -107,40 +119,38 @@ def activity_for(lesson, data):
             {"label": "찾아낸 환각 사례 2가지", "ph": "무엇이 틀렸고 어떻게 확인했는지 써요"},
         ])
     if n == 3:
-        return A.form([
-            {"label": "관찰한 사례", "ph": "예: 의사와 간호사 그림"},
-            {"label": "치우쳐 보이는 곳", "ph": "무엇이 한쪽으로 몰려 있었나요"},
-            {"label": "원인은 데이터의 무엇일까", "hint": "1차시에서 데이터를 줄였을 때를 떠올려요.", "ph": ""},
-            {"label": "누가 불편해질까", "ph": ""},
-        ])
+        # 3차시는 학습 데이터 분포를 학생이 바꾸어 결과가 달라지는 것을 직접 본다.
+        return L03_ACTIVITY
     if n == 4:
-        return A.buckets(INFO_CARDS, [
-            {"label": "넣어도 돼"}, {"label": "조건을 지키면 돼"}, {"label": "넣으면 안 돼"}])
+        # 4차시는 카드마다 숨은 위험도를 두고 판단 뒤에 개인 리포트를 돌려준다.
+        return L04_ACTIVITY
     if n == 5:
-        return A.buckets(SCENE_CARDS, [{"label": "보조"}, {"label": "대행"}])
+        # 5차시는 생각 축과 결과물 축 두 개로 판단해 경계 사례를 드러낸다.
+        return L05_ACTIVITY
     if n == 6:
-        return A.buckets(SITUATION_CARDS, SIGNAL_BUCKETS)
+        # 6차시는 1차 판정, 학급 분포 확인, 2차 판정의 두 라운드로 돈다.
+        return L06_ACTIVITY
     if n == 7:
-        return A.vote(["%s %s" % (c["mark"], c["name"]) for c in data["aiComponents"]])
+        # 7차시는 금지형 문장을 감지해 조건형으로 바꾸도록 돕는 조항 작성기다.
+        crit = ["%s %s" % (c["mark"], c["name"]) for c in data["aiComponents"]]
+        return L07_ACTIVITY.replace("__CRITERIA__", A.js(crit))
     if n == 8:
-        return A.board()
+        # 8차시는 화면 안에서 약속 카드를 만들고 표기 없이는 제출되지 않는다.
+        return L08_ACTIVITY
     if n == 9:
-        return A.form([
-            {"label": "1단계 내 생각 먼저 쓰기", "hint": "5문장으로 써요. 이 칸을 채워야 다음이 열려요.", "ph": ""},
-            {"label": "2단계 AI가 짚어 준 점", "hint": "고쳐 달라고 하지 말고 무엇이 부족한지 물어요.", "ph": ""},
-            {"label": "받아들일 것과 받아들이지 않을 것", "ph": ""},
-            {"label": "3단계 내 말로 다시 쓰기", "ph": ""},
-            {"label": "무엇이 달라졌나요", "ph": ""},
-        ], gated=True)
+        # 9차시는 단계 잠금과 문장 비교로 3단계 원칙을 화면이 지키게 한다.
+        return L09_ACTIVITY
     if n == 10:
-        return A.selfcheck(HABIT_ITEMS, promises=3)
+        # 10차시는 익명 자가 점검이다. 개인 리포트는 학생 화면에만 남는다.
+        return L10_ACTIVITY
     if n == 11:
-        return A.form([
-            {"label": "우리 모둠이 모은 문제 3개", "ph": ""},
-            {"label": "고른 문제와 한 문장 정의", "hint": "누가, 언제, 무엇 때문에 불편한지 써요.", "ph": ""},
-            {"label": "신호등 판단과 근거", "hint": "초록·노랑·주황·빨강 중 무엇이고 왜 그런가요", "ph": ""},
-            {"label": "해결 절차 4단계", "ph": "1) ... 2) ... 3) ... 4) ..."},
-        ])
+        # 11차시는 문제를 좁히는 캔버스와 절차 카드로 프로젝트를 세운다.
+        return L11_ACTIVITY
+    # 12차시는 발표 카드, 서로에게 남기는 배운 점, 첫 시간과의 성찰 비교다.
+    return L12_ACTIVITY
+
+
+def _unused_form_12():
     return A.form([
         {"label": "완성한 결과물", "ph": ""},
         {"label": "AI가 한 일 / 우리가 한 일", "ph": ""},
@@ -149,9 +159,20 @@ def activity_for(lesson, data):
     ])
 
 
+def intro_js(art, line, hint):
+    """입장 화면에 깔 소개 그림. 활동 구역 안에 넣어야 공통 골격이 갈라지지 않는다."""
+    body = art + u'<p><b>%s</b><br>%s</p>' % (line, hint)
+    return u"\n\n  function activityIntro() {\n    return %s;\n  }\n" % A.js(body)
+
+
 def render_html(lesson, data):
     mod = data["modules"][lesson["module"] - 1]
     accent = mod["color"]
+    w = lesson["webapp"]
+    activity = activity_for(lesson, data) + WART.ICON_JS + intro_js(
+        ART.lesson_art(lesson["no"]),
+        "%d차시 · %s" % (lesson["no"], w["name"]),
+        "%s 방 코드가 없으면 혼자 체험해 보기로 눌러 봐요." % w["purpose"])
     html = TEMPLATE
     for key, value in [
         ("__ACCENT__", accent),
@@ -159,9 +180,10 @@ def render_html(lesson, data):
         ("__APP_NAME__", lesson["webapp"]["name"]),
         ("__SUBTITLE__", "%d차시 · %s" % (lesson["no"], lesson["shortTitle"])),
         ("__SLUG__", lesson["webapp"]["slug"]),
+        ("__LESSON_ID__", lesson["id"]),
         ("__SHEET_ENDPOINT__", SHEET_ENDPOINT),
         ("__COPYRIGHT__", data["program"]["copyrightLine"]),
-        ("__ACTIVITY__", activity_for(lesson, data)),
+        ("__ACTIVITY__", activity),
     ]:
         html = html.replace(key, value)
     return html
@@ -204,6 +226,14 @@ def render_spec(lesson, data):
     a("- Firebase 실시간 DB `/wise/%s/<방코드>/` + Google Sheets 백업" % w["slug"])
     a("- Google Sites 소스 코드 삽입용 단일 HTML. 외부 CDN 참조 없음")
     a("- 실명·학번·연락처를 수집하지 않는다")
+    a("")
+    a("## 13개 앱이 함께 갖춘 기능")
+    a("")
+    a("- **발표 모드** : 교사 화면의 `결과 크게 띄우기` 를 누르면 학급 화면용 큰 글씨로 결과만 보여 준다")
+    a("- **자동 임시 저장** : 쓰던 내용을 이 기기에 8초마다 저장한다. 인터넷이 끊겨도 사라지지 않는다")
+    a("- **진행 막대** : 활동이 몇 단계 중 어디까지 왔는지 상단에 표시한다")
+    a("- **개인 되돌아보기** : 학생 화면에서만 보이는 요약을 준다. 교사 화면에는 학급 집계만 간다")
+    a("- **교사 화면 낱낱이 보기** : 표를 접었다 펼 수 있고, 모둠 수와 마지막 제출 시각을 함께 보여 준다")
     a("")
     a("## 저장하는 것")
     a("")
@@ -277,7 +307,8 @@ def render_prompt(lesson, data):
     a("실시간 갱신은 3초 폴링으로 한다. SSE 스트리밍은 학교망에서 끊긴다.")
     a("")
     a("같은 기록을 Google Sheets 에도 백업한다.")
-    a("시트 : %s" % SHEET_ID)
+    # 백업 시트 ID 는 공개 자료에 싣지 않는다. 학급 기록이 들어 있는 시트다.
+    a("시트 : 선생님이 만든 백업 시트의 ID 를 여기에 넣는다.")
     a("Apps Script 웹앱 주소로 fetch POST 하되 mode 는 no-cors,")
     a("Content-Type 은 text/plain 으로 보낸다. 응답을 읽지 마라.")
     a("백업이 실패해도 학생 화면이 멈추면 안 된다. catch 로 삼키고 넘어가라.")
@@ -347,7 +378,12 @@ def survey_activity(data):
   var OPTS = ["전혀 아니다", "아니다", "보통이다", "그렇다", "매우 그렇다"];
 
   function activityHtml() {
-    var h = '<div class="card"><h2>언제 하는 설문인가요</h2>' +
+    var h = '<div class="card"><h2>나만 아는 숫자 4자리</h2>' +
+      '<p class="muted">사전 설문과 사후 설문을 이어 보는 데만 써요. ' +
+      '비밀번호가 아니에요. 열두 시간 뒤에도 같은 숫자를 써 주세요.</p>' +
+      '<input id="s-code" inputmode="numeric" maxlength="4" placeholder="예: 0412">' +
+      '<p class="muted" id="s-code-msg" style="margin-top:6px"></p></div>';
+    h += '<div class="card"><h2>언제 하는 설문인가요</h2>' +
       '<div class="row">' +
       '<button type="button" class="chip pick" data-i="when" data-v="0" style="width:auto;margin:0">사전 (1차시 전)</button>' +
       '<button type="button" class="chip pick" data-i="when" data-v="1" style="width:auto;margin:0">사후 (12차시 뒤)</button>' +
@@ -364,13 +400,55 @@ def survey_activity(data):
       h += '<div class="card"><h3>' + esc(OPENS[k]) + '</h3>' +
         '<textarea id="o' + k + '" maxlength="400"></textarea></div>';
     }
+    h += '<div class="card"><h2>내 응답 요약</h2><div id="myrep">' +
+      '<p class="muted">문항에 답하면 여기에 나타나요.</p></div></div>';
     h += '<div class="safe">솔직하게 답해 주세요. 누가 무엇을 골랐는지는 아무에게도 보이지 않아요.</div>';
     return h;
   }
 
+  /* 1번 문항은 역채점한다. 값이 낮을수록 바람직한 응답이기 때문이다. */
+  function myScore(obj) {
+    var sum = 0, n = 0;
+    for (var i = 0; i < ITEMS.length; i++) {
+      var v = obj[i];
+      if (v === undefined) { continue; }
+      var sc = Number(v) + 1;
+      if (i === 0) { sc = 6 - sc; }
+      sum += sc;
+      n++;
+    }
+    return { avg: n ? sum / n : 0, n: n };
+  }
+
+  function paintRep(saved) {
+    if (!$("myrep")) { return; }
+    var now = myScore(pick);
+    if (!now.n) {
+      $("myrep").innerHTML = '<p class="muted">문항에 답하면 여기에 나타나요.</p>';
+      return;
+    }
+    var h = '<p class="big">' + now.avg.toFixed(1) + ' / 5.0</p>' +
+      '<p class="muted">답한 문항 ' + now.n + ' / ' + ITEMS.length +
+      ' · 높을수록 스스로 판단하며 쓰고 있다는 뜻이에요.</p>' +
+      barHtml(Math.round(now.avg * 20), 100);
+    if (saved && saved.pick && saved.when === "사전" && pick.when === "1") {
+      var before = myScore(saved.pick);
+      if (before.n) {
+        var diff = (now.avg - before.avg).toFixed(1);
+        h += '<p style="margin-top:12px">사전 ' + before.avg.toFixed(1) + ' 에서 사후 ' +
+          now.avg.toFixed(1) + ' 로 ' + (Number(diff) >= 0 ? "+" : "") + diff + '</p>';
+        h += '<p class="muted">이 비교는 이 기기에 남아 있던 내 사전 응답과 견준 거예요. 선생님께는 학급 평균만 갑니다.</p>';
+      }
+    }
+    $("myrep").innerHTML = h;
+  }
+
   var pick = {};
 
+  var prior = null;
+
   function activityInit(saved) {
+    prior = saved;
     if (saved && saved.pick) { pick = saved.pick; }
     var btns = document.querySelectorAll("#activity .pick");
     for (var i = 0; i < btns.length; i++) {
@@ -379,6 +457,15 @@ def survey_activity(data):
         paint();
       };
     }
+    if ($("s-code")) {
+      var pre = me.code || "";
+      if (!pre) {
+        try { pre = localStorage.getItem("wise_student_code") || ""; } catch (e) { pre = ""; }
+      }
+      if (pre) { $("s-code").value = pre; }
+      $("s-code").oninput = paintCode;
+    }
+    wiseNote("사전인지 사후인지 먼저 골라 주세요.");
     if (saved && saved.opens) {
       for (var k = 0; k < OPENS.length; k++) {
         if ($("o" + k) && saved.opens[k]) { $("o" + k).value = saved.opens[k]; }
@@ -387,13 +474,38 @@ def survey_activity(data):
     paint();
   }
 
+  function paintCode() {
+    if (!$("s-code") || !$("s-code-msg")) { return; }
+    var raw = $("s-code").value || "";
+    var got = "";
+    for (var i = 0; i < raw.length && got.length < 4; i++) {
+      if (raw.charAt(i) >= "0" && raw.charAt(i) <= "9") { got += raw.charAt(i); }
+    }
+    if (got.length === 4) {
+      $("s-code-msg").innerHTML = '<span class="ok">좋아요. 사후 설문에서도 ' + got + ' 을 써 주세요.</span>';
+    } else {
+      $("s-code-msg").innerHTML = '<span class="warn">숫자 네 자리를 넣어 주세요. ' +
+        '넣지 않으면 사전과 사후를 이어 볼 수 없어요. 학급 평균에는 그대로 들어가요.</span>';
+    }
+  }
+
   function paint() {
+    paintCode();
     var btns = document.querySelectorAll("#activity .pick");
     for (var i = 0; i < btns.length; i++) {
       var k = btns[i].getAttribute("data-i");
       var v = btns[i].getAttribute("data-v");
       btns[i].className = "chip pick" + (pick[k] === v ? " on" : "");
     }
+    var done = 0;
+    for (var q = 0; q < ITEMS.length; q++) { if (pick[q] !== undefined) { done++; } }
+    wiseStep(Math.min(2, Math.floor(done * 3 / ITEMS.length)), 3);
+    paintRep(prior);
+  }
+
+  function activityAutofill() {
+    pick.when = "0";
+    for (var i = 0; i < ITEMS.length; i++) { pick[i] = String(i %% 5); }
   }
 
   function activityCollect() {
@@ -408,7 +520,17 @@ def survey_activity(data):
     for (var k = 0; k < OPENS.length; k++) {
       opens.push($("o" + k) ? $("o" + k).value.trim() : "");
     }
-    return { when: pick.when === "1" ? "사후" : "사전", pick: pick, opens: opens };
+    var code = "";
+    if ($("s-code")) {
+      var raw = $("s-code").value || "";
+      for (var c = 0; c < raw.length && code.length < 4; c++) {
+        if (raw.charAt(c) >= "0" && raw.charAt(c) <= "9") { code += raw.charAt(c); }
+      }
+    }
+    if (code) {
+      try { localStorage.setItem("wise_student_code", code); } catch (e) {}
+    }
+    return { when: pick.when === "1" ? "사후" : "사전", code: code, pick: pick, opens: opens };
   }
 
   function teacherSummary(list) {
@@ -455,9 +577,13 @@ def make_common():
         ("__APP_NAME__", "AI적정활용 자기인식 설문"),
         ("__SUBTITLE__", "공통 · 1차시 전과 12차시 뒤에 같은 8문항"),
         ("__SLUG__", "survey"),
+        ("__LESSON_ID__", "L01"),
         ("__SHEET_ENDPOINT__", SHEET_ENDPOINT),
         ("__COPYRIGHT__", data["program"]["copyrightLine"]),
-        ("__ACTIVITY__", survey_activity(data)),
+        ("__ACTIVITY__", survey_activity(data) + WART.ICON_JS + intro_js(
+            ART.flow_art(),
+            "공통 · AI적정활용 자기인식 설문",
+            "여덟 문항에 답하면 내 점수를 요약해 줘요. 사전과 사후에 같은 문항으로 물어요.")),
     ]:
         html = html.replace(key, value)
     write(os.path.join(base, "index.html"), html)
@@ -482,53 +608,29 @@ def make_common():
              "`spec/07_웹앱_공통사양.md` 를 그대로 따른다.", "",
              "---", "", data["program"]["copyrightLine"]]
     write(os.path.join(base, "SPEC.md"), "\n".join(spec) + "\n")
-
-    pr = ["# 공통 웹앱 제작 프롬프트 : AI적정활용 자기인식 설문", "",
-          "> 이 프롬프트 자체가 산출물이다. 선생님이 각자 고쳐 쓸 수 있도록 통째로 복사해 붙여 넣게 만들었다.",
-          "", "---", "", "```",
-          "초등 5·6학년 수업에서 쓸 사전·사후 설문 웹앱을 만들어 줘.",
-          "HTML 파일 하나로 끝나야 하고, 외부 라이브러리나 CDN을 절대 참조하지 마.",
-          "Google Sites 의 소스 코드 삽입 기능에 그대로 붙여 넣을 것이다.", "",
-          "[무엇을 하는 앱인가]",
-          "같은 8문항을 1차시 전과 12차시 뒤에 묻고, 학급 평균의 변화량을 자동으로 계산한다.",
-          "", "[문항]"]
-    for i in s["items"]:
-        pr.append("%d. %s  (%s · %s)" % (i["no"], i["text"], i["skill"], i["scoring"]))
-    pr += ["", "[자유응답]"]
-    for o in s["openItems"]:
-        pr.append("- %s (%s)" % (o["text"], o["when"]))
-    pr += ["", "[반드시 지킬 것]",
-           "1. 방 코드 6자리 + 비밀번호 4자리 + 닉네임으로 입장한다.",
-           "   방 코드 옆에 복사 버튼을 반드시 둔다.",
-           "2. 방 코드 없이 들어가는 '혼자 체험해 보기' 경로를 둔다.",
-           "3. 닉네임 중복을 막지 마라. 같은 닉네임이면 기존 기록을 이어받게 한다.",
-           "4. 교사가 화면을 닫아도 방이 사라지면 안 된다.",
-           "5. 사전인지 사후인지 먼저 고르게 한다.",
-           "6. 8문항을 모두 답해야 제출된다. 몇 개 남았는지 알려 준다.",
-           "7. 1번 문항은 역채점한다. 6에서 뺀 값으로 환산해 계산한다.",
-           "8. 교사 화면에 문항별 사전 평균, 사후 평균, 변화량을 표로 보여 준다.",
-           "   개인 응답은 표시하지 마라. 학급 단위 통계만 쓴다.",
-           "9. 실명, 학번, 연락처, 이메일을 묻지 마라.",
-           "10. 글자 16px 이상, 누르는 곳은 44px 이상. 태블릿에서 손가락으로 쓴다.",
-           "11. 정규식에 역슬래시 이스케이프를 쓰지 마라. [0-9] 처럼 문자 클래스로 써라.",
-           "    Apps Script 로 옮길 때 역슬래시가 깨진다.",
-           "12. em dash 를 쓰지 마라.", "",
-           "[데이터 저장]",
-           "Firebase 실시간 DB 를 REST 로 직접 호출한다. SDK 를 붙이지 마라.",
-           "주소 : https://remind-c2610-default-rtdb.firebaseio.com",
-           "경로 : /wise/survey/<방코드>/entries",
-           "같은 기록을 Google Sheets 에도 백업한다. 시트 : " + SHEET_ID,
-           "mode 는 no-cors, Content-Type 은 text/plain 으로 보낸다.",
-           "백업이 실패해도 학생 화면이 멈추면 안 된다.", "",
-           "[안전 문구]",
-           "솔직하게 답해도 누가 무엇을 골랐는지 아무에게도 보이지 않는다고 화면에 밝힌다.",
-           "", "[말투]",
-           "초등 5·6학년이 읽는 문장으로 써라. 한 문장 40자 이내, 존댓말 청유형으로 쓴다.",
-           "```", "", "---", "", "## 고쳐 쓰는 법", "",
-           "- 문항을 바꾸려면 위 `[문항]` 부분을 고쳐 다시 돌린다.",
-           "- 만들어진 파일은 Google Sites 에서 `삽입 → 소스 코드 삽입` 으로 붙여 넣는다.",
-           "", "---", "", data["program"]["copyrightLine"]]
-    write(os.path.join(base, "PROMPT.md"), "\n".join(pr) + "\n")
+    prompt = ["# 공통 웹앱 제작 프롬프트 : AI적정활용 자기인식 설문", "",
+              "아래 글을 그대로 붙여 넣으면 같은 앱을 다시 만들 수 있다.", "",
+              "```",
+              "초등 5·6학년 학급에서 쓸 사전·사후 설문 웹앱을 단일 HTML 파일로 만들어 줘.",
+              "외부 CDN을 참조하지 말고 CSS와 JS를 전부 인라인해. Google Sites 소스 코드 삽입에 쓸 거야.",
+              "",
+              "화면 구성",
+              "- 사전(1차시 전)인지 사후(12차시 뒤)인지 먼저 고르게 한다.",
+              "- 5점 척도 8문항. 문항은 아래 목록을 그대로 쓴다.",
+              "- 자유응답 칸을 둔다.",
+              "- 답할 때마다 내 평균 점수를 요약해 보여 준다. 1번 문항은 역채점한다.",
+              "- 같은 기기에 사전 응답이 남아 있으면 사후 점수와 견주어 보여 준다.",
+              "",
+              "저장",
+              "- 방 코드 6자리, 비밀번호 4자리, 닉네임으로 입장한다. 실명은 받지 않는다.",
+              "- Firebase 실시간 DB에 먼저 쓰고 같은 기록을 Google Sheets에 백업한다.",
+              "- 교사 화면에는 문항별 사전 평균, 사후 평균, 변화량만 보여 준다. 개인 응답은 보여 주지 않는다.",
+              "",
+              "문항"]
+    for it in s["items"]:
+        prompt.append("%d. %s" % (it["no"], it["text"]))
+    prompt += ["```", "", "---", "", data["program"]["copyrightLine"]]
+    write(os.path.join(base, "PROMPT.md"), "\n".join(prompt) + "\n")
 
     print("만들었다 : %s  (사전·사후 설문)" % base)
     return base

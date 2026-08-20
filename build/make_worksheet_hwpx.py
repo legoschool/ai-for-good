@@ -12,6 +12,7 @@ import sys
 import xml.etree.ElementTree as ET
 
 import hwpx
+import make_view as V
 import tasks as T
 
 T.setup_console()
@@ -45,6 +46,10 @@ def clone(template, value):
 def worksheet_lines(lesson, data):
     prog = data["program"]
     ws = lesson["worksheet"]
+    w = lesson["webapp"]
+    dev = lesson["plan"]["develop"]["blocks"]
+    hints = V.ws_hints(lesson, len(ws["sections"]))
+    samples = V.ws_examples(lesson, len(ws["sections"]))
     L = []
 
     L.append(("title", "%s  학생 활동지" % ws["title"]))
@@ -56,21 +61,50 @@ def worksheet_lines(lesson, data):
     L.append(("body", RULE))
     L.append(("blank", ""))
 
+    L.append(("body", "[ 오늘의 약속 ]"))
+    L.append(("body", "  ㆍ이름, 사진, 친구 이야기 같은 개인정보는 넣지 않아요. 웹앱에는 닉네임만 씁니다."))
+    L.append(("body", "  ㆍ내 생각을 먼저 쓰고 나서 AI에게 물어봐요."))
+    L.append(("blank", ""))
+
+    L.append(("body", "[ 오늘 할 일 ]"))
+    for i, blk in enumerate(dev, 1):
+        head = blk["heading"]
+        if head.startswith("[활동"):
+            head = head.split("]", 1)[-1].strip()
+        L.append(("body", "  (   ) %d. %s" % (i, head)))
+    L.append(("blank", ""))
+
     for i, sec in enumerate(ws["sections"], 1):
-        L.append(("body", "%d. %s" % (i, sec)))
-        for _ in range(4):
+        title = sec["title"] if isinstance(sec, dict) else str(sec)
+        L.append(("body", "%d. %s" % (i, title)))
+        hint = hints[i - 1]
+        if hint:
+            L.append(("body", "   ㆍ%s" % hint))
+        sample = samples[i - 1]
+        if sample:
+            L.append(("body", "   예시) %s" % sample))
+        for _ in range(5):
             L.append(("body", RULE))
         L.append(("blank", ""))
+
+    L.append(("body", "[ 오늘 쓰는 웹앱 ]  %s" % w["name"]))
+    L.append(("body", "  ㆍ하는 일 : %s" % w["purpose"]))
+    L.append(("body", "  ㆍ방 코드 :                    닉네임 :"))
+    L.append(("body", "  ㆍ주소 : legoschool.github.io/wise-ai/webapp/%s/" % lesson["id"]))
+    L.append(("body", "  ㆍ방 코드가 없으면 둘러보기로 들어가도 됩니다."))
+    L.append(("blank", ""))
 
     L.append(("body", "[ 스스로 점검하기 ]"))
     L.append(("body", "( ) 내 생각을 먼저 쓰고 나서 AI에게 물었다."))
     L.append(("body", "( ) AI의 답을 그대로 쓰지 않고 확인했다."))
     L.append(("body", "( ) 이름, 사진, 친구 이야기 같은 개인정보를 넣지 않았다."))
+    L.append(("body", "( ) AI가 한 일과 내가 한 일을 밝힐 수 있다."))
     L.append(("body", "( ) 오늘 배운 것을 내 말로 설명할 수 있다."))
     L.append(("blank", ""))
 
-    L.append(("body", "[ 오늘 쓰는 웹앱 ]  %s" % lesson["webapp"]["name"]))
-    L.append(("body", "방 코드 :                    닉네임 :"))
+    L.append(("body", "[ 오늘 새로 알게 된 것 ]"))
+    for _ in range(3):
+        L.append(("body", RULE))
     L.append(("blank", ""))
 
     L.append(("body", "[ 기기가 없어도 함께해요 ]"))

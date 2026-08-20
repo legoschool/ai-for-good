@@ -1,69 +1,151 @@
+<meta charset="utf-8">
 <div id="wise-app">
 <style>
+/* 티처스랩 결. 사이트·슬라이드·인쇄물과 같은 규격이다.
+   크림 바탕, 검정 테두리, 번지지 않는 그림자, 굵은 제목. */
 #wise-app *,#wise-app *::before,#wise-app *::after{box-sizing:border-box}
-#wise-app{--ink:#101010;--muted:#6F6A61;--line:#111111;--paper:#FFFFFF;--bg:#F4EEE0;
---green:#00D45A;--green-d:#00B84D;--blue:#2B59E0;--purple:#7B4FE8;--sun:#FFE24B;
+#wise-app{--ink:#101010;--ink2:#33312D;--muted:#6F6A61;--line:#111111;--paper:#FFFFFF;
+--bg:#F4EEE0;--bg-d:#EBE3D2;--green:#00D45A;--sun:#FFE24B;
 --accent:#059669;--accent-soft:#ecfdf5;
-font-family:"Pretendard","Malgun Gothic","맑은 고딕",system-ui,sans-serif;
-color:var(--ink);background:var(--bg);line-height:1.65;font-size:17px;
-padding:16px;max-width:1000px;margin:0 auto}
-#wise-app h1,#wise-app h2,#wise-app h3{margin:0;font-weight:800;line-height:1.3;
-letter-spacing:-.02em;color:var(--ink)}
-#wise-app .hd{position:relative;background:var(--accent);color:#fff;
-border:2.5px solid var(--line);padding:20px 22px;margin-bottom:16px;overflow:hidden}
-#wise-app .hd::before{content:"";position:absolute;inset:0;opacity:.4;mix-blend-mode:overlay;
-background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='hn'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23hn)'/%3E%3C/svg%3E")}
-#wise-app .hd>*{position:relative;z-index:2}
-#wise-app .hd h1{font-size:24px;font-weight:900;color:#fff}
-#wise-app .hd p{margin:6px 0 0;font-size:14.5px;opacity:.94;font-weight:600}
-#wise-app .card{background:var(--paper);border:2.5px solid var(--line);padding:18px;margin-bottom:14px}
-#wise-app .card h2{font-size:19px;font-weight:900;margin-bottom:10px}
-#wise-app .card h3{font-size:16px;font-weight:800}
+--shadow:5px 5px 0 var(--line);
+font-family:"Pretendard","Malgun Gothic","맑은 고딕","Apple SD Gothic Neo",system-ui,sans-serif;
+color:var(--ink2);background:var(--bg);line-height:1.75;font-size:21px;
+padding:18px;max-width:1040px;margin:0 auto;-webkit-text-size-adjust:100%}
+#wise-app h1,#wise-app h2,#wise-app h3{margin:0;color:var(--ink);font-weight:900;line-height:1.28;
+letter-spacing:-.028em}
+#wise-app .hd{background:var(--accent);color:#fff;border:3px solid var(--line);border-radius:18px;
+padding:20px 22px;margin-bottom:16px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+#wise-app .hd::after{content:"";position:absolute;right:-40px;top:-60px;width:200px;height:200px;
+border-radius:50%;background:rgba(255,255,255,.12)}
+#wise-app .hd h1{font-size:28px;color:#fff}
+#wise-app .hd p{margin:6px 0 0;font-size:19px;opacity:.95;font-weight:700}
+#wise-app .card{background:var(--paper);border:3px solid var(--line);border-radius:16px;padding:20px;
+margin-bottom:16px;box-shadow:var(--shadow)}
+#wise-app .card h2{font-size:27px;margin-bottom:10px}
+#wise-app .card h3{font-size:22px}
 #wise-app .row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
-#wise-app label{display:block;font-size:14px;color:var(--muted);margin:10px 0 4px;font-weight:700}
+#wise-app label{display:block;font-size:19px;color:var(--muted);margin:12px 0 4px;font-weight:800}
 #wise-app input,#wise-app textarea,#wise-app select{
-width:100%;font:inherit;font-size:18px;padding:12px 14px;border:2px solid var(--line);
-background:#fff;color:var(--ink)}
+width:100%;font:inherit;font-size:20px;padding:14px 15px;border:2.5px solid var(--line);
+border-radius:12px;background:#fff;color:var(--ink)}
 #wise-app input:focus,#wise-app textarea:focus,#wise-app select:focus{
-outline:3px solid var(--green);outline-offset:1px}
-#wise-app textarea{min-height:96px;resize:vertical}
-#wise-app button{font:inherit;font-size:16px;font-weight:800;min-height:48px;padding:12px 18px;
-border:2.5px solid var(--line);background:var(--green);color:var(--ink);cursor:pointer}
-#wise-app button:hover{background:var(--green-d)}
-#wise-app button.ghost{background:#fff;color:var(--ink)}
-#wise-app button.ghost:hover{background:var(--sun)}
-#wise-app button.plain{background:#fff;color:var(--muted)}
-#wise-app button:disabled{opacity:.4;cursor:not-allowed}
-#wise-app button:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
-#wise-app .code{font-size:36px;font-weight:900;letter-spacing:.14em;color:var(--ink);
-background:var(--green);border:2.5px solid var(--line);padding:2px 14px}
-#wise-app .muted{color:var(--muted);font-size:14.5px}
-#wise-app .pill{display:inline-block;padding:4px 12px;border:2px solid var(--line);
-border-radius:999px;background:var(--sun);color:var(--ink);font-size:13px;font-weight:800}
-#wise-app .hide{display:none}
-#wise-app .bucket{border:2.5px dashed var(--line);padding:14px;min-height:120px;background:#fff}
-#wise-app .bucket h3{font-size:15px;margin-bottom:8px}
+outline:3px solid var(--sun);outline-offset:2px}
+#wise-app textarea{min-height:104px;resize:vertical}
+#wise-app button{font:inherit;font-size:21px;font-weight:900;min-height:58px;padding:13px 20px;
+border-radius:12px;border:2.5px solid var(--line);background:var(--green);color:var(--ink);
+cursor:pointer;box-shadow:3px 3px 0 var(--line)}
+#wise-app button:hover{background:var(--sun)}
+#wise-app button:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--line)}
+#wise-app button.ghost{background:#fff}
+#wise-app button.plain{background:#fff;color:var(--muted);box-shadow:none}
+#wise-app button:disabled{opacity:.45;cursor:not-allowed;box-shadow:none}
+#wise-app .code{font-size:38px;font-weight:900;letter-spacing:.16em;color:var(--accent)}
+#wise-app .muted{color:var(--muted);font-size:19px}
+#wise-app .pill{display:inline-block;padding:5px 13px;border-radius:999px;background:var(--sun);
+border:2.5px solid var(--line);color:var(--ink);font-size:15px;font-weight:900}
+#wise-app .tag{display:inline-block;padding:3px 10px;border-radius:999px;background:#fff;
+border:2px solid var(--line);color:var(--ink2);font-size:14px;font-weight:800;margin-right:4px}
+#wise-app .hide{display:none !important}
+#wise-app .bucket{border:3px dashed var(--line);border-radius:14px;padding:12px;min-height:120px;
+background:#fff}
+#wise-app .bucket h3{font-size:18px;margin-bottom:8px}
 #wise-app .grid{display:grid;gap:12px}
-#wise-app .chip{display:block;width:100%;text-align:left;padding:12px 14px;margin-bottom:8px;
-border:2px solid var(--line);background:#fff;color:var(--ink);font-weight:700;min-height:48px;
-cursor:pointer;font-size:15.5px}
-#wise-app .chip:hover{background:var(--sun)}
-#wise-app .chip.on{background:var(--green);font-weight:800}
-#wise-app .bar{height:16px;border:2px solid var(--line);background:#fff;overflow:hidden}
+#wise-app .g2{display:grid;gap:14px;grid-template-columns:1fr 1fr}
+#wise-app .chip{display:block;width:100%;text-align:left;padding:15px 17px;margin-bottom:10px;font-size:21px;
+border:2.5px solid var(--line);border-radius:12px;background:#fff;color:var(--ink);font-weight:700;
+min-height:52px;box-shadow:3px 3px 0 var(--line)}
+#wise-app .chip:hover{background:var(--bg-d)}
+#wise-app .chip.on{background:var(--accent);color:#fff}
+#wise-app .bar{height:16px;border-radius:8px;background:#fff;border:2.5px solid var(--line);
+overflow:hidden}
 #wise-app .bar>i{display:block;height:100%;background:var(--green)}
-#wise-app table{width:100%;border-collapse:collapse;font-size:14.5px}
-#wise-app th,#wise-app td{border:2px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
-#wise-app th{background:var(--bg);font-weight:800}
+#wise-app .steps{display:flex;gap:6px;margin:12px 0 0}
+#wise-app .steps>span{flex:1;height:10px;border-radius:6px;background:#fff;border:2px solid var(--line)}
+#wise-app .steps>span.on{background:var(--green)}
+#wise-app table{width:100%;border-collapse:collapse;font-size:17px}
+#wise-app th,#wise-app td{border:2px solid var(--line);padding:9px 11px;text-align:left;
+vertical-align:top}
+#wise-app th{background:var(--bg-d);font-weight:900;color:var(--ink)}
 #wise-app .scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
-#wise-app .safe{margin-top:14px;padding:13px 16px;background:var(--sun);
-border:2.5px solid var(--line);color:var(--ink);font-size:14.5px;font-weight:700}
-#wise-app .ok{color:#0B7A3B;font-weight:800}
-#wise-app .warn{color:#B0450A;font-weight:800}
-#wise-app .foot{text-align:center;color:var(--muted);font-size:12.5px;padding:16px 0;font-weight:600}
-@media (max-width:640px){#wise-app{padding:10px;font-size:16px}#wise-app .hd h1{font-size:20px}
-#wise-app .code{font-size:28px}}
+#wise-app .safe{margin-top:14px;padding:14px 16px;border-radius:12px;background:#FFF3D6;
+border:2.5px solid var(--line);color:var(--ink2);font-size:16px;font-weight:700}
+#wise-app .note{padding:13px 15px;border-radius:12px;background:var(--sun);
+border:2.5px solid var(--line);color:var(--ink);font-size:17px;font-weight:800;margin-top:12px}
+#wise-app .ok{color:#0B7A3B;font-weight:900}
+#wise-app .warn{color:#B03A00;font-weight:900}
+#wise-app .big{font-size:34px;font-weight:900;line-height:1.2;color:var(--ink)}
+#wise-app .foot{text-align:center;color:var(--muted);font-size:14px;padding:16px 0;font-weight:700}
+#wise-app .wi{vertical-align:middle;margin-right:8px;flex:none}
+#wise-app .ws-scene{display:block;width:100%;height:164px;border:2.5px solid var(--line);
+border-radius:14px;background:#fff;margin:10px 0 6px}
+#wise-app .iconrow{display:flex;align-items:center;gap:8px}
+#wise-app .quest{display:none}
+#wise-app .quest.on{display:block;animation:wfade .34s cubic-bezier(.22,.61,.36,1)}
+@keyframes wfade{from{opacity:0;transform:translateY(14px) scale(.99)}to{opacity:1;transform:none}}
+#wise-app .spin{display:inline-block;width:20px;height:20px;border-radius:50%;
+border:3px solid var(--bg-d);border-top-color:var(--ink);animation:wspin .7s linear infinite;
+vertical-align:middle;margin-right:8px}
+#wise-app .spin.big{width:34px;height:34px;border-width:4px}
+@keyframes wspin{to{transform:rotate(360deg)}}
+#wise-app .loading{display:flex;align-items:center;gap:10px;font-weight:800;color:var(--ink);
+padding:14px 0}
+#wise-app .skel{height:16px;border-radius:8px;background:var(--bg-d);margin:8px 0;
+animation:wpulse 1.1s ease-in-out infinite}
+#wise-app .skel.w60{width:60%}
+#wise-app .skel.w80{width:80%}
+@keyframes wpulse{0%,100%{opacity:1}50%{opacity:.45}}
+#wise-app button.busy{position:relative;color:var(--muted)}
+#wise-app .busy-wrap{position:fixed;inset:0;background:rgba(244,238,224,.72);display:flex;
+align-items:center;justify-content:center;z-index:65}
+#wise-app .busy-wrap .box{background:#fff;border:3px solid var(--line);border-radius:18px;
+padding:20px 26px;box-shadow:6px 6px 0 var(--line);display:flex;align-items:center;gap:12px;
+font-weight:900;color:var(--ink)}
+#wise-app .fade-in{animation:wfade .28s ease-out}
+#wise-app .hud{display:flex;gap:12px;align-items:center;flex-wrap:wrap;background:#fff;
+border:2.5px solid var(--line);border-radius:14px;padding:11px 15px;margin-bottom:14px;
+font-weight:800;font-size:17px;color:var(--ink);box-shadow:3px 3px 0 var(--line)}
+#wise-app .hud .grow{flex:1;min-width:120px}
+#wise-app .tile{font-size:22px;border:3px solid var(--line);border-radius:16px;padding:16px;background:#fff;
+text-align:left;font-weight:800;font-size:20px;min-height:118px;display:flex;flex-direction:column;gap:6px;
+box-shadow:var(--shadow);color:var(--ink)}
+#wise-app .tile small{font-weight:700;color:var(--muted);font-size:16px}
+#wise-app .tile.done{background:var(--sun)}
+#wise-app .cele{position:fixed;inset:0;background:rgba(17,17,17,.6);display:flex;align-items:center;
+justify-content:center;padding:20px;z-index:60}
+#wise-app .cele .box{background:#fff;border:3px solid var(--line);border-radius:22px;padding:26px;
+max-width:460px;width:100%;text-align:center;box-shadow:8px 8px 0 var(--line)}
+#wise-app .cele h2{font-size:28px;margin-bottom:10px}
+#wise-app .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--ink);
+color:#fff;padding:13px 22px;border-radius:999px;font-weight:800;font-size:17px;z-index:70;
+border:2.5px solid var(--line)}
+#wise-app canvas{max-width:100%;height:auto;border-radius:12px}
+#wise-app .intro{margin:-4px 0 16px}
+#wise-app .intro svg{display:block;width:100%;height:168px;border:2.5px solid var(--line);
+border-radius:14px;background:#fff}
+#wise-app .intro p{margin:10px 0 0;font-size:18px;color:var(--muted);font-weight:700}
+#wise-app .intro b{color:var(--ink)}
+#wise-app .wtop{position:sticky;top:0;z-index:40;display:flex;gap:8px;align-items:center;
+flex-wrap:nowrap;overflow-x:auto;background:var(--bg);padding:10px 0;margin:-18px 0 12px}
+#wise-app .wtop a,#wise-app .wtop button{font-size:15px;font-weight:800;color:var(--ink);
+background:#fff;border:2.5px solid var(--line);border-radius:999px;padding:9px 16px;min-height:44px;
+white-space:nowrap;text-decoration:none;cursor:pointer;box-shadow:none}
+#wise-app .wtop a:hover,#wise-app .wtop button:hover{background:var(--sun)}
+#wise-app #present .card{border-radius:20px}
+#wise-app #present table{font-size:23px}
+#wise-app #present .big{font-size:46px}
+@media (max-width:640px){#wise-app{padding:10px;font-size:19px}#wise-app .hd h1{font-size:32px}
+#wise-app .g2{grid-template-columns:1fr}#wise-app .intro svg{height:126px}
+#wise-app .ws-scene{height:120px}}
 @media (prefers-reduced-motion:reduce){#wise-app *{transition:none!important;animation:none!important}}
 </style>
+
+<nav id="w-top" class="wtop">
+  <a href="../../index.html" target="_blank" rel="noopener">홈으로 돌아가기</a>
+  <a href="../../browse.html" target="_blank" rel="noopener">둘러보기</a>
+  <a href="../../lesson/L10.html" target="_blank" rel="noopener">차시 페이지</a>
+  <a href="../../webapp/common/index.html" target="_blank" rel="noopener">사전·사후 설문</a>
+  <button type="button" id="w-restart">처음부터</button>
+</nav>
 
 <div class="hd">
   <h1>사용 습관 자가 점검</h1>
@@ -72,34 +154,44 @@ border:2.5px solid var(--line);color:var(--ink);font-size:14.5px;font-weight:700
 
 <!-- 입장 -->
 <section id="gate" class="card">
+  <div id="w-intro" class="hide"></div>
   <h2>들어가기</h2>
+  <p class="muted">선생님이 알려 준 방 번호와 내 닉네임만 쓰면 돼요.</p>
   <div class="grid" style="grid-template-columns:1fr 1fr">
     <div>
-      <label for="w-room">방 코드 6자리</label>
+      <label for="w-room">방 번호 6자리</label>
       <input id="w-room" inputmode="numeric" maxlength="6" placeholder="예: 482913">
     </div>
-    <div>
-      <label for="w-pw">비밀번호 4자리</label>
-      <input id="w-pw" inputmode="numeric" maxlength="4" placeholder="예: 1234">
-    </div>
-  </div>
-  <div class="grid" style="grid-template-columns:1fr 1fr">
     <div>
       <label for="w-nick">닉네임</label>
       <input id="w-nick" maxlength="12" placeholder="이름 말고 별명을 써요">
     </div>
+  </div>
+  <div class="grid" style="grid-template-columns:1fr 1fr">
     <div>
-      <label for="w-group">모둠</label>
+      <label for="w-code">나만 아는 숫자 4자리</label>
+      <input id="w-code" inputmode="numeric" maxlength="4" placeholder="예: 0412">
+    </div>
+    <div>
+      <label for="w-group">모둠 (없으면 비워 둬요)</label>
       <input id="w-group" maxlength="10" placeholder="예: 3모둠">
     </div>
   </div>
+  <p class="muted" style="margin-top:6px">이 숫자는 비밀번호가 아니에요.
+    사전 설문과 사후 설문을 이어 보는 데만 써요. 열두 시간 뒤에도 같은 숫자를 써 주세요.
+    잊어버려도 활동은 그대로 할 수 있어요.</p>
   <div class="row" style="margin-top:14px">
     <button id="w-enter">입장하기</button>
-    <button id="w-solo" class="ghost">혼자 체험해 보기</button>
+    <button id="w-solo" class="ghost">둘러보기</button>
     <button id="w-teacher" class="plain">선생님 화면</button>
   </div>
   <p id="w-gate-msg" class="muted" style="margin-top:10px"></p>
-  <div class="safe">이름, 사진, 친구 이야기 같은 개인정보는 넣지 않아요.</div>
+  <div class="note" id="w-prepost">처음 시작하기 전에는 <b>사전 설문</b>, 열두 시간을 마친 뒤에는
+    <b>사후 설문</b>을 합니다.
+    <a href="../common/index.html" target="_blank" rel="noopener">자기인식 설문 열기</a></div>
+  <div class="safe"><b>개인정보를 모으지 않아요.</b> 이름, 사진, 친구 이야기 같은 개인정보는 넣지 않아요.
+    학교, 학년, 반, 전화번호도 묻지 않습니다. 닉네임과 답만 저장합니다.
+    모인 자료는 수업 프로그램을 더 좋게 만드는 데만 쓰고, 학년도가 끝나면 지웁니다.</div>
 </section>
 
 <!-- 학생 활동 -->
@@ -109,7 +201,10 @@ border:2.5px solid var(--line);color:var(--ink);font-size:14.5px;font-weight:700
       <span class="pill" id="w-who"></span>
       <span class="muted" id="w-sync">저장 준비됨</span>
     </div>
+    <div class="steps hide" id="w-steps"></div>
+    <div class="note hide" id="w-note"></div>
   </div>
+  <div id="w-hud" class="hide"></div>
   <div id="activity"></div>
   <div class="card">
     <button id="w-submit">제출하기</button>
@@ -122,7 +217,10 @@ border:2.5px solid var(--line);color:var(--ink);font-size:14.5px;font-weight:700
 <section id="teacher" class="hide">
   <div class="card">
     <h2>선생님 화면</h2>
-    <div class="row">
+    <p class="muted">방을 만들면 여섯 자리 번호가 나옵니다. 학생에게 번호만 알려 주세요.</p>
+    <label for="w-pw">선생님 비밀번호 4자리 (이 화면을 다시 열 때 씁니다)</label>
+    <input id="w-pw" inputmode="numeric" maxlength="4" placeholder="예: 1234">
+    <div class="row" style="margin-top:12px">
       <button id="t-make">새 방 만들기</button>
       <button id="t-open" class="ghost">기존 방 열기</button>
       <button id="t-back" class="plain">돌아가기</button>
@@ -135,6 +233,7 @@ border:2.5px solid var(--line);color:var(--ink);font-size:14.5px;font-weight:700
       </div>
       <p class="muted" id="t-pw"></p>
       <div class="row" style="margin-top:12px">
+        <button id="t-present">결과 크게 띄우기</button>
         <button id="t-refresh" class="ghost">새로고침</button>
         <button id="t-csv" class="ghost">CSV 내려받기</button>
         <button id="t-lock" class="plain">방 잠그기</button>
@@ -143,10 +242,29 @@ border:2.5px solid var(--line);color:var(--ink);font-size:14.5px;font-weight:700
   </div>
   <div id="t-board" class="card hide">
     <h2>제출 현황 <span class="pill" id="t-count">0명</span></h2>
+    <p class="muted" id="t-note"></p>
     <div id="t-summary"></div>
-    <div class="scroll" style="margin-top:12px"><table id="t-table"></table></div>
+    <div class="row" style="margin-top:12px">
+      <button id="t-detail" class="plain">낱낱이 보기 켜기</button>
+    </div>
+    <div class="scroll hide" id="t-wrap" style="margin-top:12px"><table id="t-table"></table></div>
   </div>
 </section>
+
+<!-- 발표 -->
+<section id="present" class="hide">
+  <div class="card">
+    <div class="row" style="justify-content:space-between">
+      <h2 id="p-title">우리 반 결과</h2>
+      <button id="p-close" class="plain">닫기</button>
+    </div>
+    <div id="p-body" style="margin-top:12px"></div>
+  </div>
+</section>
+
+<div id="w-cele" class="hide"></div>
+<div id="w-busy" class="hide"></div>
+<div id="w-toast" class="hide"></div>
 
 <p class="foot">2026년 티처스랩 5기 교사연구회 A.N.D · CC BY-NC-SA</p>
 </div>
@@ -157,13 +275,17 @@ border:2.5px solid var(--line);color:var(--ink);font-size:14.5px;font-weight:700
 
   var APP = "habit-check";
   var DB = "https://remind-c2610-default-rtdb.firebaseio.com";
-  var SHEET_ENDPOINT = "PASTE_YOUR_APPS_SCRIPT_DEPLOY_URL";
+  var SHEET_ENDPOINT = "https://script.google.com/macros/s/AKfycbzawwJFwOtjGU8VNx2KLAbfYSMaMAENueB6uWEVcmod3EEA3CuzXO7_oXHQHHW20x4/exec";
   var QUEUE_KEY = "wise_backup_queue";
   var LOCAL_KEY = "wise_" + APP + "_local";
+  var ACCENT = "#059669";
+  var COPYRIGHT_LINE = "2026년 티처스랩 5기 교사연구회 A.N.D · CC BY-NC-SA";
 
   var $ = function (id) { return document.getElementById(id); };
-  var me = { room: "", pw: "", nick: "", group: "", solo: false };
+  var me = { room: "", pw: "", nick: "", group: "", code: "", solo: false };
+  var CODE_KEY = "wise_student_code";
   var timer = null;
+  var draftTimer = null;
 
   /* ---------- 저장 ---------- */
 
@@ -201,6 +323,18 @@ border:2.5px solid var(--line);color:var(--ink);font-size:14.5px;font-weight:700
     } catch (e) {}
   }
 
+  /* 방을 만들었다는 것만 시트에 알린다. 학생 응답은 보내지 않는다. */
+  function sheetRoom(room) {
+    try {
+      if (SHEET_ENDPOINT.indexOf("http") !== 0) { return; }
+      fetch(SHEET_ENDPOINT, {
+        method: "POST", mode: "no-cors",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify({ rooms: [{ app: APP, room: room, at: Date.now() }] })
+      })["catch"](function () {});
+    } catch (e) {}
+  }
+
   /* ---------- 도구 ---------- */
 
   function onlyDigits(s, n) {
@@ -223,99 +357,1322 @@ border:2.5px solid var(--line);color:var(--ink);font-size:14.5px;font-weight:700
       .replace(/>/g, "&gt;").replace(/"/g, "&quot;");
   }
 
+  function pct(a, b) { return b ? Math.round(a * 100 / b) : 0; }
+
+  function barHtml(a, b) {
+    return '<div class="bar"><i style="width:' + pct(a, b) + '%"></i></div>';
+  }
+
   function show(id) {
-    var ids = ["gate", "stage", "teacher"];
+    var ids = ["gate", "stage", "teacher", "present"];
     for (var i = 0; i < ids.length; i++) {
       $(ids[i]).className = ids[i] === id ? "" : "hide";
     }
   }
 
-  /* ---------- 활동 (차시별) ---------- */
+  /* 활동 화면이 부르는 골격 기능 */
 
+  function wiseDraft(obj) {
+    try { localStorage.setItem(LOCAL_KEY, JSON.stringify(obj)); } catch (e) {}
+    $("w-sync").textContent = "이 기기에 임시 저장됨";
+  }
 
-  var ITEMS = ["숙제할 때 AI를 썼다", "모르는 것을 스스로 생각하기 전에 AI에게 먼저 물었다", "AI의 답을 확인하지 않고 그대로 썼다", "친구나 선생님 대신 AI에게 이야기했다", "자기 전에 화면을 오래 보았다"];
-  var PROMISES = 3;
+  function wiseStep(i, n) {
+    var h = "";
+    for (var k = 0; k < n; k++) { h += '<span class="' + (k <= i ? "on" : "") + '"></span>'; }
+    $("w-steps").innerHTML = h;
+    $("w-steps").className = "steps";
+  }
 
-  function activityHtml() {
-    var h = '<div class="card"><h2>일주일 동안 나는 어땠나요</h2>' +
-      '<p class="muted">솔직하게 골라 주세요. 누가 무엇을 골랐는지는 아무에게도 보이지 않아요.</p></div>';
-    for (var i = 0; i < ITEMS.length; i++) {
-      h += '<div class="card"><h3>' + esc(ITEMS[i]) + '</h3><div class="row">';
-      var opts = ["거의 없음", "가끔", "자주", "아주 자주"];
-      for (var o = 0; o < opts.length; o++) {
-        h += '<button type="button" class="chip pick" data-i="' + i + '" data-v="' + o +
-          '" style="width:auto;margin:0">' + opts[o] + '</button>';
-      }
-      h += '</div></div>';
+  /* 여정 화면 전환. 활동이 만든 .quest 조각을 갈아 끼운다. */
+  /* 여정형 앱에서 다음 화면으로 가는 버튼을 화면마다 자동으로 붙인다.
+     허브로 돌아갔다가 다시 고르게 하면 학생이 거기서 멈춘다.
+     차시 코드가 이미 '...로 가기' 버튼을 만들어 두었으면 건드리지 않는다. */
+  function addNextButtons() {
+    var qs = document.querySelectorAll("#activity .quest");
+    if (qs.length < 3) { return; }
+    var ids = [], titles = [], i;
+    for (i = 0; i < qs.length; i++) {
+      ids.push(qs[i].getAttribute("data-q"));
+      var h = qs[i].querySelector("h2");
+      titles.push(h ? h.textContent.trim() : "다음");
     }
-    h += '<div class="card"><h2>AI가 못 하는 일</h2>' +
-      '<textarea id="cant" maxlength="300" placeholder="예: 친구와 화해하기"></textarea></div>';
-    h += '<div class="card"><h2>내 디지털 웰빙 약속</h2>';
-    for (var p = 0; p < PROMISES; p++) {
-      h += '<label for="p' + p + '">약속 ' + (p + 1) + '</label>' +
-        '<input id="p' + p + '" maxlength="80" placeholder="구체적으로 써요">';
+    for (i = 0; i < qs.length; i++) {
+      var id = ids[i];
+      if (id === "story" || id === "hub") { continue; }
+      if (i + 1 >= qs.length) { continue; }
+      if (hasForward(qs[i])) { continue; }
+      var row = document.createElement("div");
+      row.className = "row autonext";
+      row.style.marginTop = "10px";
+      var b = document.createElement("button");
+      b.type = "button";
+      b.setAttribute("data-next", ids[i + 1]);
+      b.textContent = "다음 : " + titles[i + 1];
+      b.onclick = function () { wiseGo(this.getAttribute("data-next")); };
+      row.appendChild(b);
+      var card = qs[i].querySelector(".card");
+      (card || qs[i]).appendChild(row);
     }
-    h += '</div>';
-    h += '<div class="safe">힘든 마음은 AI가 아니라 믿을 수 있는 어른에게 먼저 말해요.</div>';
+  }
+
+  /* 이미 앞으로 가는 버튼이 있는가. '교무실로' 같은 되돌아가기와
+     '다음 카드' 같은 같은 화면 안 이동은 세지 않는다. */
+  function hasForward(sec) {
+    var bs = sec.querySelectorAll("button");
+    for (var i = 0; i < bs.length; i++) {
+      var b = bs[i];
+      if (b.parentNode && /autonext/.test(b.parentNode.className || "")) { continue; }
+      var t = b.textContent || "";
+      var bid = b.id || "";
+      if (/(다음 카드|다음 문항|앞 카드|앞 문항|돌아가기|돌아가)/.test(t)) { continue; }
+      if (/-go$|^go-/.test(bid)) { return true; }
+      if (/(로 가기|으로 가기|보러 가기|하러 가기|넘어가|이어서 하기)/.test(t)) { return true; }
+    }
+    return false;
+  }
+
+  /* 차시 코드가 뒤늦게 만들어 내는 '…로 가기' 버튼과 겹치지 않게,
+     화면에 들어올 때마다 자동 버튼을 보일지 말지 다시 정한다. */
+  function syncNextButton(sec) {
+    if (!sec) { return; }
+    var row = sec.querySelector(".autonext");
+    if (!row) { return; }
+    row.style.display = hasForward(sec) ? "none" : "";
+  }
+
+  function wiseGo(id) {
+    var qs = document.querySelectorAll("#activity .quest");
+    for (var i = 0; i < qs.length; i++) {
+      qs[i].className = "quest" + (qs[i].getAttribute("data-q") === id ? " on" : "");
+    }
+    if (window.scrollTo) { window.scrollTo(0, 0); }
+    if (typeof activityEnter === "function") {
+      try { activityEnter(id); } catch (e) {}
+    }
+    for (var k = 0; k < qs.length; k++) {
+      if (qs[k].getAttribute("data-q") === id) { syncNextButton(qs[k]); }
+    }
+  }
+
+  /* 상단 진행 표시. 여러 칸을 한 줄로 보여 준다. */
+  function wiseHud(items) {
+    var h = "";
+    for (var i = 0; i < items.length; i++) {
+      var it = items[i];
+      h += '<span>' + esc(it.label) + ' ' + it.done + ' / ' + it.total + '</span>';
+    }
+    var first = items[0] || { done: 0, total: 1 };
+    h += '<span class="grow">' + barHtml(first.done, first.total) + '</span>';
+    $("w-hud").innerHTML = h;
+    $("w-hud").className = "hud";
+  }
+
+  /* 기다리는 동안 무엇을 하는 중인지 보여 준다. 화면이 멈춘 것처럼 보이지 않게 한다. */
+  function wiseSpinner(text, big) {
+    return '<div class="loading"><span class="spin' + (big ? " big" : "") + '"></span>' +
+      '<span>' + esc(text || "불러오는 중이에요") + '</span></div>';
+  }
+
+  function wiseSkeleton(lines) {
+    var n = lines || 3, h = "";
+    for (var i = 0; i < n; i++) {
+      h += '<div class="skel ' + (i % 3 === 1 ? "w80" : (i % 3 === 2 ? "w60" : "")) + '"></div>';
+    }
     return h;
   }
 
-  var pick = {};
-
-  function activityInit(saved) {
-    if (saved && saved.pick) { pick = saved.pick; }
-    var btns = document.querySelectorAll("#activity .pick");
-    for (var i = 0; i < btns.length; i++) {
-      btns[i].onclick = function () {
-        pick[this.getAttribute("data-i")] = this.getAttribute("data-v");
-        paint();
-      };
-    }
-    if (saved) {
-      if (saved.cant && $("cant")) { $("cant").value = saved.cant; }
-      for (var p = 0; p < PROMISES; p++) {
-        if (saved.promises && saved.promises[p] && $("p" + p)) { $("p" + p).value = saved.promises[p]; }
-      }
-    }
-    paint();
+  function wiseBusy(on, text) {
+    if (!on) { $("w-busy").className = "hide"; return; }
+    $("w-busy").innerHTML = '<div class="busy-wrap"><div class="box">' +
+      '<span class="spin big"></span><span>' + esc(text || "잠시만요") + '</span></div></div>';
+    $("w-busy").className = "";
   }
 
-  function paint() {
-    var btns = document.querySelectorAll("#activity .pick");
-    for (var i = 0; i < btns.length; i++) {
-      var k = btns[i].getAttribute("data-i");
-      var v = btns[i].getAttribute("data-v");
-      btns[i].className = "chip pick" + (pick[k] === v ? " on" : "");
+  /* 버튼을 누른 뒤 끝날 때까지 눌리지 않게 한다. */
+  function wiseButtonBusy(el, on, text) {
+    if (!el) { return; }
+    if (on) {
+      el.setAttribute("data-orig", el.textContent);
+      el.innerHTML = '<span class="spin"></span>' + esc(text || "하는 중");
+      el.disabled = true;
+    } else {
+      el.textContent = el.getAttribute("data-orig") || el.textContent;
+      el.disabled = false;
     }
+  }
+
+  function wiseToast(text) {
+    $("w-toast").textContent = text;
+    $("w-toast").className = "toast";
+    setTimeout(function () { $("w-toast").className = "toast hide"; }, 2200);
+  }
+
+  function wiseCelebrate(title, lines, buttonText) {
+    var h = '<div class="box"><h2>' + esc(title) + '</h2>';
+    for (var i = 0; i < lines.length; i++) {
+      h += '<p class="muted" style="margin-top:6px">' + lines[i] + '</p>';
+    }
+    h += '<div class="row" style="justify-content:center;margin-top:16px">' +
+      '<button type="button" id="cele-close">' + esc(buttonText || "닫기") + '</button></div></div>';
+    $("w-cele").innerHTML = h;
+    $("w-cele").className = "cele";
+    var celeClose = function () { $("w-cele").className = "hide"; $("w-cele").innerHTML = ""; };
+    $("cele-close").onclick = celeClose;
+    $("w-cele").onclick = function (ev) { if (ev.target === $("w-cele")) { celeClose(); } };
+  }
+
+  /* 결과 카드를 그림으로 만들어 내려받는다. 교실에서 인쇄해 붙일 수 있다. */
+  function wiseCardPng(title, lines, filename) {
+    try {
+      var c = document.createElement("canvas");
+      c.width = 900; c.height = 560;
+      var g = c.getContext("2d");
+      g.fillStyle = "#ffffff"; g.fillRect(0, 0, 900, 560);
+      g.fillStyle = ACCENT; g.fillRect(0, 0, 900, 120);
+      g.fillStyle = "#ffffff"; g.font = "bold 40px sans-serif";
+      g.fillText(title, 40, 76);
+      g.fillStyle = "#111827"; g.font = "26px sans-serif";
+      for (var i = 0; i < lines.length && i < 10; i++) {
+        g.fillText(String(lines[i]).slice(0, 34), 40, 180 + i * 42);
+      }
+      g.fillStyle = "#6b7280"; g.font = "18px sans-serif";
+      g.fillText(COPYRIGHT_LINE, 40, 530);
+      var a = document.createElement("a");
+      a.href = c.toDataURL("image/png");
+      a.download = (filename || "wise_card") + ".png";
+      document.body.appendChild(a); a.click(); document.body.removeChild(a);
+      wiseToast("카드를 내려받았어요.");
+    } catch (e) { wiseToast("이 기기에서는 카드 저장이 안 돼요."); }
+  }
+
+  /* 교사 화면용 막대 그림. 캔버스로 그린다. */
+  function wiseBars(rows, width) {
+    var w = width || 620, h = 42 * rows.length + 24;
+    var c = document.createElement("canvas");
+    if (!c || typeof c.getContext !== "function") { return barTable(rows); }
+    c.width = w; c.height = h;
+    var g = c.getContext("2d");
+    g.fillStyle = "#ffffff"; g.fillRect(0, 0, w, h);
+    var max = 1;
+    for (var i = 0; i < rows.length; i++) { if (rows[i].value > max) { max = rows[i].value; } }
+    for (var k = 0; k < rows.length; k++) {
+      var y = 16 + k * 42;
+      g.fillStyle = "#374151"; g.font = "bold 16px sans-serif";
+      g.fillText(String(rows[k].label).slice(0, 14), 8, y + 20);
+      var x0 = 160, bw = (w - 200) * rows[k].value / max;
+      g.fillStyle = "#e5e7eb"; g.fillRect(x0, y, w - 200, 24);
+      g.fillStyle = rows[k].color || ACCENT; g.fillRect(x0, y, bw, 24);
+      g.fillStyle = "#111827"; g.font = "bold 15px sans-serif";
+      g.fillText(String(rows[k].value), x0 + bw + 8, y + 18);
+    }
+    return '<img alt="분포 그림" style="width:100%" src="' + c.toDataURL("image/png") + '">';
+  }
+
+  /* 캔버스를 못 쓰는 자리에서는 표로 대신한다. */
+  function barTable(rows) {
+    var h = '<div class="scroll"><table><tr><th>항목</th><th>수</th><th>분포</th></tr>';
+    var max = 1;
+    for (var i = 0; i < rows.length; i++) { if (rows[i].value > max) { max = rows[i].value; } }
+    for (var k = 0; k < rows.length; k++) {
+      h += "<tr><td>" + esc(rows[k].label) + "</td><td>" + rows[k].value + "</td><td>" +
+        barHtml(rows[k].value, max) + "</td></tr>";
+    }
+    return h + "</table></div>";
+  }
+
+  function wiseNote(text) {
+    if (!text) { $("w-note").className = "note hide"; return; }
+    $("w-note").innerHTML = text;
+    $("w-note").className = "note";
+  }
+
+  /* ---------- 활동 (차시별) ---------- */
+
+
+  /* ---------- 자료 ---------- */
+
+  var SAFE_LINE = "힘든 마음은 AI가 아니라 믿을 수 있는 어른에게 먼저 말해요.";
+
+  var DAYS = ["월", "화", "수", "목", "금", "토", "일"];
+  var LEVELS = ["안 썼어요", "조금 썼어요", "많이 썼어요"];
+
+  var SCENES = [
+    { t: "숙제를 대신 시켰어요", icon: "write" },
+    { t: "모르는 것을 설명해 달라고 했어요", icon: "talk" },
+    { t: "쓴 글을 다듬어 달라고 했어요", icon: "write" },
+    { t: "그림을 만들어 달라고 했어요", icon: "star" },
+    { t: "다른 나라 말로 옮겨 달라고 했어요", icon: "again" },
+    { t: "문제의 답을 그대로 받았어요", icon: "check" },
+    { t: "아이디어를 여러 개 받았어요", icon: "both" },
+    { t: "심심해서 이야기 상대를 했어요", icon: "heart" }
+  ];
+
+  /* can : 0 할 수 있어요 · 1 반만 할 수 있어요 · 2 그건 제가 못 해요 */
+  var ASKS = [
+    { t: "이 낱말을 다시 설명해 줘", can: 0, say: "쉬운 말로 다시 풀어 줄게요." },
+    { t: "이 문장을 다른 나라 말로 옮겨 줘", can: 0, say: "어색한 곳은 직접 고쳐 주세요." },
+    { t: "아이디어를 다섯 개만 줘", can: 0, say: "고르는 것은 여러분이 해요." },
+    { t: "이 이야기를 짧게 줄여 줘", can: 0, say: "빠진 것이 없는지는 읽어 봐 주세요." },
+    { t: "비슷한 문제를 하나 더 만들어 줘", can: 0, say: "풀이는 여러분이 해야 늘어요." },
+    { t: "발표 순서를 정리해 줘", can: 0, say: "무엇을 말할지는 여러분이 정해요." },
+    { t: "이게 사실인지 확인해 줘", can: 1,
+      say: "저도 틀릴 때가 있어요. 교과서나 어른에게 한 번 더 확인해 주세요." },
+    { t: "내 글을 더 좋게 고쳐 줘", can: 1,
+      say: "표현은 도울 수 있지만, 하고 싶은 말은 여러분 것이에요." },
+    { t: "친구와 화해하게 해 줘", can: 2,
+      say: "마음을 푸는 일은 사람이 해요." },
+    { t: "나를 안아 줘", can: 2,
+      say: "저는 손이 없어요. 곁에 있는 사람이 해 줄 수 있어요." },
+    { t: "나 대신 약속을 지켜 줘", can: 2,
+      say: "책임은 사람이 지는 것이에요." },
+    { t: "운동장에서 대신 뛰어 줘", can: 2,
+      say: "직접 겪는 일은 여러분만 할 수 있어요." }
+  ];
+
+  var WHO = ["가족", "선생님", "친한 친구", "상담 선생님", "117 학교폭력 신고"];
+
+  /* 보기 약속. 전부 언제 어떻게 할지가 들어 있다. */
+  var VOWS = [
+    "자기 전 30분은 화면을 끈다",
+    "숙제할 때는 내 생각을 세 줄 먼저 쓴다",
+    "AI가 알려 준 사실은 한 번 더 확인한다",
+    "AI가 쓴 문장은 내 말로 바꾸어 쓴다",
+    "고민이 생기면 사람에게 먼저 말한다",
+    "모르는 낱말은 먼저 짐작해 보고 물어본다",
+    "하루에 한 가지는 AI 없이 해 본다",
+    "쓰기 전에 무엇을 부탁할지 정하고 연다"
+  ];
+
+  /* 약속이 구체적인지 볼 때 찾는 말. 시간이나 상황이 들어 있으면 통과다. */
+  var WHENWORDS = ["때", "전에", "뒤에", "후에", "분", "시간", "동안", "하루", "아침",
+    "저녁", "밤", "주말", "숙제", "수업", "자기 전", "먼저"];
+
+  var st = {
+    days: {}, scenes: {}, judge: {}, asked: {}, cant: {}, who: {}, vows: {},
+    vowCache: {}, swap: "", badges: {}, classData: null, thinking: false
+  };
+
+  /* ---------- 화면 ---------- */
+
+  function q(id, inner) {
+    return '<section class="quest" data-q="' + id + '">' + inner +
+      '<div class="safe">' + SAFE_LINE + '</div></section>';
+  }
+
+  /* 8-6절. 화면을 딱딱 갈아 끼우지 않는다. 0.6초를 넘기지 않는다.
+     움직임을 줄이는 기기와 검사기에서는 기다리지 않는다. */
+  function reducedMotion() {
+    try {
+      return !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+    } catch (e) { return false; }
+  }
+
+  function goSlow(id, text, ms) {
+    if (reducedMotion()) { wiseGo(id); return; }
+    wiseBusy(true, text || "여는 중이에요");
+    setTimeout(function () {
+      wiseBusy(false);
+      wiseGo(id);
+    }, ms || 480);
+  }
+
+  function activityHtml() {
+    var h = "";
+
+    h += q("story",
+      '<div class="card"><span class="pill">이야기</span>' +
+      '<h2 style="margin-top:10px">하루 정비소</h2>' +
+      '<div class="iconrow" style="margin-top:12px">' + wiseIcon("ai", 44) +
+      '<p style="margin:0"><b>또또</b>가 문을 열고 기다려요. 하루를 마치고 들르는 작은 정비소예요.</p></div>' +
+      '<p style="margin-top:12px">또또는 여러분의 일주일을 함께 살펴봐요. ' +
+      '많이 썼다고 나무라지 않아요. 숫자만 보여 주고, 정하는 사람은 여러분이에요.</p>' +
+      '<div class="note" style="margin-top:12px">여기서는 이름을 묻지 않아요. ' +
+      '누가 무엇을 골랐는지는 선생님도 볼 수 없어요. 우리 반 전체 숫자만 모여요.</div>' +
+      '<div class="row" style="margin-top:14px">' +
+      '<button type="button" id="story-go">정비소로 들어가기</button></div></div>');
+
+    h += q("hub",
+      '<div class="card"><h2>하루 정비소</h2>' +
+      '<p class="muted">순서대로 해도 되고, 하고 싶은 곳부터 해도 돼요.</p>' +
+      '<div class="g2" style="margin-top:12px">' +
+      '<button type="button" class="tile" id="t-week">' + wiseIcon("rec", 30) +
+      '<span>기록칸</span><small id="s-week">일주일을 눌러 봐요</small></button>' +
+      '<button type="button" class="tile" id="t-scale">' + wiseIcon("both", 30) +
+      '<span>저울칸</span><small id="s-scale">보조와 대행 가르기</small></button>' +
+      '<button type="button" class="tile" id="t-ask">' + wiseIcon("ai", 30) +
+      '<span>부탁 시험소</span><small id="s-ask">또또에게 부탁해 보기</small></button>' +
+      '<button type="button" class="tile" id="t-vow">' + wiseIcon("write", 30) +
+      '<span>약속 작성소</span><small id="s-vow">내 약속 3가지</small></button>' +
+      '<button type="button" class="tile" id="t-class">' + wiseIcon("talk", 30) +
+      '<span>우리 반</span><small id="s-class">익명 집계 보기</small></button>' +
+      '<button type="button" class="tile" id="t-card">' + wiseIcon("star", 30) +
+      '<span>정비 완료증</span><small id="s-card">오늘의 내 기록</small></button>' +
+      '</div></div>' +
+      '<div class="card"><h3>내가 받은 배지</h3><div id="badges" class="row" style="margin-top:8px"></div></div>');
+
+    h += q("week",
+      '<div class="card"><span class="pill">기록칸</span>' +
+      '<h2 style="margin-top:10px">이번 주에 AI를 얼마나 썼나요</h2>' +
+      '<p class="muted">기억나는 대로 골라요. 정확한 숫자를 세지 않아도 돼요.</p>' +
+      '<div id="weekbox" style="margin-top:10px"></div>' +
+      '<p class="note" id="weekline"></p>' +
+      '<h3 style="margin-top:16px">이번 주에 해 본 것을 골라요</h3>' +
+      '<p class="muted">고른 장면은 저울칸에서 하나씩 갈라 봐요.</p>' +
+      '<div id="scenebox" style="margin-top:8px"></div>' +
+      '<div class="row" style="margin-top:14px">' +
+      '<button type="button" id="week-go">저울칸으로 가기</button>' +
+      '<button type="button" class="plain back">정비소로</button></div></div>');
+
+    h += q("scale",
+      '<div class="card"><span class="pill">저울칸</span>' +
+      '<h2 style="margin-top:10px">내가 한 일과 AI가 한 일</h2>' +
+      '<p class="muted">고른 장면을 하나씩 갈라요. 옳고 그름을 매기는 것이 아니에요.</p>' +
+      '<div id="scalebox" style="margin-top:10px"></div>' +
+      '<div id="scaleview" style="margin-top:12px"></div>' +
+      '<div id="swapbox" style="margin-top:12px"></div>' +
+      '<div class="row" style="margin-top:14px">' +
+      '<button type="button" id="scale-go">부탁 시험소로 가기</button>' +
+      '<button type="button" class="plain back">정비소로</button></div></div>');
+
+    h += q("ask",
+      '<div class="card"><span class="pill">부탁 시험소</span>' +
+      '<h2 style="margin-top:10px">또또에게 부탁해 봐요</h2>' +
+      '<p class="muted">눌러 보면 또또가 답해요. 할 수 있는 것도 있고, 못 하는 것도 있어요.</p>' +
+      '<div id="askbox" style="margin-top:10px"></div>' +
+      '<div id="answerbox" style="margin-top:12px"></div>' +
+      '<div id="cantbox" style="margin-top:12px"></div>' +
+      '<div id="whobox" style="margin-top:12px"></div>' +
+      '<div class="row" style="margin-top:14px">' +
+      '<button type="button" id="ask-go">약속 작성소로 가기</button>' +
+      '<button type="button" class="plain back">정비소로</button></div></div>');
+
+    h += q("vow",
+      '<div class="card"><span class="pill">작성소</span>' +
+      '<h2 style="margin-top:10px">내 디지털 웰빙 약속 3가지</h2>' +
+      '<p class="muted">언제 어떻게 지킬지가 들어가면 지키기 쉬워요.</p>' +
+      '<div id="vowbox" style="margin-top:10px"></div>' +
+      '<div class="row" style="margin-top:14px">' +
+      '<button type="button" id="vow-go">우리 반 보러 가기</button>' +
+      '<button type="button" class="plain back">정비소로</button></div></div>');
+
+    h += q("class",
+      '<div class="card"><span class="pill">함께 보기</span>' +
+      '<h2 style="margin-top:10px">우리 반은 어땠을까</h2>' +
+      '<p class="muted">누가 무엇을 골랐는지는 아무에게도 보이지 않아요. 전체 숫자만 모여요.</p>' +
+      '<div class="row" style="margin-top:10px">' +
+      '<button type="button" id="peek">우리 반 집계 불러오기</button></div>' +
+      '<div id="classbox" style="margin-top:12px"></div>' +
+      '<div class="row" style="margin-top:14px">' +
+      '<button type="button" id="class-go">완료증 받으러 가기</button>' +
+      '<button type="button" class="plain back">정비소로</button></div></div>');
+
+    h += q("card",
+      '<div class="card"><span class="pill">기록</span>' +
+      '<h2 style="margin-top:10px">정비 완료증</h2>' +
+      '<div id="mine"></div>' +
+      '<div class="row" style="margin-top:12px">' +
+      '<button type="button" id="save-card" class="ghost">완료증 그림으로 저장</button>' +
+      '<button type="button" class="plain back">정비소로</button></div></div>');
+
+    return h;
+  }
+
+  /* ---------- 작은 도구 ---------- */
+
+  function count(obj) {
+    var n = 0;
+    for (var k in obj) { if (obj.hasOwnProperty(k)) { n++; } }
+    return n;
+  }
+
+  function keysOf(obj) {
+    var out = [];
+    for (var k in obj) { if (obj.hasOwnProperty(k) && obj[k]) { out.push(k); } }
+    return out;
+  }
+
+  function usedDays() {
+    var n = 0;
+    for (var d = 0; d < DAYS.length; d++) {
+      if (st.days[d] !== undefined && Number(st.days[d]) > 0) { n++; }
+    }
+    return n;
+  }
+
+  function judged() {
+    var n = 0;
+    for (var k in st.judge) {
+      if (st.judge.hasOwnProperty(k) && st.scenes[k]) { n++; }
+    }
+    return n;
+  }
+
+  function sideCount(side) {
+    var n = 0;
+    for (var k in st.judge) {
+      if (st.judge.hasOwnProperty(k) && st.scenes[k] && st.judge[k] === side) { n++; }
+    }
+    return n;
+  }
+
+  /* ---------- 기록칸 ---------- */
+
+  function paintWeek() {
+    if (!$("weekbox")) { return; }
+    var h = "";
+    for (var d = 0; d < DAYS.length; d++) {
+      h += '<div class="card" style="margin:8px 0;padding:12px 14px">' +
+        '<b>' + esc(DAYS[d]) + '요일</b><div class="row" style="margin-top:8px">';
+      for (var v = 0; v < LEVELS.length; v++) {
+        h += '<button type="button" class="chip dy' + (Number(st.days[d]) === v ? " on" : "") +
+          '" data-d="' + d + '" data-v="' + v + '" style="width:auto;margin:0">' +
+          esc(LEVELS[v]) + '</button>';
+      }
+      h += '</div></div>';
+    }
+    $("weekbox").innerHTML = h;
+    bindClass("dy", function (el) {
+      st.days[el.getAttribute("data-d")] = Number(el.getAttribute("data-v"));
+      paintWeek();
+      paintHub();
+    });
+
+    var sh = "";
+    for (var s = 0; s < SCENES.length; s++) {
+      sh += '<button type="button" class="chip sc' + (st.scenes[s] ? " on" : "") +
+        '" data-s="' + s + '">' + wiseIcon(SCENES[s].icon, 26) + esc(SCENES[s].t) + '</button>';
+    }
+    $("scenebox").innerHTML = sh;
+    bindClass("sc", function (el) {
+      var s2 = el.getAttribute("data-s");
+      if (st.scenes[s2]) {
+        st.scenes[s2] = false;
+        delete st.judge[s2];
+      } else {
+        st.scenes[s2] = true;
+      }
+      paintWeek();
+      paintScale();
+      paintHub();
+    });
+    paintWeekLine();
+  }
+
+  function paintWeekLine() {
+    if (!$("weekline")) { return; }
+    var marked = count(st.days), picked = count(keysOf(st.scenes));
+    if (!marked) {
+      $("weekline").innerHTML = "일곱 칸을 눌러 이번 주를 채워 봐요.";
+      return;
+    }
+    $("weekline").innerHTML = "표시한 칸 " + marked + " / 7 · 이번 주에 AI를 쓴 날은 " +
+      usedDays() + "일이에요. 고른 장면은 " + picked + "개예요.";
+  }
+
+  /* ---------- 저울칸 ---------- */
+
+  function paintScale() {
+    if (!$("scalebox")) { return; }
+    var picked = keysOf(st.scenes);
+    if (!picked.length) {
+      $("scalebox").innerHTML = '<p class="muted">기록칸에서 장면을 먼저 골라요. ' +
+        '고른 장면이 여기에 하나씩 나와요.</p>';
+      $("scaleview").innerHTML = "";
+      $("swapbox").innerHTML = "";
+      return;
+    }
+    var h = "";
+    for (var i = 0; i < picked.length; i++) {
+      var s = picked[i];
+      h += '<div class="card fade-in" style="margin:8px 0;padding:14px">' +
+        '<div class="iconrow">' + wiseIcon(SCENES[s].icon, 30) +
+        '<b>' + esc(SCENES[s].t) + '</b></div><div class="row" style="margin-top:10px">' +
+        '<button type="button" class="chip jd' + (st.judge[s] === "assist" ? " on" : "") +
+        '" data-j="' + s + '" data-side="assist" style="width:auto;margin:0">' +
+        wiseIcon("me", 24) + '보조 · 내가 하고 도움만 받았어요</button>' +
+        '<button type="button" class="chip jd' + (st.judge[s] === "agent" ? " on" : "") +
+        '" data-j="' + s + '" data-side="agent" style="width:auto;margin:0">' +
+        wiseIcon("ai", 24) + '대행 · AI가 대신했어요</button></div></div>';
+    }
+    $("scalebox").innerHTML = h;
+    bindClass("jd", function (el) {
+      st.judge[el.getAttribute("data-j")] = el.getAttribute("data-side");
+      paintScale();
+      paintHub();
+    });
+    paintScaleView();
+    paintSwap();
+  }
+
+  function paintScaleView() {
+    if (!$("scaleview")) { return; }
+    var a = sideCount("assist"), b = sideCount("agent"), all = a + b;
+    if (!all) {
+      $("scaleview").innerHTML = '<p class="muted">하나씩 가르면 여기에 저울 눈금이 나와요.</p>';
+      return;
+    }
+    var h = '<div class="card fade-in" style="margin:0"><h3>저울 눈금</h3>' +
+      '<p style="margin-top:8px">' + wiseIcon("me", 24) + '보조 ' + a + '개</p>' + barHtml(a, all) +
+      '<p style="margin-top:10px">' + wiseIcon("ai", 24) + '대행 ' + b + '개</p>' + barHtml(b, all) +
+      '<p class="big" style="margin-top:12px">대행 ' + pct(b, all) + '%</p>' +
+      '<p class="muted">많고 적음을 매기는 숫자가 아니에요. 지금 내 모습이에요.</p></div>';
+    $("scaleview").innerHTML = h;
+  }
+
+  function paintSwap() {
+    if (!$("swapbox")) { return; }
+    var agents = [];
+    for (var k in st.judge) {
+      if (st.judge.hasOwnProperty(k) && st.scenes[k] && st.judge[k] === "agent") { agents.push(k); }
+    }
+    if (!agents.length) {
+      $("swapbox").innerHTML = "";
+      return;
+    }
+    var h = '<div class="card fade-in" style="margin:0"><h3>하나만 바꾼다면</h3>' +
+      '<p class="muted">대행이었던 것 중에 보조로 바꾸고 싶은 것을 하나 골라요. ' +
+      '약속 작성소에서 문장 후보로 나와요.</p>';
+    for (var i = 0; i < agents.length; i++) {
+      h += '<button type="button" class="chip sw' + (st.swap === agents[i] ? " on" : "") +
+        '" data-w="' + agents[i] + '">' + esc(SCENES[agents[i]].t) + '</button>';
+    }
+    $("swapbox").innerHTML = h + '</div>';
+    bindClass("sw", function (el) {
+      var w = el.getAttribute("data-w");
+      st.swap = (st.swap === w) ? "" : w;
+      paintSwap();
+      paintVow();
+      paintHub();
+    });
+  }
+
+  /* ---------- 부탁 시험소 ---------- */
+
+  function paintAsk() {
+    if (!$("askbox")) { return; }
+    var h = "";
+    for (var i = 0; i < ASKS.length; i++) {
+      h += '<button type="button" class="chip ak' + (st.asked[i] ? " on" : "") +
+        '" data-a="' + i + '">' + esc(ASKS[i].t) +
+        (st.asked[i] ? " · 물어봤어요" : "") + '</button>';
+    }
+    $("askbox").innerHTML = h;
+    bindClass("ak", function (el) { askToto(Number(el.getAttribute("data-a"))); });
+    paintCant();
+    paintWho();
+  }
+
+  /* 또또가 곧바로 답하면 대답을 읽지 않는다. 잠깐 생각하는 시간을 둔다. */
+  function askToto(i) {
+    if (st.thinking) { return; }
+    st.asked[i] = true;
+    if (!$("answerbox")) { return; }
+    if (reducedMotion()) {
+      showAnswer(i);
+      return;
+    }
+    st.thinking = true;
+    $("answerbox").innerHTML = wiseSpinner("또또가 생각하는 중이에요", true) + wiseSkeleton(2);
+    setTimeout(function () {
+      st.thinking = false;
+      showAnswer(i);
+    }, 800);
+  }
+
+  function showAnswer(i) {
+    var a = ASKS[i];
+    var mark = a.can === 2 ? "red" : (a.can === 1 ? "yellow" : "green");
+    var head = a.can === 2 ? "그건 제가 못 해요" : (a.can === 1 ? "반만 할 수 있어요" : "할 수 있어요");
+    if (a.can === 2 && !st.cant[i]) {
+      st.cant[i] = true;
+      wiseToast("못 하는 일 목록에 담았어요.");
+    }
+    if ($("answerbox")) {
+      $("answerbox").innerHTML = '<div class="card fade-in" style="margin:0">' +
+        '<p class="muted">' + esc(a.t) + '</p>' +
+        '<div class="iconrow" style="margin-top:8px">' + wiseIcon(mark, 32) +
+        '<h3 style="margin:0">' + esc(head) + '</h3></div>' +
+        '<p style="margin-top:8px">' + esc(a.say) + '</p></div>';
+    }
+    paintAskChips();
+    paintCant();
+    paintWho();
+    paintHub();
+  }
+
+  function paintAskChips() {
+    var chips = document.querySelectorAll("#activity .ak");
+    for (var i = 0; i < chips.length; i++) {
+      var k = chips[i].getAttribute("data-a");
+      chips[i].className = "chip ak" + (st.asked[k] ? " on" : "");
+    }
+  }
+
+  function paintCant() {
+    if (!$("cantbox")) { return; }
+    var got = keysOf(st.cant);
+    if (!got.length) {
+      $("cantbox").innerHTML = '<p class="muted">또또가 못 한다고 답한 것이 여기에 쌓여요. ' +
+        '세 가지를 찾으면 다음이 열려요.</p>';
+      return;
+    }
+    var h = '<div class="card fade-in" style="margin:0"><h3>AI가 못 하는 일 ' +
+      got.length + ' / 3</h3><ul style="margin:8px 0 0 18px">';
+    for (var i = 0; i < got.length; i++) {
+      h += "<li>" + esc(ASKS[got[i]].t) + "</li>";
+    }
+    $("cantbox").innerHTML = h + "</ul></div>";
+  }
+
+  function paintWho() {
+    if (!$("whobox")) { return; }
+    if (keysOf(st.cant).length < 3) {
+      $("whobox").innerHTML = "";
+      return;
+    }
+    var h = '<div class="card fade-in" style="margin:0"><h3>그럼 이런 일은 누구에게 말할까요</h3>' +
+      '<p class="muted">여러 개를 골라도 돼요.</p>';
+    for (var i = 0; i < WHO.length; i++) {
+      h += '<button type="button" class="chip wh' + (st.who[i] ? " on" : "") +
+        '" data-h="' + i + '">' + wiseIcon(i === 4 ? "heart" : "me", 26) + esc(WHO[i]) + '</button>';
+    }
+    h += '<div class="safe" style="font-size:18px;font-weight:700">' + SAFE_LINE +
+      ' 혼자 참지 않아도 돼요.</div></div>';
+    $("whobox").innerHTML = h;
+    bindClass("wh", function (el) {
+      var k = el.getAttribute("data-h");
+      st.who[k] = !st.who[k];
+      paintWho();
+      paintHub();
+    });
+  }
+
+  /* ---------- 약속 작성소 ---------- */
+
+  /* 칸에 글이 있을 때만 담는다. 지우는 것은 아래 oninput 이 맡는다.
+     화면에 없는 칸이 캐시를 지우면 써 둔 약속이 사라진다. */
+  function cacheVows() {
+    for (var j = 0; j < 2; j++) {
+      var el = $("vx" + j);
+      if (!el) { continue; }
+      var v = el.value ? el.value.trim() : "";
+      if (v) { st.vowCache["vx" + j] = v; }
+    }
+  }
+
+  function readVows() {
+    cacheVows();
+    var out = [];
+    for (var i = 0; i < VOWS.length; i++) {
+      if (st.vows[i]) { out.push(VOWS[i]); }
+    }
+    for (var j = 0; j < 2; j++) {
+      var v = st.vowCache["vx" + j];
+      if (v) { out.push(v); }
+    }
+    return out;
+  }
+
+  function paintVow() {
+    if (!$("vowbox")) { return; }
+    cacheVows();
+    var h = "";
+    if (st.swap) {
+      h += '<div class="note">저울칸에서 고른 것 : ' + esc(SCENES[st.swap].t) +
+        '. 이것을 보조로 바꾸는 약속을 하나 써 볼까요.</div>';
+    }
+    for (var i = 0; i < VOWS.length; i++) {
+      h += '<button type="button" class="chip vw' + (st.vows[i] ? " on" : "") +
+        '" data-v="' + i + '">' + esc(VOWS[i]) + '</button>';
+    }
+    h += '<label for="vx0">내 말로 쓰기 1</label>' +
+      '<input id="vx0" maxlength="40" placeholder="예: 숙제할 때는 내 생각을 세 줄 먼저 쓴다">' +
+      '<label for="vx1">내 말로 쓰기 2</label>' +
+      '<input id="vx1" maxlength="40" placeholder="예: 저녁 아홉 시 뒤에는 묻지 않는다">' +
+      '<p class="note" id="vowcount"></p>';
+    $("vowbox").innerHTML = h;
+    for (var j = 0; j < 2; j++) {
+      if ($("vx" + j) && st.vowCache["vx" + j]) { $("vx" + j).value = st.vowCache["vx" + j]; }
+    }
+    bindClass("vw", function (el) {
+      var v = el.getAttribute("data-v");
+      if (st.vows[v]) {
+        st.vows[v] = false;
+      } else if (readVows().length >= 3) {
+        wiseToast("약속은 세 개까지예요. 바꾸려면 고른 것을 눌러 빼요.");
+        return;
+      } else {
+        st.vows[v] = true;
+      }
+      paintVow();
+      paintHub();
+    });
+    for (var k = 0; k < 2; k++) {
+      var box = $("vx" + k);
+      if (box) {
+        box.setAttribute("data-vx", String(k));
+        box.oninput = function () {
+          var key = "vx" + this.getAttribute("data-vx");
+          st.vowCache[key] = this.value ? this.value.trim() : "";
+          countVows();
+          paintHub();
+        };
+      }
+    }
+    countVows();
+  }
+
+  function countVows() {
+    if (!$("vowcount")) { return; }
+    var list = readVows();
+    var vague = "";
+    for (var j = 0; j < 2; j++) {
+      var v = st.vowCache["vx" + j];
+      if (!v) { continue; }
+      var ok = false;
+      for (var w = 0; w < WHENWORDS.length; w++) {
+        if (v.indexOf(WHENWORDS[w]) >= 0) { ok = true; break; }
+      }
+      if (!ok) { vague = v; }
+    }
+    var h = list.length >= 3 ? "세 개를 정했어요. 작성 끝." :
+      ("지금 " + list.length + "개예요. 세 개를 채워 봐요.");
+    if (vague) {
+      h += ' 언제 지킬지도 넣어 볼까요. 예: 자기 전 30분은 화면을 끈다';
+    }
+    $("vowcount").innerHTML = h;
+    if (list.length >= 3) { award("약속 셋"); }
+  }
+
+  /* ---------- 우리 반 (익명) ---------- */
+
+  function peek() {
+    if (!$("classbox")) { return; }
+    if (me.solo) {
+      $("classbox").innerHTML = '<p class="muted">둘러보기 중에는 우리 반 집계가 없어요. ' +
+        '나머지 활동은 그대로 해 볼 수 있어요.</p>';
+      return;
+    }
+    wiseButtonBusy($("peek"), true, "모으는 중");
+    $("classbox").innerHTML = wiseSpinner("우리 반 기록을 모으는 중이에요", true) + wiseSkeleton(3);
+    dbGet(me.room + "/entries").then(function (data) {
+      st.classData = summarize(data);
+      wiseButtonBusy($("peek"), false);
+      $("classbox").innerHTML = classHtml(st.classData);
+      paintHub();
+    })["catch"](function () {
+      wiseButtonBusy($("peek"), false);
+      $("classbox").innerHTML = '<p class="warn">지금은 불러올 수 없어요. 잠시 뒤 다시 눌러요.</p>';
+    });
+  }
+
+  /* 방 데이터를 합계로만 바꾼다. 닉네임을 여기서 버린다. */
+  function summarize(data) {
+    var out = { n: 0, assist: 0, agent: 0, cant: {}, who: {}, vows: {}, days: [0, 0, 0, 0, 0, 0, 0, 0] };
+    for (var k in data) {
+      if (!data.hasOwnProperty(k)) { continue; }
+      var p = data[k].payload || {};
+      out.n += 1;
+      out.assist += p.assist || 0;
+      out.agent += p.agent || 0;
+      var ud = Number(p.usedDays || 0);
+      if (ud >= 0 && ud <= 7) { out.days[ud] += 1; }
+      var c = p.cant || [];
+      for (var i = 0; i < c.length; i++) { out.cant[c[i]] = (out.cant[c[i]] || 0) + 1; }
+      var w = p.who || [];
+      for (var j = 0; j < w.length; j++) { out.who[w[j]] = (out.who[w[j]] || 0) + 1; }
+      var v = p.vows || [];
+      for (var m = 0; m < v.length; m++) { out.vows[v[m]] = (out.vows[v[m]] || 0) + 1; }
+    }
+    return out;
+  }
+
+  function topRows(map, limit) {
+    var keys = [];
+    for (var k in map) { if (map.hasOwnProperty(k)) { keys.push(k); } }
+    keys.sort(function (a, b) { return map[b] - map[a]; });
+    var out = [];
+    for (var i = 0; i < keys.length && i < (limit || 5); i++) {
+      out.push({ text: keys[i], n: map[keys[i]] });
+    }
+    return out;
+  }
+
+  function listHtml(title, rows, empty) {
+    if (!rows.length) { return '<h3 style="margin-top:16px">' + title + '</h3><p class="muted">' + empty + '</p>'; }
+    var h = '<h3 style="margin-top:16px">' + title + '</h3><div class="scroll"><table>' +
+      '<tr><th>내용</th><th>고른 사람</th></tr>';
+    for (var i = 0; i < rows.length; i++) {
+      h += "<tr><td>" + esc(rows[i].text) + "</td><td>" + rows[i].n + "명</td></tr>";
+    }
+    return h + "</table></div>";
+  }
+
+  function classHtml(sum) {
+    if (!sum.n) { return '<p class="muted">아직 우리 반 기록이 모이지 않았어요.</p>'; }
+    var all = sum.assist + sum.agent;
+    var h = '<div class="card fade-in" style="margin:0"><h3>우리 반 저울</h3>' +
+      '<p style="margin-top:8px">' + wiseIcon("me", 24) + '보조 ' + sum.assist + '개</p>' +
+      barHtml(sum.assist, all || 1) +
+      '<p style="margin-top:10px">' + wiseIcon("ai", 24) + '대행 ' + sum.agent + '개</p>' +
+      barHtml(sum.agent, all || 1) +
+      '<p class="big" style="margin-top:12px">우리 반 대행 ' + pct(sum.agent, all) + '%</p>' +
+      '<p class="muted">낸 사람 ' + sum.n + '명. 누가 무엇을 골랐는지는 보이지 않아요.</p></div>';
+    h += listHtml("우리 반이 찾은 AI가 못 하는 일", topRows(sum.cant, 5), "아직 없어요.");
+    h += listHtml("많이 고른 약속", topRows(sum.vows, 5), "아직 없어요.");
+    return h;
+  }
+
+  /* ---------- 배지와 허브 ---------- */
+
+  function award(name) {
+    if (st.badges[name]) { return; }
+    st.badges[name] = true;
+    wiseToast("배지를 받았어요 : " + name);
+  }
+
+  function badgeNames() {
+    var out = [];
+    for (var k in st.badges) { if (st.badges.hasOwnProperty(k)) { out.push(k); } }
+    return out;
+  }
+
+  function paintHub() {
+    if (!$("s-week")) { return; }
+    var marked = count(st.days), picked = keysOf(st.scenes).length;
+    var cants = keysOf(st.cant).length, whos = keysOf(st.who).length;
+    var vows = readVows().length;
+
+    $("s-week").textContent = "표시한 칸 " + marked + " / 7 · 고른 장면 " + picked + "개";
+    $("s-scale").textContent = picked ? ("가른 장면 " + judged() + " / " + picked) : "기록칸을 먼저 해요";
+    $("s-ask").textContent = "찾은 것 " + cants + " / 3" + (whos ? (" · 말할 사람 " + whos + "명") : "");
+    $("s-vow").textContent = "정한 약속 " + vows + " / 3";
+    $("s-class").textContent = st.classData ? "우리 반 집계를 보았어요" : "익명 집계 보기";
+    $("s-card").textContent = "오늘의 내 기록";
+
+    var tiles = [["t-week", marked >= 7 && picked > 0], ["t-scale", picked > 0 && judged() >= picked],
+      ["t-ask", cants >= 3 && whos > 0], ["t-vow", vows >= 3],
+      ["t-class", !!st.classData], ["t-card", false]];
+    for (var i = 0; i < tiles.length; i++) {
+      if ($(tiles[i][0])) { $(tiles[i][0]).className = "tile" + (tiles[i][1] ? " done" : ""); }
+    }
+
+    if (marked >= 7) { award("일주일 기록"); }
+    if (picked > 0 && judged() >= picked) { award("저울 맞추기"); }
+    if (cants >= 3) { award("못 하는 일 찾기"); }
+    if (whos > 0) { award("사람에게 말하기"); }
+
+    var names = badgeNames();
+    if ($("badges")) {
+      $("badges").innerHTML = names.length
+        ? names.map(function (n) { return '<span class="pill">' + esc(n) + '</span>'; }).join(" ")
+        : '<span class="muted">아직 없어요. 기록칸부터 해 보면 받을 수 있어요.</span>';
+    }
+    paintHud();
+  }
+
+  function paintHud() {
+    var items = [{ label: "기록", done: count(st.days), total: 7 }];
+    var picked = keysOf(st.scenes).length;
+    if (picked) { items.push({ label: "저울", done: judged(), total: picked }); }
+    items.push({ label: "못 하는 일", done: keysOf(st.cant).length, total: 3 });
+    items.push({ label: "약속", done: readVows().length, total: 3 });
+    wiseHud(items);
+  }
+
+  /* ---------- 완료증 ---------- */
+
+  function paintMine() {
+    if (!$("mine")) { return; }
+    var picked = keysOf(st.scenes).length;
+    if (!count(st.days) && !picked) {
+      $("mine").innerHTML = '<p class="muted">아직 기록이 없어요. 기록칸부터 가 볼까요.</p>';
+      return;
+    }
+    var a = sideCount("assist"), b = sideCount("agent");
+    var cants = keysOf(st.cant), whos = keysOf(st.who), vows = readVows();
+    var h = '<p class="big">' + usedDays() + '일</p>' +
+      '<p class="muted">이번 주에 AI를 쓴 날이에요. 많고 적음을 매기지 않아요.</p>';
+    if (a + b) {
+      h += '<p style="margin-top:12px">보조 ' + a + '개 · 대행 ' + b + '개 · 대행 ' +
+        pct(b, a + b) + '%</p>' + barHtml(a, a + b);
+    }
+    if (cants.length) {
+      h += '<h3 style="margin-top:14px">또또가 못 한다고 답한 것</h3><ul style="margin:8px 0 0 18px">';
+      for (var i = 0; i < cants.length; i++) { h += "<li>" + esc(ASKS[cants[i]].t) + "</li>"; }
+      h += "</ul>";
+    }
+    if (whos.length) {
+      var names = [];
+      for (var w = 0; w < whos.length; w++) { names.push(WHO[whos[w]]); }
+      h += '<p style="margin-top:10px">힘들 때 말할 사람 : ' + esc(names.join(", ")) + '</p>';
+    }
+    if (vows.length) {
+      h += '<h3 style="margin-top:14px">내 약속</h3><ul style="margin:8px 0 0 18px">';
+      for (var v = 0; v < vows.length; v++) { h += "<li>" + esc(vows[v]) + "</li>"; }
+      h += "</ul>";
+    }
+    var bs = badgeNames();
+    h += '<p style="margin-top:12px">받은 배지 : ' + (bs.length ? esc(bs.join(", ")) : "아직 없어요") + '</p>';
+    h += '<div class="note" style="margin-top:12px">다음 시간에는 AI로 우리 마을의 문제를 도와요.</div>';
+    $("mine").innerHTML = h;
+  }
+
+  function saveCard() {
+    var a = sideCount("assist"), b = sideCount("agent");
+    var cants = keysOf(st.cant), vows = readVows();
+    wiseCardPng("하루 정비소 " + me.nick, [
+      "이번 주에 AI를 쓴 날 " + usedDays() + "일",
+      "보조 " + a + "개 · 대행 " + b + "개",
+      "AI가 못 하는 일 : " + (cants.length ? ASKS[cants[0]].t : "아직 못 찾았어요"),
+      "내 약속 : " + (vows.length ? vows[0] : "아직 정하지 않았어요"),
+      SAFE_LINE
+    ], "wise_l10_" + me.nick);
+  }
+
+  /* ---------- 흐름 ---------- */
+
+  function bindClass(cls, fn) {
+    var els = document.querySelectorAll("#activity ." + cls);
+    for (var i = 0; i < els.length; i++) {
+      els[i].onclick = function () { fn(this); };
+    }
+  }
+
+  function hintFor(id) {
+    if (id === "week") { return "일곱 칸을 누르고, 이번 주에 해 본 장면을 골라요."; }
+    if (id === "scale") { return "고른 장면을 보조와 대행으로 갈라요. 옳고 그름이 아니에요."; }
+    if (id === "ask") { return "또또에게 부탁해 봐요. 못 한다고 답하는 것이 오늘의 답이에요."; }
+    if (id === "vow") { return "언제 어떻게 지킬지가 들어가면 지키기 쉬워요."; }
+    if (id === "class") { return "우리 반 전체 숫자만 보여요. 개인 답은 아무에게도 보이지 않아요."; }
+    return "정비소에서 하고 싶은 곳을 골라요.";
+  }
+
+  function activityEnter(id) {
+    if (id === "week") { paintWeek(); }
+    if (id === "scale") { paintScale(); }
+    if (id === "ask") { paintAsk(); }
+    if (id === "vow") { paintVow(); }
+    if (id === "card") { paintMine(); }
+    if (id === "hub") { paintHub(); }
+    wiseNote(hintFor(id));
+  }
+
+  function activityInit(saved) {
+    if (saved) {
+      if (saved.days) { st.days = saved.days; }
+      if (saved.scenePick) { st.scenes = saved.scenePick; }
+      if (saved.judge) { st.judge = saved.judge; }
+      if (saved.cantPick) { st.cant = saved.cantPick; }
+      if (saved.whoPick) { st.who = saved.whoPick; }
+      if (saved.vowPick) { st.vows = saved.vowPick; }
+      if (saved.vowText) { st.vowCache = saved.vowText; }
+      if (saved.swap) { st.swap = saved.swap; }
+    }
+
+    $("story-go").onclick = function () { goSlow("hub", "정비소 문을 여는 중이에요", 560); };
+    $("t-week").onclick = function () { goSlow("week", "기록칸으로 가는 중이에요"); };
+    $("t-scale").onclick = function () { goSlow("scale", "저울을 꺼내는 중이에요"); };
+    $("t-ask").onclick = function () { goSlow("ask", "또또를 부르는 중이에요"); };
+    $("t-vow").onclick = function () { goSlow("vow", "작성소로 가는 중이에요"); };
+    $("t-class").onclick = function () { goSlow("class", "우리 반 기록을 찾는 중이에요"); };
+    $("t-card").onclick = function () { goSlow("card", "완료증을 쓰는 중이에요"); };
+
+    $("week-go").onclick = function () { goSlow("scale", "저울을 꺼내는 중이에요"); };
+    $("scale-go").onclick = function () { goSlow("ask", "또또를 부르는 중이에요"); };
+    $("ask-go").onclick = function () { goSlow("vow", "작성소로 가는 중이에요"); };
+    $("vow-go").onclick = function () { goSlow("class", "우리 반 기록을 찾는 중이에요"); };
+    $("class-go").onclick = function () { goSlow("card", "완료증을 쓰는 중이에요"); };
+    $("peek").onclick = peek;
+    $("save-card").onclick = saveCard;
+
+    var backs = document.querySelectorAll("#activity .back");
+    for (var i = 0; i < backs.length; i++) {
+      backs[i].onclick = function () { goSlow("hub", "정비소로 돌아가는 중이에요", 420); };
+    }
+
+    wiseGo("story");
+    paintHub();
+  }
+
+  function activityDraft() {
+    return {
+      days: st.days, scenePick: st.scenes, judge: st.judge, cantPick: st.cant,
+      whoPick: st.who, vowPick: st.vows, vowText: st.vowCache, swap: st.swap
+    };
+  }
+
+  function activityAutofill() {
+    for (var d = 0; d < DAYS.length; d++) { st.days[d] = d % 3; }
+    st.scenes = { 0: true, 1: true, 5: true };
+    st.judge = { 0: "agent", 1: "assist", 5: "agent" };
+    st.asked = { 8: true, 9: true, 10: true };
+    st.cant = { 8: true, 9: true, 10: true };
+    st.who = { 0: true, 1: true };
+    st.vows = { 0: true, 1: true };
+    st.vowCache = { vx0: "저녁 아홉 시 뒤에는 묻지 않는다", vx1: "" };
+    st.swap = "0";
+  }
+
+  /* 제출이 막히면 무엇이 모자란지 알려 주고 그 화면으로 데려간다. */
+  function stop(msg, screen, text) {
+    $("w-msg").innerHTML = '<span class="warn">' + msg + '</span>';
+    if (screen) { goSlow(screen, text || "그 화면으로 데려갈게요", 420); }
+    return null;
   }
 
   function activityCollect() {
-    var promises = [];
-    for (var p = 0; p < PROMISES; p++) {
-      promises.push($("p" + p) ? $("p" + p).value.trim() : "");
+    var marked = count(st.days);
+    if (marked < 7) {
+      return stop("기록칸에서 일곱 칸을 모두 눌러요. 지금 " + marked + "칸이에요.",
+        "week", "기록칸으로 가는 중이에요");
     }
-    var n = 0;
-    for (var k in pick) { if (pick.hasOwnProperty(k)) { n++; } }
-    if (n === 0) {
-      $("w-msg").innerHTML = '<span class="warn">하나라도 골라 주세요.</span>';
-      return null;
+    var picked = keysOf(st.scenes);
+    if (picked.length < 2) {
+      return stop("이번 주에 해 본 장면을 두 개 이상 골라요.", "week", "기록칸으로 가는 중이에요");
     }
-    return { pick: pick, cant: $("cant") ? $("cant").value.trim() : "", promises: promises };
+    if (judged() < picked.length) {
+      return stop("저울칸에서 고른 장면을 모두 갈라요. 고른 " + picked.length + "개 가운데 " +
+        judged() + "개를 갈랐어요.", "scale", "저울을 꺼내는 중이에요");
+    }
+    var cants = keysOf(st.cant);
+    if (cants.length < 3) {
+      return stop("부탁 시험소에서 또또가 못 한다고 답하는 것을 세 가지 찾아요. 지금 " +
+        cants.length + "가지 찾았어요.", "ask", "또또를 부르는 중이에요");
+    }
+    var whos = keysOf(st.who);
+    if (!whos.length) {
+      return stop("힘들 때 말할 사람을 한 명 이상 골라요.", "ask", "또또를 부르는 중이에요");
+    }
+    var vows = readVows();
+    if (vows.length < 3) {
+      return stop("약속을 세 개 정한 뒤에 제출해요. 지금 " + vows.length + "개예요.",
+        "vow", "작성소로 가는 중이에요");
+    }
+
+    var a = sideCount("assist"), b = sideCount("agent");
+    var cantText = [], whoText = [];
+    for (var i = 0; i < cants.length; i++) { cantText.push(ASKS[cants[i]].t); }
+    for (var j = 0; j < whos.length; j++) { whoText.push(WHO[whos[j]]); }
+
+    wiseCelebrate("정비를 마쳤어요", [
+      "이번 주에 AI를 쓴 날 <b>" + usedDays() + "일</b>",
+      "보조 <b>" + a + "개</b> · 대행 <b>" + b + "개</b>",
+      "정한 약속 <b>" + vows.length + "개</b>",
+      SAFE_LINE
+    ], "좋아요");
+
+    return {
+      days: st.days, scenePick: st.scenes, judge: st.judge,
+      cantPick: st.cant, whoPick: st.who, vowPick: st.vows, vowText: st.vowCache,
+      cant: cantText, who: whoText, vows: vows, swap: st.swap ? SCENES[st.swap].t : "",
+      usedDays: usedDays(), assist: a, agent: b, agentPct: pct(b, a + b),
+      badges: badgeNames()
+    };
+  }
+
+  /* ---------- 교사 화면 (익명 집계만) ---------- */
+
+  /* 골격의 낱낱이 보기는 개인 응답을 그대로 펼친다.
+     10차시는 안전 규칙 5절에 따라 그 화면을 쓰지 않는다.
+     골격을 고치지 않고 이 차시에서만 감춘다. */
+  function hideDetail() {
+    if ($("t-detail")) {
+      $("t-detail").style.display = "none";
+      $("t-detail").textContent = "낱낱이 보기 없음";
+    }
+    if ($("t-wrap")) { $("t-wrap").className = "scroll hide"; }
+    if ($("t-table")) { $("t-table").innerHTML = ""; }
   }
 
   function teacherSummary(list) {
-    var h = '<p class="muted">개인 응답은 보이지 않습니다. 학급 익명 집계만 표시합니다.</p>';
-    h += '<div class="scroll"><table><tr><th>항목</th><th>거의 없음</th><th>가끔</th><th>자주</th><th>아주 자주</th></tr>';
-    for (var i = 0; i < ITEMS.length; i++) {
-      var c = [0, 0, 0, 0];
-      for (var k = 0; k < list.length; k++) {
-        var v = list[k].payload && list[k].payload.pick ? list[k].payload.pick[i] : undefined;
-        if (v !== undefined) { c[v]++; }
-      }
-      h += "<tr><td>" + esc(ITEMS[i]) + "</td><td>" + c[0] + "</td><td>" + c[1] +
-        "</td><td>" + c[2] + "</td><td>" + c[3] + "</td></tr>";
+    hideDetail();
+    var data = {};
+    for (var i = 0; i < list.length; i++) { data[i] = list[i]; }
+    var sum = summarize(data);
+
+    var h = '<p class="muted">이 차시는 <b>익명 집계만</b> 보여 줍니다. ' +
+      '개인 응답과 낱낱이 보기는 이 화면에 나타나지 않습니다.</p>';
+    if (!sum.n) { return h + '<p class="muted">아직 제출이 없습니다.</p>'; }
+
+    var all = sum.assist + sum.agent;
+    h += '<h3>우리 반 저울</h3>' + wiseBars([
+      { label: "보조", value: sum.assist, color: "#16a34a" },
+      { label: "대행", value: sum.agent, color: "#ea580c" }
+    ], 560);
+    h += '<p style="margin-top:8px">학급 평균 대행 비율 ' + pct(sum.agent, all) + '% · 낸 사람 ' +
+      sum.n + '명</p>';
+
+    var dayRows = [];
+    for (var d = 0; d <= 7; d++) {
+      if (sum.days[d]) { dayRows.push({ label: d + "일", value: sum.days[d] }); }
     }
-    return h + "</table></div>";
+    if (dayRows.length) {
+      h += '<h3 style="margin-top:16px">이번 주에 쓴 날 (인원)</h3>' + wiseBars(dayRows, 560) +
+        '<p class="muted">많이 쓴 학생을 짚지 않는다. 학급의 모습만 본다.</p>';
+    }
+
+    h += listHtml("우리 반이 찾은 AI가 못 하는 일", topRows(sum.cant, 8), "아직 없다.");
+    h += listHtml("힘들 때 말하겠다고 한 곳", topRows(sum.who, 8), "아직 없다.");
+    h += listHtml("많이 고른 약속", topRows(sum.vows, 10), "아직 없다.");
+    h += '<p class="muted" style="margin-top:12px">직접 쓴 약속도 닉네임 없이 위 목록에 함께 모입니다. ' +
+      '도움이 필요해 보이는 학생은 수업 뒤 개별 면담으로 연결합니다.</p>';
+    h += '<div class="safe">내려받는 CSV 에는 닉네임과 응답이 그대로 들어 있습니다. ' +
+      '학급 통계만 남기고 개별 행은 지웁니다. 화면에서는 개인 응답을 보여 주지 않습니다.</div>';
+    return h;
+  }
+
+  function presentHtml(list) {
+    var data = {};
+    for (var i = 0; i < list.length; i++) { data[i] = list[i]; }
+    var sum = summarize(data);
+    var all = sum.assist + sum.agent;
+    var h = '<div class="card"><h2>우리 반 저울</h2>' +
+      '<p class="big">대행 ' + pct(sum.agent, all) + '%</p>' +
+      wiseBars([
+        { label: "보조", value: sum.assist, color: "#16a34a" },
+        { label: "대행", value: sum.agent, color: "#ea580c" }
+      ], 700) +
+      '<p class="muted">누가 무엇을 냈는지는 보이지 않습니다.</p></div>';
+
+    var rows = topRows(sum.cant, 5);
+    if (rows.length) {
+      h += '<div class="card"><h2>AI가 못 하는 일</h2><ul style="margin:10px 0 0 20px">';
+      for (var r = 0; r < rows.length; r++) {
+        h += '<li>' + esc(rows[r].text) + ' <span class="pill">' + rows[r].n + '명</span></li>';
+      }
+      h += '</ul></div>';
+    }
+    h += '<div class="card"><p class="big">' + SAFE_LINE + '</p></div>';
+    return h;
+  }
+
+  /* ---------- 그림 ---------- */
+
+  function wiseIcon(kind, size) {
+    var s = size || 30;
+    var ink = "#111";
+    var body = "";
+    if (kind === "id") {
+      body = '<circle cx="24" cy="18" r="9" fill="#FFE24B" stroke="' + ink + '" stroke-width="3"/>' +
+        '<path d="M9 42c0-9 7-14 15-14s15 5 15 14z" fill="#FFE24B" stroke="' + ink + '" stroke-width="3"/>';
+    } else if (kind === "loc") {
+      body = '<path d="M24 5c8 0 14 6 14 14 0 10-14 24-14 24S10 29 10 19c0-8 6-14 14-14z" fill="#2B59E0" stroke="' +
+        ink + '" stroke-width="3"/><circle cx="24" cy="19" r="5" fill="#fff"/>';
+    } else if (kind === "rel") {
+      body = '<circle cx="17" cy="17" r="8" fill="#7B4FE8" stroke="' + ink + '" stroke-width="3"/>' +
+        '<circle cx="32" cy="20" r="7" fill="#fff" stroke="' + ink + '" stroke-width="3"/>' +
+        '<path d="M6 42c0-8 5-12 11-12s11 4 11 12z" fill="#7B4FE8" stroke="' + ink + '" stroke-width="3"/>';
+    } else if (kind === "rec") {
+      body = '<rect x="10" y="7" width="28" height="34" rx="4" fill="#fff" stroke="' + ink + '" stroke-width="3"/>' +
+        '<path d="M17 17h14M17 25h14M17 33h8" stroke="' + ink + '" stroke-width="3" stroke-linecap="round"/>';
+    } else if (kind === "pub") {
+      body = '<circle cx="24" cy="24" r="17" fill="#00D45A" stroke="' + ink + '" stroke-width="3"/>' +
+        '<path d="M7 24h34M24 7c6 8 6 26 0 34M24 7c-6 8-6 26 0 34" fill="none" stroke="' + ink + '" stroke-width="2.5"/>';
+    } else if (kind === "green") {
+      body = '<circle cx="24" cy="24" r="16" fill="#16a34a" stroke="' + ink + '" stroke-width="3"/>' +
+        '<path d="M16 24l6 7 12-14" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>';
+    } else if (kind === "yellow") {
+      body = '<circle cx="24" cy="24" r="16" fill="#eab308" stroke="' + ink + '" stroke-width="3"/>' +
+        '<path d="M24 14v13" stroke="#fff" stroke-width="4" stroke-linecap="round"/>' +
+        '<circle cx="24" cy="33" r="2.6" fill="#fff"/>';
+    } else if (kind === "orange") {
+      body = '<circle cx="24" cy="24" r="16" fill="#ea580c" stroke="' + ink + '" stroke-width="3"/>' +
+        '<path d="M24 13l12 21H12z" fill="#fff" stroke="' + ink + '" stroke-width="2"/>';
+    } else if (kind === "red") {
+      body = '<circle cx="24" cy="24" r="16" fill="#dc2626" stroke="' + ink + '" stroke-width="3"/>' +
+        '<path d="M16 16l16 16M32 16L16 32" stroke="#fff" stroke-width="4" stroke-linecap="round"/>';
+    } else if (kind === "me") {
+      body = '<circle cx="24" cy="16" r="8" fill="#00D45A" stroke="' + ink + '" stroke-width="3"/>' +
+        '<path d="M10 42c0-9 6-14 14-14s14 5 14 14z" fill="#00D45A" stroke="' + ink + '" stroke-width="3"/>';
+    } else if (kind === "ai") {
+      body = '<rect x="9" y="12" width="30" height="24" rx="6" fill="#2B59E0" stroke="' + ink + '" stroke-width="3"/>' +
+        '<circle cx="18" cy="24" r="3.4" fill="#fff"/><circle cx="30" cy="24" r="3.4" fill="#fff"/>' +
+        '<path d="M24 12V6M18 40h12" stroke="' + ink + '" stroke-width="3" stroke-linecap="round"/>';
+    } else if (kind === "both") {
+      body = '<circle cx="17" cy="24" r="10" fill="#00D45A" stroke="' + ink + '" stroke-width="3"/>' +
+        '<rect x="24" y="15" width="18" height="18" rx="5" fill="#2B59E0" stroke="' + ink + '" stroke-width="3"/>';
+    } else if (kind === "write") {
+      body = '<path d="M10 38l4-11 20-20 7 7-20 20z" fill="#FFE24B" stroke="' + ink + '" stroke-width="3" stroke-linejoin="round"/>' +
+        '<path d="M8 42h32" stroke="' + ink + '" stroke-width="3" stroke-linecap="round"/>';
+    } else if (kind === "check") {
+      body = '<rect x="9" y="9" width="30" height="30" rx="7" fill="#fff" stroke="' + ink + '" stroke-width="3"/>' +
+        '<path d="M16 24l6 7 12-15" stroke="#00D45A" stroke-width="4.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>';
+    } else if (kind === "again") {
+      body = '<path d="M38 24a14 14 0 1 1-5-10.7" fill="none" stroke="' + ink + '" stroke-width="4"/>' +
+        '<path d="M36 6v10h-10" fill="none" stroke="' + ink + '" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>';
+    } else if (kind === "talk") {
+      body = '<rect x="7" y="10" width="34" height="22" rx="8" fill="#fff" stroke="' + ink + '" stroke-width="3"/>' +
+        '<path d="M16 32l0 8 9-8z" fill="#fff" stroke="' + ink + '" stroke-width="3" stroke-linejoin="round"/>' +
+        '<path d="M15 18h18M15 25h11" stroke="' + ink + '" stroke-width="3" stroke-linecap="round"/>';
+    } else if (kind === "moon") {
+      body = '<path d="M31 6a18 18 0 1 0 11 30A15 15 0 0 1 31 6z" fill="#FFE24B" stroke="' + ink + '" stroke-width="3"/>';
+    } else if (kind === "heart") {
+      body = '<path d="M24 40S8 30 8 19a8 8 0 0 1 16-3 8 8 0 0 1 16 3c0 11-16 21-16 21z" fill="#FF6B5A" stroke="' +
+        ink + '" stroke-width="3" stroke-linejoin="round"/>';
+    } else if (kind === "star") {
+      body = '<path d="M24 6l5 12 13 1-10 9 3 13-11-7-11 7 3-13-10-9 13-1z" fill="#FFE24B" stroke="' +
+        ink + '" stroke-width="3" stroke-linejoin="round"/>';
+    } else {
+      body = '<circle cx="24" cy="24" r="16" fill="#EBE3D2" stroke="' + ink + '" stroke-width="3"/>';
+    }
+    return '<svg class="wi" viewBox="0 0 48 48" width="' + s + '" height="' + s +
+      '" aria-hidden="true" focusable="false">' + body + '</svg>';
+  }
+
+  function wiseScene(kind) {
+    var ink = "#111";
+    var inner = "";
+    if (kind === "axis") {
+      inner = '<rect width="320" height="150" fill="#F6F7F9"/>' +
+        '<path d="M40 122h250M40 122V16" stroke="' + ink + '" stroke-width="3.5" stroke-linecap="round"/>' +
+        '<path d="M282 122l-10-6v12z M40 16l-6 10h12z" fill="' + ink + '"/>' +
+        '<rect x="52" y="76" width="72" height="40" rx="10" fill="#00D45A" stroke="' + ink + '" stroke-width="3"/>' +
+        '<text x="88" y="101" font-size="15" font-weight="800" text-anchor="middle" fill="#111">보조</text>' +
+        '<rect x="130" y="56" width="72" height="40" rx="10" fill="#FFE24B" stroke="' + ink + '" stroke-width="3"/>' +
+        '<text x="166" y="81" font-size="15" font-weight="800" text-anchor="middle" fill="#111">경계</text>' +
+        '<rect x="206" y="30" width="72" height="40" rx="10" fill="#FF6B5A" stroke="' + ink + '" stroke-width="3"/>' +
+        '<text x="242" y="55" font-size="15" font-weight="800" text-anchor="middle" fill="#111">대행</text>' +
+        '<text x="150" y="142" font-size="13" font-weight="700" text-anchor="middle" fill="#6b7280">생각을 누가 했나</text>' +
+        '<text x="14" y="70" font-size="13" font-weight="700" fill="#6b7280" transform="rotate(-90 14 70)">결과물</text>';
+    } else if (kind === "steps3") {
+      inner = '<rect width="320" height="120" fill="#F6F7F9"/>' +
+        '<rect x="12" y="28" width="86" height="60" rx="14" fill="#00D45A" stroke="' + ink + '" stroke-width="3"/>' +
+        '<text x="55" y="64" font-size="15" font-weight="800" text-anchor="middle">내 생각</text>' +
+        '<rect x="117" y="28" width="86" height="60" rx="14" fill="#FFE24B" stroke="' + ink + '" stroke-width="3"/>' +
+        '<text x="160" y="64" font-size="15" font-weight="800" text-anchor="middle">AI 검토</text>' +
+        '<rect x="222" y="28" width="86" height="60" rx="14" fill="#2B59E0" stroke="' + ink + '" stroke-width="3"/>' +
+        '<text x="265" y="64" font-size="15" font-weight="800" text-anchor="middle" fill="#fff">내 말로</text>' +
+        '<path d="M100 58h15M205 58h15" stroke="' + ink + '" stroke-width="4" stroke-linecap="round"/>';
+    } else if (kind === "signal") {
+      inner = '<rect width="320" height="120" fill="#F6F7F9"/>' +
+        '<rect x="16" y="18" width="288" height="84" rx="18" fill="#fff" stroke="' + ink + '" stroke-width="3"/>' +
+        '<circle cx="70" cy="60" r="22" fill="#16a34a" stroke="' + ink + '" stroke-width="3"/>' +
+        '<circle cx="130" cy="60" r="22" fill="#eab308" stroke="' + ink + '" stroke-width="3"/>' +
+        '<circle cx="190" cy="60" r="22" fill="#ea580c" stroke="' + ink + '" stroke-width="3"/>' +
+        '<circle cx="250" cy="60" r="22" fill="#dc2626" stroke="' + ink + '" stroke-width="3"/>';
+    } else if (kind === "room") {
+      inner = '<rect width="320" height="120" fill="#F6F7F9"/>' +
+        '<rect x="16" y="26" width="120" height="68" rx="14" fill="#fff" stroke="' + ink + '" stroke-width="3"/>' +
+        '<text x="76" y="58" font-size="14" font-weight="800" text-anchor="middle">방 코드</text>' +
+        '<text x="76" y="80" font-size="20" font-weight="900" text-anchor="middle" fill="#2B59E0">482913</text>' +
+        '<path d="M144 60h28" stroke="' + ink + '" stroke-width="4" stroke-linecap="round"/>' +
+        '<path d="M166 52l10 8-10 8z" fill="' + ink + '"/>' +
+        '<circle cx="212" cy="48" r="14" fill="#00D45A" stroke="' + ink + '" stroke-width="3"/>' +
+        '<path d="M192 94c0-12 9-18 20-18s20 6 20 18z" fill="#00D45A" stroke="' + ink + '" stroke-width="3"/>' +
+        '<circle cx="272" cy="48" r="14" fill="#FFE24B" stroke="' + ink + '" stroke-width="3"/>' +
+        '<path d="M252 94c0-12 9-18 20-18s20 6 20 18z" fill="#FFE24B" stroke="' + ink + '" stroke-width="3"/>';
+    } else {
+      inner = '<rect width="320" height="120" fill="#F6F7F9"/>';
+    }
+    var vb = kind === "axis" ? "0 0 320 150" : "0 0 320 120";
+    return '<svg class="ws-scene" viewBox="' + vb + '" aria-hidden="true">' + inner + '</svg>';
+  }
+
+
+  function activityIntro() {
+    return "<svg class=\"art\" viewBox=\"0 0 320 180\" role=\"img\" aria-hidden=\"true\" preserveAspectRatio=\"xMidYMid slice\"><rect width=\"320\" height=\"180\" fill=\"#F4EEE0\"/><circle cx=\"62\" cy=\"60\" r=\"30\" fill=\"#FFE24B\" stroke=\"#111111\" stroke-width=\"3\"/><circle cx=\"74\" cy=\"52\" r=\"24\" fill=\"#F4EEE0\"/><rect x=\"30\" y=\"106\" width=\"70\" height=\"46\" rx=\"8\" fill=\"#FFFFFF\" stroke=\"#111111\" stroke-width=\"3\"/><path d=\"M46 130 h38\" stroke=\"#111111\" stroke-width=\"5\" stroke-linecap=\"round\"/><rect x=\"150\" y=\"100\" width=\"30\" height=\"40\" rx=\"6\" fill=\"#00D45A\" stroke=\"#111111\" stroke-width=\"3\"/><rect x=\"188\" y=\"70\" width=\"30\" height=\"70\" rx=\"6\" fill=\"#2B59E0\" stroke=\"#111111\" stroke-width=\"3\"/><rect x=\"226\" y=\"112\" width=\"30\" height=\"28\" rx=\"6\" fill=\"#7B4FE8\" stroke=\"#111111\" stroke-width=\"3\"/><rect x=\"264\" y=\"84\" width=\"30\" height=\"56\" rx=\"6\" fill=\"#FFE24B\" stroke=\"#111111\" stroke-width=\"3\"/><path d=\"M138 148 h164\" stroke=\"#111111\" stroke-width=\"4\" stroke-linecap=\"round\"/><text x=\"138\" y=\"40\" font-size=\"14\" font-weight=\"800\" fill=\"#111111\">내 리포트</text></svg><p><b>10차시 · 사용 습관 자가 점검</b><br>일주일 사용 습관을 익명으로 점검하고 학급 평균만 보여 주며, 디지털 웰빙 약속 3가지를 정한다. 방 코드가 없으면 혼자 체험해 보기로 눌러 봐요.</p>";
   }
 
 
@@ -323,24 +1680,41 @@ border:2.5px solid var(--line);color:var(--ink);font-size:14.5px;font-weight:700
 
   function enter(solo) {
     var room = onlyDigits($("w-room").value, 6);
-    var pw = onlyDigits($("w-pw").value, 4);
     var nick = $("w-nick").value.trim();
     var group = $("w-group").value.trim();
+    var code = onlyDigits($("w-code").value, 4);
+    if (code) {
+      try { localStorage.setItem(CODE_KEY, code); } catch (e) {}
+    }
 
     if (!nick) { $("w-gate-msg").textContent = "닉네임을 써 주세요."; return; }
-    if (!solo && room.length !== 6) { $("w-gate-msg").textContent = "방 코드 6자리를 정확히 써 주세요."; return; }
+    if (!solo && room.length !== 6) { $("w-gate-msg").textContent = "방 번호 6자리를 정확히 써 주세요."; return; }
 
-    me = { room: solo ? "solo" : room, pw: pw, nick: nick, group: group, solo: !!solo };
+    me = { room: solo ? "solo" : room, pw: "", nick: nick, group: group,
+      code: code, solo: !!solo };
     $("w-who").textContent = me.nick + (me.group ? " · " + me.group : "") +
       (me.solo ? " · 혼자 체험" : " · " + me.room);
     $("activity").innerHTML = activityHtml();
     activityInit(loadLocal());
+    addNextButtons();
+    startDraft();
     show("stage");
   }
 
   function loadLocal() {
     try { return JSON.parse(localStorage.getItem(LOCAL_KEY) || "null"); }
     catch (e) { return null; }
+  }
+
+  function startDraft() {
+    if (draftTimer) { clearInterval(draftTimer); }
+    if (typeof activityDraft !== "function") { return; }
+    draftTimer = setInterval(function () {
+      try {
+        var d = activityDraft();
+        if (d) { wiseDraft(d); }
+      } catch (e) {}
+    }, 8000);
   }
 
   function submit() {
@@ -355,18 +1729,21 @@ border:2.5px solid var(--line);color:var(--ink);font-size:14.5px;font-weight:700
     }
 
     var record = {
-      nick: me.nick, group: me.group, app: APP,
+      nick: me.nick, group: me.group, code: me.code, app: APP,
       room: me.room, at: Date.now(), payload: payload
     };
 
-    $("w-sync").textContent = "저장 중...";
+    $("w-sync").innerHTML = '<span class="spin"></span>저장 중';
+    wiseButtonBusy($("w-submit"), true, "보내는 중");
     dbPush(me.room + "/entries", record).then(function () {
+      wiseButtonBusy($("w-submit"), false);
       $("w-sync").textContent = "저장됨";
       $("w-msg").innerHTML = '<span class="ok">제출했어요. 고쳐서 다시 제출해도 괜찮아요.</span>';
       sheetBackup(record);
     })["catch"](function () {
+      wiseButtonBusy($("w-submit"), false);
       $("w-sync").textContent = "저장 실패";
-      $("w-msg").innerHTML = '<span class="warn">인터넷이 불안정해요. 잠시 뒤 다시 제출해 주세요.</span>';
+      $("w-msg").innerHTML = '<span class="warn">인터넷이 불안정해요. 쓴 내용은 이 기기에 남아 있어요. 잠시 뒤 다시 제출해 주세요.</span>';
     });
   }
 
@@ -375,9 +1752,13 @@ border:2.5px solid var(--line);color:var(--ink);font-size:14.5px;font-weight:700
   function teacherMake() {
     var code = makeCode();
     var pw = onlyDigits($("w-pw").value, 4) || "0000";
+    wiseBusy(true, "방을 만드는 중");
     dbPut(code + "/meta", { app: APP, pw: pw, at: Date.now(), locked: false })
-      .then(function () { teacherOpen(code, pw); })
-      ["catch"](function () { alert("방을 만들지 못했어요. 인터넷을 확인해 주세요."); });
+      .then(function () { wiseBusy(false); sheetRoom(code); teacherOpen(code, pw); })
+      ["catch"](function () {
+        wiseBusy(false);
+        alert("방을 만들지 못했어요. 인터넷을 확인해 주세요.");
+      });
   }
 
   function teacherOpen(code, pw) {
@@ -386,6 +1767,7 @@ border:2.5px solid var(--line);color:var(--ink);font-size:14.5px;font-weight:700
     $("t-pw").textContent = "비밀번호 " + (pw || "-") + " · 이 화면을 닫아도 방은 사라지지 않아요.";
     $("t-room").className = "";
     $("t-board").className = "card";
+    $("t-summary").innerHTML = wiseSpinner("제출을 불러오는 중이에요", true) + wiseSkeleton(3);
     teacherRefresh();
     if (timer) { clearInterval(timer); }
     timer = setInterval(teacherRefresh, 3000);
@@ -404,10 +1786,35 @@ border:2.5px solid var(--line);color:var(--ink);font-size:14.5px;font-weight:700
       for (var n in latest) { if (latest.hasOwnProperty(n)) { list.push(latest[n]); } }
 
       $("t-count").textContent = list.length + "명";
+      $("t-note").textContent = noteFor(list, rows.length);
       $("t-summary").innerHTML = teacherSummary(list);
       $("t-table").innerHTML = teacherTable(list);
       window.__wiseRows = list;
+      if ($("present").className === "") { paintPresent(list); }
     })["catch"](function () {});
+  }
+
+  function noteFor(list, tries) {
+    if (!list.length) { return "아직 제출이 없어요. 학생에게 방 코드를 알려 주세요."; }
+    var groups = {}, n = 0;
+    for (var i = 0; i < list.length; i++) {
+      var g = list[i].group || "모둠 없음";
+      if (!groups[g]) { groups[g] = 0; n++; }
+      groups[g] += 1;
+    }
+    var last = 0;
+    for (var k = 0; k < list.length; k++) { if (list[k].at > last) { last = list[k].at; } }
+    return "모둠 " + n + "개 · 제출 시도 " + tries + "회 · 마지막 제출 " +
+      new Date(last).toLocaleTimeString("ko-KR");
+  }
+
+  function paintPresent(list) {
+    var html = "";
+    try {
+      html = (typeof presentHtml === "function") ? presentHtml(list) : teacherSummary(list);
+    } catch (e) { html = teacherSummary(list); }
+    $("p-title").textContent = "우리 반 결과 · " + list.length + "명";
+    $("p-body").innerHTML = html;
   }
 
   function teacherTable(list) {
@@ -450,7 +1857,11 @@ border:2.5px solid var(--line);color:var(--ink);font-size:14.5px;font-weight:700
   $("w-solo").onclick = function () { enter(true); };
   $("w-teacher").onclick = function () { show("teacher"); };
   $("w-submit").onclick = submit;
-  $("w-leave").onclick = function () { if (timer) { clearInterval(timer); } show("gate"); };
+  $("w-leave").onclick = function () {
+    if (timer) { clearInterval(timer); }
+    if (draftTimer) { clearInterval(draftTimer); }
+    show("gate");
+  };
 
   $("t-make").onclick = teacherMake;
   $("t-open").onclick = function () {
@@ -460,6 +1871,16 @@ border:2.5px solid var(--line);color:var(--ink);font-size:14.5px;font-weight:700
   $("t-back").onclick = function () { if (timer) { clearInterval(timer); } show("gate"); };
   $("t-refresh").onclick = teacherRefresh;
   $("t-csv").onclick = download;
+  $("t-detail").onclick = function () {
+    var open = $("t-wrap").className.indexOf("hide") < 0;
+    $("t-wrap").className = open ? "scroll hide" : "scroll";
+    this.textContent = open ? "낱낱이 보기 켜기" : "낱낱이 보기 끄기";
+  };
+  $("t-present").onclick = function () {
+    paintPresent(window.__wiseRows || []);
+    show("present");
+  };
+  $("p-close").onclick = function () { show("teacher"); };
   $("t-lock").onclick = function () {
     dbPut(me.room + "/meta/locked", true).then(function () { alert("방을 잠갔어요."); });
   };
@@ -472,6 +1893,46 @@ border:2.5px solid var(--line);color:var(--ink);font-size:14.5px;font-weight:700
     } else { fallbackCopy(code, done); }
   };
 
+  /* 상단바는 어느 화면에서나 계속 보인다. 링크는 새 창으로 열어 삽입 화면을 가두지 않는다. */
+  try {
+    var savedCode = localStorage.getItem(CODE_KEY);
+    if (savedCode && $("w-code")) { $("w-code").value = savedCode; }
+  } catch (e) {}
+
+  /* 미리보기 모드. 주소에 ?shot=화면이름 을 붙이면 둘러보기로 들어가 그 화면을 연다.
+     교사 안내 자료의 화면 캡처를 자동으로 뜨기 위한 것이다. fill=1 이면 예시값을 채운다. */
+  function shotMode() {
+    var q = "";
+    try { q = window.location && window.location.search ? window.location.search : ""; } catch (e) { return; }
+    if (q.indexOf("shot=") < 0) { return; }
+    var val = q.split("shot=")[1].split("&")[0];
+    try { val = decodeURIComponent(val); } catch (e) {}
+    $("w-nick").value = "미리보기";
+    enter(true);
+    if (q.indexOf("fill=1") >= 0 && typeof activityAutofill === "function") {
+      try { activityAutofill(); } catch (e) {}
+    }
+    if (val && val !== "stage") {
+      try { wiseGo(val); } catch (e) {}
+    }
+  }
+
+  try { shotMode(); } catch (e) {}
+
+  $("w-restart").onclick = function () {
+    if (timer) { clearInterval(timer); }
+    if (draftTimer) { clearInterval(draftTimer); }
+    show("gate");
+  };
+
+  /* 입장 화면에 이 활동을 소개하는 그림을 깐다. 혼자 열어 본 학생을 위한 것이다. */
+  if (typeof activityIntro === "function") {
+    try {
+      $("w-intro").innerHTML = activityIntro();
+      $("w-intro").className = "intro";
+    } catch (e) {}
+  }
+
   /* 자동 검사용 통로. 수업 화면에는 영향이 없다. */
   if (typeof window !== "undefined") {
     window.__wiseTest = {
@@ -480,6 +1941,7 @@ border:2.5px solid var(--line);color:var(--ink);font-size:14.5px;font-weight:700
       activityInit: activityInit,
       activityCollect: activityCollect,
       teacherSummary: teacherSummary,
+      presentHtml: (typeof presentHtml === "function") ? presentHtml : null,
       activityAutofill: (typeof activityAutofill === "function") ? activityAutofill : null,
       setMe: function (v) { me = v; }
     };

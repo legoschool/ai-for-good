@@ -9,6 +9,12 @@ import shutil
 import sys
 
 import tasks as T
+import make_admin
+import make_guide
+import make_qr
+import make_refs
+import make_view
+import site_art as ART
 from site_css import CSS, DEFS, DOODLES, RIBBON
 
 T.setup_console()
@@ -23,12 +29,16 @@ def esc(s):
 
 NAV = [
     ("index.html", "홈"),
+    ("browse.html", "둘러보기"),
     ("module/M1.html", "발견"),
     ("module/M2.html", "판단"),
     ("module/M3.html", "실천"),
     ("skills.html", "인간중심 사고"),
     ("apps.html", "12차시 웹앱"),
+    ("guide/index.html", "사용 안내"),
+    ("refs.html", "참고자료"),
     ("survey.html", "자기인식 진단"),
+    ("admin.html", "관리자"),
     ("about.html", "소개"),
 ]
 
@@ -61,10 +71,14 @@ def page(title, body, depth=0, current="", data=None):
 </div></header>
 %s
 <footer><div class="wrap">
-  <p><strong>%s</strong></p>
-  <p>%s</p>
-  <p>%s</p>
-  <p>산출물 저작권은 연구회에 귀속되며 재단이 CC BY-NC-SA로 공개합니다. 수업 자료로 자유롭게 내려받아 고쳐 쓰실 수 있습니다.</p>
+  <details class="credit">
+    <summary><strong>%s</strong><span class="more">만든 사람과 저작권 보기</span></summary>
+    <div class="credit-body">
+      <p>%s</p>
+      <p>%s</p>
+      <p>산출물 저작권은 연구회에 귀속되며 재단이 CC BY-NC-SA로 공개합니다. 수업 자료로 자유롭게 내려받아 고쳐 쓰실 수 있습니다.</p>
+    </div>
+  </details>
 </div></footer>
 </body>
 </html>
@@ -81,10 +95,10 @@ def keyvis(lesson, module):
     head, _, tail = know.rpartition(", ")
     if not head:
         head, tail = "", know
-    return (u'<div class="keyvis" style="--kv:%s">'
+    return (u'<div class="keyvis" style="--kv:%s">%s'
             u'<span class="kv-tag">%s</span><span class="kv-mark">WISE %d차시</span>'
             u'<p class="kv-cap">%s<b>%s</b></p></div>'
-            % (module["color"], esc(focus), lesson["no"],
+            % (module["color"], ART.lesson_art(lesson["no"], "kv-art"), esc(focus), lesson["no"],
                esc(head + ", " if head else ""), esc(tail)))
 
 
@@ -122,9 +136,19 @@ def lesson_ticket(lesson, data, depth=1):
     %s
   </div>
   <div class="card-foot">
-    <p class="q">이 차시 수업 자료가 필요하다면?</p>
+    <p class="q">화면에서 바로 보기</p>
     <div class="foot-row">
-      <span class="t">지도안 · 활동지 · 수업용 PPT</span>
+      <span class="t">내려받지 않고 눌러서 봅니다</span>
+      <div class="pills">
+        <a class="pill" href="%sdeck/%s.html">수업 슬라이드</a>
+        <a class="pill" href="%sprint/%s_지도안.html">지도안 보기</a>
+        <a class="pill" href="%sprint/%s_활동지.html">활동지 보기</a>
+        <a class="pill ghost" href="%swebapp/%s/index.html">웹앱 열기</a>
+      </div>
+    </div>
+    <p class="q" style="margin-top:16px">파일로 내려받기</p>
+    <div class="foot-row">
+      <span class="t">한글 · 파워포인트로 고쳐 쓰실 수 있습니다</span>
       <div class="pills">
         <a class="pill" href="%sfiles/WISE_%s_지도안.hwpx" download>지도안</a>
         <a class="pill" href="%sfiles/WISE_%s_활동지.hwpx" download>활동지</a>
@@ -136,6 +160,7 @@ def lesson_ticket(lesson, data, depth=1):
 </article>""" % (RIBBON, lesson["no"], esc(lesson["shortTitle"]), esc(lesson["problem"]),
                  keyvis(lesson, m), up, lesson["id"], esc(lesson["webapp"]["name"]),
                  timeline(lesson),
+                 up, lesson["id"], up, lesson["id"], up, lesson["id"], up, lesson["id"],
                  up, lesson["id"], up, lesson["id"], up, lesson["id"], up, lesson["id"])
 
 
@@ -167,6 +192,11 @@ def home(data):
     a('<p class="lede">%s · 초등 5·6학년 12차시</p>' % esc(prog["name"]))
     a('<div class="facts"><span>지도안 12편</span><span>활동지 12종</span>'
       '<span>수업용 PPT 12세트</span><span>수업 웹앱 12개</span></div>')
+    a(ART.hero_art())
+    a('<p style="text-align:center;margin-top:18px">'
+      '<a class="pill" href="browse.html" style="display:inline-block;border:2.5px solid var(--line);'
+      'background:var(--green);padding:12px 22px;font-weight:900;color:var(--ink)">'
+      '먼저 둘러보기</a></p>')
     a("</div></div>")
 
     a('<section class="band"><div class="wrap"><div class="band-head">'
@@ -339,6 +369,27 @@ def lesson_page(l, data):
 
     a('<div class="panel"><h2>기기가 없어도 함께합니다</h2><p>%s</p></div>' % esc(l["alternative"]))
 
+    a('<div class="panel"><h2>관련 영상과 뉴스</h2>')
+    a('<p style="color:var(--muted);font-size:15px">%s</p>' % esc(l.get("refHint", "")))
+    a('<div class="refs">')
+    mine = [r for r in data.get("references", []) if r.get("lesson") == l["id"]]
+    common = [r for r in data.get("references", []) if not r.get("lesson")]
+    for ref in mine + common:
+        a('<div class="ref"><span class="kind">%s</span>%s<br>'
+          '<a href="%s" target="_blank" rel="noopener">%s</a><p>%s</p></div>'
+          % (esc(ref["kind"]),
+             ('<span class="kind" style="background:var(--sun)">%s</span>' % esc(ref["source"]))
+             if ref.get("source") else "",
+             esc(ref["url"]), esc(ref["title"]), esc(ref["note"])))
+    for n in range(max(0, l.get("refSlots", 2) - len(mine))):
+        a('<div class="refslot"><strong>이 차시에 쓸 자료 %d</strong><br>'
+          '선생님이 고른 영상이나 기사 주소를 여기에 적어 넣습니다. '
+          '수업 전에 한 번 열어 보고, 학생 이름과 얼굴이 나오지 않는 것으로 고릅니다.</div>' % (n + 1))
+    a('</div>')
+    a('<div class="note" style="margin-top:14px">영상과 기사는 자주 바뀝니다. '
+      '수업 하루 전에 링크가 살아 있는지 확인하고, 저작권 표시를 함께 보여 줍니다.</div>')
+    a('</div>')
+
     a('<div class="panel"><h2>지도 유의점</h2><ul>')
     for c in l["cautions"]:
         a("<li>%s</li>" % esc(c))
@@ -356,6 +407,73 @@ def lesson_page(l, data):
     if l["no"] < 12:
         a('<a href="L%02d.html">다음 차시</a>' % (l["no"] + 1))
     a("</div></div></section>")
+    return "".join(b)
+
+
+def browse_page(data):
+    """선생님도 학생도 그냥 둘러볼 수 있는 쪽. 그림으로 먼저 보여 준다."""
+    b = []
+    a = b.append
+
+    a('<section class="band"><div class="wrap"><div class="band-head">'
+      '<span class="band-note">수업을 준비하는 선생님도, 궁금한 학생도 이 쪽에서 시작합니다</span>'
+      '<h2>열두 시간을 미리 둘러보기</h2>'
+      '<p>차시마다 무엇을 하는지 그림으로 보고, 방 코드 없이도 활동을 직접 눌러 볼 수 있습니다.</p></div>')
+
+    a('<div class="two">')
+    a('<div class="who"><span class="badge">선생님이라면</span>'
+      '<h3>수업 하루 전 5분</h3>'
+      '<ol><li>아래에서 그날 차시 카드를 찾습니다.</li>'
+      '<li>자세히 보기를 눌러 지도안, 활동지, PPT를 내려받습니다.</li>'
+      '<li>체험해 보기로 학생이 볼 화면을 미리 열어 봅니다.</li>'
+      '<li>수업에서는 선생님 화면에서 방을 만들어 코드를 나눠 줍니다.</li></ol></div>')
+    a('<div class="who"><span class="badge">학생이라면</span>'
+      '<h3>방 코드가 없어도 괜찮아요</h3>'
+      '<ol><li>궁금한 차시 카드를 눌러요.</li>'
+      '<li>체험해 보기를 누르고 닉네임만 쓰면 돼요.</li>'
+      '<li>혼자 체험한 내용은 내 기기에만 남아요.</li>'
+      '<li>이름, 사진, 친구 이야기는 넣지 않아요.</li></ol></div>')
+    a('</div>')
+
+    a('<div class="band-head" style="margin-top:44px"><h2>열두 개의 활동</h2>'
+      '<p>그림을 보고 무엇을 하는 시간인지 짐작해 봅시다.</p></div>')
+    a('<div class="gallery">')
+    for l in data["lessons"]:
+        m = data["modules"][l["module"] - 1]
+        w = l["webapp"]
+        a('<article class="gcard">'
+          '<div class="shot"><span class="tagno">%d차시 · %s</span>%s</div>'
+          '<div class="body"><h3>%s</h3>'
+          '<p class="ask">%s</p><p>%s</p>'
+          '<div class="go"><a class="main" href="webapp/%s/index.html">체험해 보기</a>'
+          '<a href="deck/%s.html">슬라이드</a>'
+          '<a href="lesson/%s.html">자세히 보기</a></div></div></article>'
+          % (l["no"], esc(m["name"]), ART.lesson_art(l["no"]),
+             esc(w["name"]), esc(l["problem"]), esc(w["purpose"]),
+             l["id"], l["id"], l["id"]))
+    a('</div></div></section>')
+
+    a('<section class="band tight" style="background:var(--cream-d);'
+      'border-top:2px solid var(--line);border-bottom:2px solid var(--line)">'
+      '<div class="wrap"><div class="band-head">'
+      '<h2>모든 차시에 들어 있는 세 걸음</h2>'
+      '<p>먼저 내 생각을 만들고, 그다음에 AI에게 묻고, 마지막에 내 말로 다시 씁니다.</p></div>')
+    a(ART.flow_art())
+    a('</div></section>')
+
+    a('<section class="band"><div class="wrap"><div class="band-head">'
+      '<h2>우리가 쓰는 신호등</h2>'
+      '<p>되고 안 되고 둘로 나누지 않습니다. 조건을 붙여 판단합니다.</p></div>')
+    a('<div class="sigrow">')
+    for s in data["signals"]:
+        a('<div class="cell">%s<h3>%s</h3><p>%s</p></div>'
+          % (ART.signal_art(s["color"], s["student"]), esc(s["student"]), esc(s["meaning"])))
+    a('</div>')
+    a('<div class="panel" style="margin-top:26px"><h2>둘러본 뒤에</h2>'
+      '<p>수업 전후로 같은 여덟 문항에 답해 보면 무엇이 달라졌는지 숫자로 볼 수 있습니다.</p>'
+      '<div class="dl"><a href="webapp/common/index.html">자기인식 설문 열어 보기'
+      '<small>사전·사후 공용 · 닉네임만 씁니다</small></a></div></div>')
+    a('</div></section>')
     return "".join(b)
 
 
@@ -511,6 +629,8 @@ def main():
               page("%d차시 %s" % (l["no"], l["shortTitle"]), lesson_page(l, data),
                    1, "module/M%d.html" % l["module"], data))
 
+    write(os.path.join(SITE, "browse.html"),
+          page("둘러보기", browse_page(data), 0, "browse.html", data))
     write(os.path.join(SITE, "skills.html"),
           page("인간중심 사고 12역량", skills_page(data), 0, "skills.html", data))
     write(os.path.join(SITE, "apps.html"), page("12차시 웹앱", apps_page(data), 0, "apps.html", data))
@@ -518,10 +638,16 @@ def main():
           page("AI적정활용 자기인식 진단", survey_page(data), 0, "survey.html", data))
     write(os.path.join(SITE, "about.html"), page("프로그램 소개", about_page(data), 0, "about.html", data))
 
+    make_qr.build(data, SITE)
+    views = make_view.build_all(data, SITE)
+    make_admin.build(data, SITE)
+    guides = make_guide.build(data, SITE)
+    make_refs.build(data, SITE)
     n = copy_downloads(data)
     print("사이트를 만들었다 : %s" % SITE)
-    print("  페이지 %d개 (홈 1 · 모듈 3 · 차시 12 · 역량 1 · 웹앱 1 · 진단 1 · 소개 1), 내려받기 파일 %d개"
-          % (1 + 3 + 12 + 4, n))
+    print("  화면에서 바로 보는 자료 %d쪽 (슬라이드 12 · 지도안 12 · 활동지 12) · 관리자 화면 1쪽" % views)
+    print("  페이지 %d개 (홈 1 · 둘러보기 1 · 모듈 3 · 차시 12 · 역량 1 · 웹앱 1 · 진단 1 · 소개 1), "
+          "내려받기 파일 %d개" % (1 + 1 + 3 + 12 + 4, n))
     return 0
 
 

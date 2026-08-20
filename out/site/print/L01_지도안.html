@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>1차시 지도안 · AI는 어떻게 똑똑해질까</title>
+<style>
+:root{--cream:#F4EEE0;--cream-d:#EBE3D2;--paper:#fff;--ink:#101010;--ink2:#33312D;
+--muted:#6F6A61;--line:#111;--green:#00D45A;--blue:#2B59E0;--purple:#7B4FE8;--sun:#FFE24B;
+--sans:"Pretendard","Malgun Gothic","Apple SD Gothic Neo","Noto Sans KR",system-ui,sans-serif}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--cream);color:var(--ink2);font-family:var(--sans);line-height:1.7}
+h1,h2,h3,h4{margin:0;color:var(--ink);line-height:1.25;letter-spacing:-.03em;font-weight:800}
+p{margin:0}
+a{color:var(--blue)}
+.tag{display:inline-block;border:2.5px solid var(--line);border-radius:999px;padding:4px 14px;
+font-size:13px;font-weight:800;background:var(--sun)}
+.tag.g{background:var(--green)}
+.tag.b{background:var(--blue);color:#fff}
+.tag.p{background:var(--purple);color:#fff}
+.tag.w{background:#fff}
+
+body{background:var(--cream-d);padding:18px}
+.sheet{width:210mm;min-height:297mm;margin:0 auto 18px;background:#fff;border:3px solid var(--line);
+border-radius:8px;padding:16mm 14mm;font-size:13.5px}
+.sheet h1{font-size:26px}
+.sheet h2{font-size:18px;margin:22px 0 10px;padding-bottom:6px;border-bottom:3px solid var(--line)}
+.sheet h3{font-size:15px;margin:14px 0 6px}
+.head{display:flex;gap:16px;align-items:center;border:3px solid var(--line);border-radius:16px;
+padding:14px 18px;background:var(--cream)}
+.head .no{font-size:34px;font-weight:900;color:var(--green);-webkit-text-stroke:2px var(--line);
+line-height:1;min-width:96px}
+.head .art{width:150px;border:2.5px solid var(--line);border-radius:12px;overflow:hidden;background:#fff}
+.head .art svg{display:block;width:100%;height:84px}
+table{width:100%;border-collapse:collapse;margin-top:8px;font-size:12.5px}
+th,td{border:1.5px solid var(--line);padding:7px 9px;vertical-align:top;text-align:left}
+th{background:var(--cream);font-weight:800;color:var(--ink)}
+td.stage{background:var(--sun);font-weight:800;text-align:center;width:52px}
+.qa{margin:0 0 6px}
+.qa .q{font-weight:800;color:var(--ink)}
+.qa .a{color:var(--muted)}
+.note{border:2.5px solid var(--line);border-radius:12px;background:var(--sun);padding:12px 14px;
+margin-top:12px;font-size:12.5px}
+.note.g{background:#E6F7EC}
+.note.b{background:#EEF2FF}
+ul{margin:6px 0;padding-left:18px}
+li{margin:3px 0}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.foot{margin-top:22px;border-top:2px solid var(--line);padding-top:8px;color:var(--muted);font-size:11.5px}
+
+/* 활동지 */
+.ws .band{border:3px solid var(--line);border-radius:16px;padding:14px 16px;margin-top:14px;background:#fff}
+.ws .band.sun{background:#FFFBEA}
+.ws .band.green{background:#F0FCF5}
+.ws .band h3{display:flex;gap:8px;align-items:center;font-size:16px}
+.ws .band h3 span.n{background:var(--green);border:2.5px solid var(--line);border-radius:999px;
+width:28px;height:28px;display:inline-flex;align-items:center;justify-content:center;font-size:14px}
+.lines{margin-top:10px}
+.lines div{border-bottom:1.5px dashed var(--line);height:26px}
+.boxes{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));margin-top:10px}
+.boxes .b{border:2.5px solid var(--line);border-radius:12px;min-height:74px;padding:8px 10px;
+font-size:12px;color:var(--muted)}
+.checks{margin-top:10px;display:flex;flex-direction:column;gap:6px}
+.checks label{display:flex;gap:8px;align-items:flex-start;font-size:13px}
+.checks i{display:inline-block;width:16px;height:16px;border:2.5px solid var(--line);border-radius:4px;
+flex:none;margin-top:3px}
+.sample{margin-top:8px;border:2px dashed var(--line);border-radius:10px;background:var(--cream);
+padding:8px 10px;font-size:12.5px;color:var(--ink2)}
+.sample span{display:inline-block;background:var(--sun);border:2px solid var(--line);border-radius:999px;
+padding:1px 8px;font-size:11px;font-weight:800;margin-right:8px}
+.namebar{display:flex;gap:10px;margin-top:12px}
+.namebar div{flex:1;border:2.5px solid var(--line);border-radius:10px;padding:8px 10px;font-size:12px;
+color:var(--muted)}
+@media print{
+ body{background:#fff;padding:0}
+ .sheet{border:none;border-radius:0;margin:0;width:auto;min-height:auto;padding:10mm 8mm}
+ .sheet + .sheet{page-break-before:always}
+ .toolbar{display:none}
+}
+.toolbar{position:sticky;top:0;z-index:20;max-width:210mm;margin:0 auto 12px;display:flex;
+gap:8px;flex-wrap:wrap;background:var(--cream-d);padding:10px 0}
+.toolbar a,.toolbar button{font:inherit;font-size:14px;font-weight:800;border:2.5px solid var(--line);
+border-radius:10px;background:#fff;padding:9px 14px;cursor:pointer;text-decoration:none;color:var(--ink)}
+.toolbar a:hover,.toolbar button:hover{background:var(--sun)}
+
+.appuse{background:#EAF4FF;border:2px solid var(--line);border-radius:10px;padding:8px 10px;
+margin:0 0 8px;font-size:12.5px;font-weight:700;color:var(--ink)}
+.appuse-s{margin:4px 0 0;font-size:11.5px;font-weight:800;color:var(--blue)}
+/* 활동지는 학생이 본다. 초등 5·6학년이 읽을 크기로 키운다. */
+.sheet.ws{font-size:16.5px;line-height:1.85}
+.ws h1{font-size:32px}
+.ws .band{padding:18px 20px;margin-top:18px}
+.ws .band h3{font-size:21px;gap:10px}
+.ws .band h3 span.n{width:34px;height:34px;font-size:19px}
+.ws .band p{font-size:16.5px;line-height:1.8}
+.ws .lead{font-size:18px;font-weight:800;color:var(--ink);margin:2px 0 10px}
+.ws .sample{font-size:16px;background:#FFFBEA;border:2.5px solid var(--line);border-radius:12px;
+padding:10px 12px;margin:10px 0}
+.ws .sample span{display:inline-block;background:var(--sun);border:2px solid var(--line);
+border-radius:999px;padding:2px 10px;font-size:14px;font-weight:900;margin-right:8px}
+.ws .checks label{font-size:17px;gap:10px;align-items:center}
+.ws .checks i{width:22px;height:22px;border-radius:6px}
+.ws .namebar div{font-size:15px;padding:12px 12px}
+.ws .rule{margin:34px 0;border-bottom-width:2.5px}
+.ws .rule:first-of-type{margin-top:20px}
+.ws .boxes .b{font-size:15px;min-height:78px}
+.ws table{font-size:15px}
+.ws .appbox{padding:16px 18px}
+.ws .appbox p{font-size:14.5px}
+@media print{.sheet.ws{font-size:16px}.ws .band h3{font-size:20px}}
+
+.appbox{border:2px solid #111;border-radius:12px;padding:14px 16px;margin:12px 0;background:#FCFBF7}
+.appbox .row{display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.appbox img.qr{border:2px solid #111;border-radius:10px;background:#fff;padding:4px}
+.appshots{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:10px}
+.appshots figure{margin:0}
+.appshots img{width:100%;height:150px;object-fit:cover;object-position:top center;
+border:2px solid #111;border-radius:10px;background:#fff}
+.appshots figcaption{font-size:12px;font-weight:700;margin-top:4px;text-align:center}
+@media print{.appshots img{height:120px}}
+</style>
+</head>
+<body>
+<div class="toolbar"><a href="../index.html">WISE 홈</a><a href="../lesson/L01.html">1차시 페이지</a><a href="../deck/L01.html">수업 슬라이드</a><a href="L01_활동지.html">활동지</a><a href="../webapp/L01/index.html">웹앱</a><button onclick="window.print()">인쇄하기</button></div><div class="sheet"><div class="head"><div class="no">01</div><div style="flex:1"><h1>AI는 어떻게 똑똑해질까, 데이터로 배우는 AI</h1><p style="margin-top:6px">AI가 어떻게 배우는지 알아보고, AI가 우리의 생각을 도와주는지 대신해 주는지 생각해 봅시다.</p><div class="meta"><span class="tag g">모듈1 WISE 발견</span><span class="tag">실과 1차시</span><span class="tag w">엔트리 인공지능 블록, 교육용 머신러닝 체험 도구</span></div></div><div class="art"><svg class="art" viewBox="0 0 320 180" role="img" aria-hidden="true" preserveAspectRatio="xMidYMid slice"><rect width="320" height="180" fill="#F4EEE0"/><rect x="18" y="40" width="44" height="58" rx="6" fill="#FFFFFF" stroke="#111111" stroke-width="3" transform="rotate(-8 40 69)"/><rect x="34" y="52" width="44" height="58" rx="6" fill="#FFE24B" stroke="#111111" stroke-width="3" transform="rotate(4 56 81)"/><text x="56" y="88" font-size="20" font-weight="800" fill="#111111">?</text><rect x="112" y="52" width="86" height="70" rx="10" fill="#2B59E0" stroke="#111111" stroke-width="3"/><path d="M126 96 h58 M126 82 h44 M126 68 h30" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round"/><path d="M84 86 h22 M198 86 h20" stroke="#111111" stroke-width="5" stroke-linecap="round"/><path d="M100 78 l8 8 -8 8z M214 78 l8 8 -8 8z" fill="#111111"/><rect x="230" y="48" width="62" height="46" rx="6" fill="#00D45A" stroke="#111111" stroke-width="3" transform="rotate(0 261 71)"/><path d="M244 72 l10 11 20 -22" stroke="#111111" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"/><rect x="230" y="104" width="62" height="40" rx="6" fill="#FFFFFF" stroke="#111111" stroke-width="3" transform="rotate(0 261 124)"/><path d="M244 118 l22 20 M266 118 l-22 20" stroke="#FF6B5A" stroke-width="5" stroke-linecap="round"/></svg></div></div><div class="appbox"><div class="row"><img class="qr" src="../assets/qr/L01.svg" width="104" height="104" alt="L01 웹앱 QR 코드"><div style="flex:1;min-width:220px"><strong>★ 웹앱 데이터 실험실</strong><p style="margin:4px 0">카드에 직접 라벨을 붙여 브라우저 안의 분류기를 학습시키고, 시험 카드로 정확도를 확인한 뒤 한쪽 데이터를 줄여 다시 학습시켜 결과가 무너지는 것을 눈으로 본다.</p><p style="margin:4px 0;font-size:13px">주소 : legoschool.github.io/wise-ai/webapp/L01/ · <a href="../webapp/L01/index.html">바로 열기</a> · <a href="../guide/L01.html">사용 안내</a></p><p style="margin:4px 0;font-size:13px">수업 전에 <b>선생님 화면 → 새 방 만들기</b>로 방 번호를 만들고 칠판에 적습니다. 학생은 QR 을 찍어 들어옵니다.</p></div></div><div class="appshots"><figure><img src="../assets/shots/L01_2_hub.png" alt="허브 화면"><figcaption>허브</figcaption></figure><figure><img src="../assets/shots/L01_3_pre.png" alt="pre 화면"><figcaption>pre</figcaption></figure><figure><img src="../assets/shots/L01_4_label.png" alt="이름표 붙이기 화면"><figcaption>이름표 붙이기</figcaption></figure></div></div><h2>1. 학습 목표</h2><ul><li>AI는 사람이 준 데이터로 배우며, 데이터가 치우치면 결과도 치우친다 (지식·이해)</li><li>내가 넣은 데이터에 따라 AI의 분류 결과가 어떻게 달라지는지 관찰·분석하기 (과정·기능)</li><li>AI를 문제 해결의 도구로 적극 활용하려는 자세 (가치·태도)</li></ul><div class="note g"><strong>이 시간의 핵심</strong> 학생이 스스로 판단하고 그 까닭을 말하게 합니다. 교사가 정답을 먼저 말하지 않습니다. 판단이 갈리는 자리가 이 수업의 알맹이입니다.</div><h2>2. 시간 배분</h2><table><tr><th style='width:90px'>시각</th><th style='width:70px'>단계</th><th style='width:56px'>시간</th><th>무엇을 하나</th></tr><tr><td>0분 ~ 5분</td><td class='stage'>도입</td><td>5분</td><td>동기 유발</td></tr><tr><td>5분 ~ 15분</td><td class='stage'>전개 1</td><td>10분</td><td>[활동 1] AI는 어떻게 배우는지 알아보기</td></tr><tr><td>15분 ~ 25분</td><td class='stage'>전개 2</td><td>10분</td><td>[활동 2] 데이터로 AI 가르치기</td></tr><tr><td>25분 ~ 35분</td><td class='stage'>전개 3</td><td>10분</td><td>[활동 3] AI는 도우미일까, 대신해 주는 걸까</td></tr><tr><td>35분 ~ 40분</td><td class='stage'>정리</td><td>5분</td><td>배움 정리</td></tr></table><h2>3. 이 시간에 기르는 힘</h2><table><tr><th style='width:120px'>중점 역량</th><th>지식·이해</th><th>과정·기능</th><th>가치·태도</th></tr><tr><td><strong>비판적 사고</strong></td><td>AI는 사람이 준 데이터로 배우며, 데이터가 치우치면 결과도 치우친다.</td><td>내가 넣은 데이터에 따라 AI의 분류 결과가 어떻게 달라지는지 관찰·분석하기</td><td>AI 결과를 무조건 신뢰하지 않고, 왜 그런 결과가 나왔는지 따져 보려는 자세</td></tr><tr><td><strong>문제해결 사고</strong></td><td>문제의 성격을 파악하고 AI 활용이 적합한지 판단하는 것이 문제 분석이다.</td><td>AI로 해결할 수 있는 문제를 찾고, 데이터를 모아 해결 절차를 구상하기</td><td>AI를 문제 해결의 도구로 적극 활용하려는 자세</td></tr></table><p style="margin-top:6px;color:var(--muted);font-size:12px">보조 역량 : 호기심</p><div class="note b"><strong>AI적정활용 기준</strong> ⑤ 비판적 AI 리터러시와 검증 가능성<br><strong>실행 원칙</strong> 6. 인간-AI 역할 경계 원칙</div><h2>4. 교수·학습 과정</h2><table><tr><th style='width:52px'>단계</th><th style='width:150px'>학습 내용</th><th>교사 발문과 예상 답변</th></tr><tr><td class="stage">도입 5분</td><td><strong>동기 유발</strong></td><td><div class="qa"><p class="q">발문 · (동물 사진) 컴퓨터에게 강아지인지 고양이인지 물으면 정확히 맞힐 수 있을까요?</p><p class="a">예상 답변 · 맞힐 수 있을 것 같습니다.</p><p class="a">예상 답변 · 어떻게 아는지 궁금합니다.</p></div><div class="qa"><p class="q">발문 · ‘인공지능은 어떻게 배울까’ 영상을 봅시다. 컴퓨터는 누구에게 배웠을까요?</p><p class="a">예상 답변 · 사람이 가르쳐 준 것 같습니다.</p><p class="a">예상 답변 · 사진을 아주 많이 본 것 같습니다.</p></div></td></tr><tr><td class="stage"></td><td><strong>학습 문제 확인</strong></td><td><div class="qa"><p class="q">발문 · AI가 어떻게 배우는지 알아보고, AI가 우리의 생각을 도와주는지 대신해 주는지 생각해 봅시다.</p></div></td></tr><tr><td class="stage"></td><td>준비물과 유의점</td><td><ul><li>☆ 동기유발 영상</li><li>★ 학습문제 PPT</li><li>△ 티처스랩 ‘데이터로 세상 읽기’ 발췌</li></ul></td></tr><tr><td class="stage">전개 30분</td><td><strong>[활동 1] AI는 어떻게 배우는지 알아보기</strong></td><td><p class="appuse"><b>★ 웹앱</b> 1단계 나라면 어떻게 맞힐까 화면 · 학생이 여기에 남긴 것이 활동지 1번 칸이 된다.</p><div class="qa"><p class="q">발문 · AI에게 강아지와 고양이를 구분하게 하려면 사람이 무엇을 해 주어야 할까요?</p><p class="a">예상 답변 · 사진을 많이 보여 주고, 무엇이 무엇인지 이름표를 붙여 주어야 합니다.</p></div><div class="qa"><p class="q">발문 · 머신러닝 체험 도구에 사진을 모으고 라벨을 붙여 봅시다. 이 사진을 무엇이라 부를까요?</p><p class="a">예상 답변 · AI를 가르치는 ‘학습 데이터’입니다.</p></div></td></tr><tr><td class="stage"></td><td><strong>[활동 2] 데이터로 AI 가르치기</strong></td><td><p class="appuse"><b>★ 웹앱</b> 2단계 카드 20장에 라벨 붙이기 화면 · 학생이 여기에 남긴 것이 활동지 2번 칸이 된다.</p><div class="qa"><p class="q">발문 · 모델을 학습시키고 새 사진으로 테스트해 봅시다. 한쪽 데이터를 적게 넣어 다시 학습시키면 어떻게 될까요?</p><p class="a">예상 답변 · 데이터가 적은 쪽을 자주 틀렸습니다. 배운 적이 없기 때문입니다.</p></div><div class="qa"><p class="q">발문 · AI를 똑똑하게 만드는 것은 누구일까요?</p><p class="a">예상 답변 · 데이터를 모으고 무엇을 가르칠지 정하는 사람입니다.</p></div></td></tr><tr><td class="stage"></td><td><strong>[활동 3] AI는 도우미일까, 대신해 주는 걸까</strong></td><td><p class="appuse"><b>★ 웹앱</b> 3단계 학습시키고 시험 보기 화면 · 학생이 여기에 남긴 것이 활동지 3번 칸이 된다.</p><div class="qa"><p class="q">발문 · 사람이 한 일과 AI가 한 일을 나누어 봅시다. AI는 도와주나요, 대신해 주나요?</p><p class="a">예상 답변 · 판단은 사람이 했으므로 AI는 우리를 도와주는 도구입니다.</p></div></td></tr><tr><td class="stage"></td><td>준비물과 유의점</td><td><ul><li>☆ 머신러닝 체험 도구(엔트리 등)</li><li>★ 데이터 수집·라벨링 활동지</li><li>★ 웹앱 데이터 실험실</li><li>△ ‘데이터→결과 변화’ 발견에 초점</li><li>△ 개인정보가 담긴 사진은 쓰지 않도록 안내</li></ul></td></tr><tr><td class="stage">정리 5분</td><td><strong>배움 정리</strong></td><td><div class="qa"><p class="q">발문 · 오늘 알게 된 점을 한 문장으로 말해 봅시다.</p><p class="a">예상 답변 · AI는 사람이 준 데이터로 배우고, 데이터에 따라 결과가 달라집니다.</p></div></td></tr><tr><td class="stage"></td><td><strong>다음 차시 예고</strong></td><td><div class="qa"><p class="q">발문 · 다음 시간에는 AI의 답이 늘 옳은지 확인해 봅시다.</p></div></td></tr><tr><td class="stage"></td><td>준비물과 유의점</td><td><ul><li>★ 배움 공책</li><li>△ 사람의 판단 역할에 초점</li></ul></td></tr></table><h2>5. 판서 계획</h2><div class="note b">학습 문제 : AI가 어떻게 배우는지 알아보고, AI가 우리의 생각을 도와주는지 대신해 주는지 생각해 봅시다.<br>활동 1. AI는 어떻게 배우는지 알아보기<br>활동 2. 데이터로 AI 가르치기<br>활동 3. AI는 도우미일까, 대신해 주는 걸까<br>정리 : 오늘 알게 된 점을 한 문장으로 말해 봅시다.<br>오늘 쓰는 웹앱 : 데이터 실험실</div><h2>6. 웹앱 운영</h2><p><strong>데이터 실험실</strong> · 카드에 직접 라벨을 붙여 브라우저 안의 분류기를 학습시키고, 시험 카드로 정확도를 확인한 뒤 한쪽 데이터를 줄여 다시 학습시켜 결과가 무너지는 것을 눈으로 본다.</p><ul><li>1단계 나라면 어떻게 맞힐까</li><li>2단계 카드 20장에 라벨 붙이기</li><li>3단계 학습시키고 시험 보기</li><li>4단계 한쪽 데이터를 줄이면</li><li>5단계 사람이 한 일과 AI가 한 일</li></ul><table><tr><th style='width:40px'>순서</th><th style='width:120px'>단계</th><th style='width:44px'>시간</th><th>무엇을 하나</th><th>교사 발문</th></tr><tr><td>1</td><td><strong>나라면 어떻게 맞힐까</strong></td><td>4분</td><td>카드 세 장을 보고 학생이 먼저 맞혀 본다. AI를 켜기 전에 사람이 무엇을 보고 판단하는지 말로 꺼낸다.</td><td>여러분은 무엇을 보고 강아지인지 고양이인지 정했나요?<br><span style='color:var(--muted)'>귀 모양과 몸집을 보고 정했습니다.</span></td></tr><tr><td>2</td><td><strong>카드 20장에 라벨 붙이기</strong></td><td>10분</td><td>특징만 그려진 카드 20장에 강아지 또는 고양이 이름표를 붙인다. 이것이 학습 데이터가 된다.</td><td>이 카드 더미를 무엇이라고 부를까요?<br><span style='color:var(--muted)'>AI를 가르치는 학습 데이터입니다.</span></td></tr><tr><td>3</td><td><strong>학습시키고 시험 보기</strong></td><td>11분</td><td>학습 버튼을 누르면 브라우저 안에서 진짜 모델이 학습한다. 시험 카드 여섯 장으로 정확도를 재고, 모델이 어떤 특징을 근거로 삼았는지 막대로 확인한다.</td><td>AI는 무엇을 보고 판단했나요?<br><span style='color:var(--muted)'>귀 모양을 가장 크게 보고 판단했습니다.</span></td></tr><tr><td>4</td><td><strong>한쪽 데이터를 줄이면</strong></td><td>10분</td><td>고양이 카드를 줄여 다시 학습시킨다. 정확도가 떨어지고 어떤 시험 카드가 틀리게 바뀌는지 표시된다.</td><td>왜 고양이를 자주 틀리게 되었을까요?<br><span style='color:var(--muted)'>고양이를 적게 배웠기 때문입니다.</span></td></tr><tr><td>5</td><td><strong>사람이 한 일과 AI가 한 일</strong></td><td>5분</td><td>수업에서 있었던 일 열 가지를 사람 칸과 AI 칸으로 나눈다.</td><td>AI를 똑똑하게 만든 것은 누구일까요?<br><span style='color:var(--muted)'>데이터를 모으고 이름표를 붙인 사람입니다.</span></td></tr></table><div class="note g"><strong>교사 화면</strong> 학급 평균 정확도, 데이터를 줄였을 때 평균 정확도, 라벨이 갈린 카드, 배움 문장 모음<br><strong>방 만들기</strong> 선생님 화면 → 새 방 만들기 → 여섯 자리 코드를 복사해 학생에게 알려 줍니다. 수업이 끝나면 방 잠그기를 누릅니다.</div><h2>7. 기기가 없어도 함께하는 길</h2><div class="note">기기가 부족하면 교사 화면 하나로 함께 진행한다. 인쇄한 카드 20장에 모둠이 이름표를 붙이고, 교사가 앞에서 학습과 시험을 눌러 결과를 함께 본다.</div><h2>8. 지도 유의점</h2><ul><li>정확도 경쟁으로 흐르지 않게 한다. 틀린 까닭을 데이터에서 찾는 것이 목표다.</li><li>라벨이 갈린 카드는 누가 맞았는지 가리지 않고, 사람마다 다르게 볼 수 있음을 짚는다.</li><li>개인정보가 담긴 사진은 쓰지 않는다. 이 앱은 사진을 올릴 수 없게 만들었다.</li></ul><div class="note"><strong>개인정보 지도</strong> 이름, 사진, 친구 이야기를 넣지 않도록 활동 전에 한 번 짚어 줍니다. 웹앱은 닉네임만 받고 실명과 학번을 묻지 않습니다.</div><h2>9. 학생 활동지 작성 예시</h2><p style="font-size:12.5px;color:var(--muted)">활동지에도 같은 예시가 실려 있습니다. 무엇을 쓰는지 먼저 보여 준 뒤 학생이 자기 말로 바꾸게 합니다.</p><table><tr><th style='width:170px'>활동지 칸</th><th>학생 작성 예시</th></tr><tr><td><strong>1. 우리 모둠이 모은 데이터</strong></td><td>사진을 많이 보여 주고, 무엇이 무엇인지 이름표를 붙여 주어야 합니다.</td></tr><tr><td><strong>2. 라벨 붙이기</strong></td><td>AI를 가르치는 ‘학습 데이터’입니다.</td></tr><tr><td><strong>3. 데이터를 줄였더니</strong></td><td>데이터가 적은 쪽을 자주 틀렸습니다. 배운 적이 없기 때문입니다.</td></tr><tr><td><strong>4. 사람이 한 일과 AI가 한 일</strong></td><td>데이터를 모으고 무엇을 가르칠지 정하는 사람입니다.</td></tr></table><h2>10. 자주 나오는 어려움과 대처</h2><table><tr><th style='width:150px'>이런 일이 생기면</th><th>이렇게 합니다</th></tr><tr><td><strong>기기가 모자란다</strong></td><td>모둠에 한 대만 두고 기록 담당을 정한다. 판단은 모둠이 함께 하고 입력만 한 사람이 한다.</td></tr><tr><td><strong>인터넷이 끊긴다</strong></td><td>쓰던 내용은 그 기기에 남는다. 활동지에 먼저 쓰게 하고 연결이 돌아오면 제출한다.</td></tr><tr><td><strong>방 코드를 잃어버렸다</strong></td><td>선생님 화면에서 기존 방 열기를 누르고 코드를 넣으면 다시 열린다.</td></tr><tr><td><strong>닉네임이 겹친다</strong></td><td>막지 않는다. 뒤에 낸 제출이 반영되므로 닉네임 뒤에 숫자를 붙이게 한다.</td></tr><tr><td><strong>의견이 한쪽으로 쏠린다</strong></td><td>소수 의견을 먼저 듣는다. 결과 크게 띄우기로 분포를 보여 주고 까닭을 묻는다.</td></tr><tr><td><strong>시간이 모자란다</strong></td><td>활동 하나를 줄이고 정리 발문은 반드시 남긴다. 남은 활동은 활동지로 마무리한다.</td></tr></table><h2>11. 평가 기준</h2><table><tr><th style='width:110px'>역량</th><th>잘함</th><th>보통</th><th>도움 필요</th></tr><tr><td><strong>비판적 사고</strong></td><td>내가 넣은 데이터에 따라 AI의 분류 결과가 어떻게 달라지는지 관찰·분석하기. 스스로 해내고 그렇게 판단한 까닭을 설명한다</td><td>내가 넣은 데이터에 따라 AI의 분류 결과가 어떻게 달라지는지 관찰·분석하기. 친구나 교사의 도움을 조금 받아 해낸다</td><td>내가 넣은 데이터에 따라 AI의 분류 결과가 어떻게 달라지는지 관찰·분석하기. 예시를 함께 보며 한 단계씩 따라 한다</td></tr><tr><td><strong>문제해결 사고</strong></td><td>AI로 해결할 수 있는 문제를 찾고, 데이터를 모아 해결 절차를 구상하기. 스스로 해내고 그렇게 판단한 까닭을 설명한다</td><td>AI로 해결할 수 있는 문제를 찾고, 데이터를 모아 해결 절차를 구상하기. 친구나 교사의 도움을 조금 받아 해낸다</td><td>AI로 해결할 수 있는 문제를 찾고, 데이터를 모아 해결 절차를 구상하기. 예시를 함께 보며 한 단계씩 따라 한다</td></tr></table><div class="note g"><strong>무엇을 보고 판단하나</strong> 웹앱 교사 화면의 제출 기록과 활동지, 그리고 판단이 갈린 자리에서 학생이 든 까닭을 함께 봅니다. 정답을 맞혔는지가 아니라 까닭을 댈 수 있는지를 봅니다.</div><h2>12. 산출물과 교육과정</h2><table><tr><th style='width:130px'>성취기준</th><td>[6실05-04] [6실05-05]</td></tr><tr><th>학생 산출물</th><td>라벨 20장과 학급 비교, 정확도 기록(전체 · 데이터 축소), 사람과 AI의 역할 구분표, 배움 문장</td></tr><tr><th>평가 방법</th><td>구술 평가, 관찰 평가</td></tr><tr><th>수업 도구</th><td>엔트리 인공지능 블록, 교육용 머신러닝 체험 도구</td></tr></table><p class="foot">인간중심 사고를 기르는 AI적정활용 수업 WISE · 2026년 티처스랩 5기 교사연구회 A.N.D · CC BY-NC-SA</p></div>
+<script></script>
+</body>
+</html>

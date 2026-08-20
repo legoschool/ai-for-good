@@ -1,69 +1,151 @@
+<meta charset="utf-8">
 <div id="wise-app">
 <style>
+/* 티처스랩 결. 사이트·슬라이드·인쇄물과 같은 규격이다.
+   크림 바탕, 검정 테두리, 번지지 않는 그림자, 굵은 제목. */
 #wise-app *,#wise-app *::before,#wise-app *::after{box-sizing:border-box}
-#wise-app{--ink:#101010;--muted:#6F6A61;--line:#111111;--paper:#FFFFFF;--bg:#F4EEE0;
---green:#00D45A;--green-d:#00B84D;--blue:#2B59E0;--purple:#7B4FE8;--sun:#FFE24B;
+#wise-app{--ink:#101010;--ink2:#33312D;--muted:#6F6A61;--line:#111111;--paper:#FFFFFF;
+--bg:#F4EEE0;--bg-d:#EBE3D2;--green:#00D45A;--sun:#FFE24B;
 --accent:#2563eb;--accent-soft:#eff6ff;
-font-family:"Pretendard","Malgun Gothic","맑은 고딕",system-ui,sans-serif;
-color:var(--ink);background:var(--bg);line-height:1.65;font-size:17px;
-padding:16px;max-width:1000px;margin:0 auto}
-#wise-app h1,#wise-app h2,#wise-app h3{margin:0;font-weight:800;line-height:1.3;
-letter-spacing:-.02em;color:var(--ink)}
-#wise-app .hd{position:relative;background:var(--accent);color:#fff;
-border:2.5px solid var(--line);padding:20px 22px;margin-bottom:16px;overflow:hidden}
-#wise-app .hd::before{content:"";position:absolute;inset:0;opacity:.4;mix-blend-mode:overlay;
-background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='hn'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23hn)'/%3E%3C/svg%3E")}
-#wise-app .hd>*{position:relative;z-index:2}
-#wise-app .hd h1{font-size:24px;font-weight:900;color:#fff}
-#wise-app .hd p{margin:6px 0 0;font-size:14.5px;opacity:.94;font-weight:600}
-#wise-app .card{background:var(--paper);border:2.5px solid var(--line);padding:18px;margin-bottom:14px}
-#wise-app .card h2{font-size:19px;font-weight:900;margin-bottom:10px}
-#wise-app .card h3{font-size:16px;font-weight:800}
+--shadow:5px 5px 0 var(--line);
+font-family:"Pretendard","Malgun Gothic","맑은 고딕","Apple SD Gothic Neo",system-ui,sans-serif;
+color:var(--ink2);background:var(--bg);line-height:1.75;font-size:21px;
+padding:18px;max-width:1040px;margin:0 auto;-webkit-text-size-adjust:100%}
+#wise-app h1,#wise-app h2,#wise-app h3{margin:0;color:var(--ink);font-weight:900;line-height:1.28;
+letter-spacing:-.028em}
+#wise-app .hd{background:var(--accent);color:#fff;border:3px solid var(--line);border-radius:18px;
+padding:20px 22px;margin-bottom:16px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+#wise-app .hd::after{content:"";position:absolute;right:-40px;top:-60px;width:200px;height:200px;
+border-radius:50%;background:rgba(255,255,255,.12)}
+#wise-app .hd h1{font-size:28px;color:#fff}
+#wise-app .hd p{margin:6px 0 0;font-size:19px;opacity:.95;font-weight:700}
+#wise-app .card{background:var(--paper);border:3px solid var(--line);border-radius:16px;padding:20px;
+margin-bottom:16px;box-shadow:var(--shadow)}
+#wise-app .card h2{font-size:27px;margin-bottom:10px}
+#wise-app .card h3{font-size:22px}
 #wise-app .row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
-#wise-app label{display:block;font-size:14px;color:var(--muted);margin:10px 0 4px;font-weight:700}
+#wise-app label{display:block;font-size:19px;color:var(--muted);margin:12px 0 4px;font-weight:800}
 #wise-app input,#wise-app textarea,#wise-app select{
-width:100%;font:inherit;font-size:18px;padding:12px 14px;border:2px solid var(--line);
-background:#fff;color:var(--ink)}
+width:100%;font:inherit;font-size:20px;padding:14px 15px;border:2.5px solid var(--line);
+border-radius:12px;background:#fff;color:var(--ink)}
 #wise-app input:focus,#wise-app textarea:focus,#wise-app select:focus{
-outline:3px solid var(--green);outline-offset:1px}
-#wise-app textarea{min-height:96px;resize:vertical}
-#wise-app button{font:inherit;font-size:16px;font-weight:800;min-height:48px;padding:12px 18px;
-border:2.5px solid var(--line);background:var(--green);color:var(--ink);cursor:pointer}
-#wise-app button:hover{background:var(--green-d)}
-#wise-app button.ghost{background:#fff;color:var(--ink)}
-#wise-app button.ghost:hover{background:var(--sun)}
-#wise-app button.plain{background:#fff;color:var(--muted)}
-#wise-app button:disabled{opacity:.4;cursor:not-allowed}
-#wise-app button:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
-#wise-app .code{font-size:36px;font-weight:900;letter-spacing:.14em;color:var(--ink);
-background:var(--green);border:2.5px solid var(--line);padding:2px 14px}
-#wise-app .muted{color:var(--muted);font-size:14.5px}
-#wise-app .pill{display:inline-block;padding:4px 12px;border:2px solid var(--line);
-border-radius:999px;background:var(--sun);color:var(--ink);font-size:13px;font-weight:800}
-#wise-app .hide{display:none}
-#wise-app .bucket{border:2.5px dashed var(--line);padding:14px;min-height:120px;background:#fff}
-#wise-app .bucket h3{font-size:15px;margin-bottom:8px}
+outline:3px solid var(--sun);outline-offset:2px}
+#wise-app textarea{min-height:104px;resize:vertical}
+#wise-app button{font:inherit;font-size:21px;font-weight:900;min-height:58px;padding:13px 20px;
+border-radius:12px;border:2.5px solid var(--line);background:var(--green);color:var(--ink);
+cursor:pointer;box-shadow:3px 3px 0 var(--line)}
+#wise-app button:hover{background:var(--sun)}
+#wise-app button:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--line)}
+#wise-app button.ghost{background:#fff}
+#wise-app button.plain{background:#fff;color:var(--muted);box-shadow:none}
+#wise-app button:disabled{opacity:.45;cursor:not-allowed;box-shadow:none}
+#wise-app .code{font-size:38px;font-weight:900;letter-spacing:.16em;color:var(--accent)}
+#wise-app .muted{color:var(--muted);font-size:19px}
+#wise-app .pill{display:inline-block;padding:5px 13px;border-radius:999px;background:var(--sun);
+border:2.5px solid var(--line);color:var(--ink);font-size:15px;font-weight:900}
+#wise-app .tag{display:inline-block;padding:3px 10px;border-radius:999px;background:#fff;
+border:2px solid var(--line);color:var(--ink2);font-size:14px;font-weight:800;margin-right:4px}
+#wise-app .hide{display:none !important}
+#wise-app .bucket{border:3px dashed var(--line);border-radius:14px;padding:12px;min-height:120px;
+background:#fff}
+#wise-app .bucket h3{font-size:18px;margin-bottom:8px}
 #wise-app .grid{display:grid;gap:12px}
-#wise-app .chip{display:block;width:100%;text-align:left;padding:12px 14px;margin-bottom:8px;
-border:2px solid var(--line);background:#fff;color:var(--ink);font-weight:700;min-height:48px;
-cursor:pointer;font-size:15.5px}
-#wise-app .chip:hover{background:var(--sun)}
-#wise-app .chip.on{background:var(--green);font-weight:800}
-#wise-app .bar{height:16px;border:2px solid var(--line);background:#fff;overflow:hidden}
+#wise-app .g2{display:grid;gap:14px;grid-template-columns:1fr 1fr}
+#wise-app .chip{display:block;width:100%;text-align:left;padding:15px 17px;margin-bottom:10px;font-size:21px;
+border:2.5px solid var(--line);border-radius:12px;background:#fff;color:var(--ink);font-weight:700;
+min-height:52px;box-shadow:3px 3px 0 var(--line)}
+#wise-app .chip:hover{background:var(--bg-d)}
+#wise-app .chip.on{background:var(--accent);color:#fff}
+#wise-app .bar{height:16px;border-radius:8px;background:#fff;border:2.5px solid var(--line);
+overflow:hidden}
 #wise-app .bar>i{display:block;height:100%;background:var(--green)}
-#wise-app table{width:100%;border-collapse:collapse;font-size:14.5px}
-#wise-app th,#wise-app td{border:2px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
-#wise-app th{background:var(--bg);font-weight:800}
+#wise-app .steps{display:flex;gap:6px;margin:12px 0 0}
+#wise-app .steps>span{flex:1;height:10px;border-radius:6px;background:#fff;border:2px solid var(--line)}
+#wise-app .steps>span.on{background:var(--green)}
+#wise-app table{width:100%;border-collapse:collapse;font-size:17px}
+#wise-app th,#wise-app td{border:2px solid var(--line);padding:9px 11px;text-align:left;
+vertical-align:top}
+#wise-app th{background:var(--bg-d);font-weight:900;color:var(--ink)}
 #wise-app .scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
-#wise-app .safe{margin-top:14px;padding:13px 16px;background:var(--sun);
-border:2.5px solid var(--line);color:var(--ink);font-size:14.5px;font-weight:700}
-#wise-app .ok{color:#0B7A3B;font-weight:800}
-#wise-app .warn{color:#B0450A;font-weight:800}
-#wise-app .foot{text-align:center;color:var(--muted);font-size:12.5px;padding:16px 0;font-weight:600}
-@media (max-width:640px){#wise-app{padding:10px;font-size:16px}#wise-app .hd h1{font-size:20px}
-#wise-app .code{font-size:28px}}
+#wise-app .safe{margin-top:14px;padding:14px 16px;border-radius:12px;background:#FFF3D6;
+border:2.5px solid var(--line);color:var(--ink2);font-size:16px;font-weight:700}
+#wise-app .note{padding:13px 15px;border-radius:12px;background:var(--sun);
+border:2.5px solid var(--line);color:var(--ink);font-size:17px;font-weight:800;margin-top:12px}
+#wise-app .ok{color:#0B7A3B;font-weight:900}
+#wise-app .warn{color:#B03A00;font-weight:900}
+#wise-app .big{font-size:34px;font-weight:900;line-height:1.2;color:var(--ink)}
+#wise-app .foot{text-align:center;color:var(--muted);font-size:14px;padding:16px 0;font-weight:700}
+#wise-app .wi{vertical-align:middle;margin-right:8px;flex:none}
+#wise-app .ws-scene{display:block;width:100%;height:164px;border:2.5px solid var(--line);
+border-radius:14px;background:#fff;margin:10px 0 6px}
+#wise-app .iconrow{display:flex;align-items:center;gap:8px}
+#wise-app .quest{display:none}
+#wise-app .quest.on{display:block;animation:wfade .34s cubic-bezier(.22,.61,.36,1)}
+@keyframes wfade{from{opacity:0;transform:translateY(14px) scale(.99)}to{opacity:1;transform:none}}
+#wise-app .spin{display:inline-block;width:20px;height:20px;border-radius:50%;
+border:3px solid var(--bg-d);border-top-color:var(--ink);animation:wspin .7s linear infinite;
+vertical-align:middle;margin-right:8px}
+#wise-app .spin.big{width:34px;height:34px;border-width:4px}
+@keyframes wspin{to{transform:rotate(360deg)}}
+#wise-app .loading{display:flex;align-items:center;gap:10px;font-weight:800;color:var(--ink);
+padding:14px 0}
+#wise-app .skel{height:16px;border-radius:8px;background:var(--bg-d);margin:8px 0;
+animation:wpulse 1.1s ease-in-out infinite}
+#wise-app .skel.w60{width:60%}
+#wise-app .skel.w80{width:80%}
+@keyframes wpulse{0%,100%{opacity:1}50%{opacity:.45}}
+#wise-app button.busy{position:relative;color:var(--muted)}
+#wise-app .busy-wrap{position:fixed;inset:0;background:rgba(244,238,224,.72);display:flex;
+align-items:center;justify-content:center;z-index:65}
+#wise-app .busy-wrap .box{background:#fff;border:3px solid var(--line);border-radius:18px;
+padding:20px 26px;box-shadow:6px 6px 0 var(--line);display:flex;align-items:center;gap:12px;
+font-weight:900;color:var(--ink)}
+#wise-app .fade-in{animation:wfade .28s ease-out}
+#wise-app .hud{display:flex;gap:12px;align-items:center;flex-wrap:wrap;background:#fff;
+border:2.5px solid var(--line);border-radius:14px;padding:11px 15px;margin-bottom:14px;
+font-weight:800;font-size:17px;color:var(--ink);box-shadow:3px 3px 0 var(--line)}
+#wise-app .hud .grow{flex:1;min-width:120px}
+#wise-app .tile{font-size:22px;border:3px solid var(--line);border-radius:16px;padding:16px;background:#fff;
+text-align:left;font-weight:800;font-size:20px;min-height:118px;display:flex;flex-direction:column;gap:6px;
+box-shadow:var(--shadow);color:var(--ink)}
+#wise-app .tile small{font-weight:700;color:var(--muted);font-size:16px}
+#wise-app .tile.done{background:var(--sun)}
+#wise-app .cele{position:fixed;inset:0;background:rgba(17,17,17,.6);display:flex;align-items:center;
+justify-content:center;padding:20px;z-index:60}
+#wise-app .cele .box{background:#fff;border:3px solid var(--line);border-radius:22px;padding:26px;
+max-width:460px;width:100%;text-align:center;box-shadow:8px 8px 0 var(--line)}
+#wise-app .cele h2{font-size:28px;margin-bottom:10px}
+#wise-app .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--ink);
+color:#fff;padding:13px 22px;border-radius:999px;font-weight:800;font-size:17px;z-index:70;
+border:2.5px solid var(--line)}
+#wise-app canvas{max-width:100%;height:auto;border-radius:12px}
+#wise-app .intro{margin:-4px 0 16px}
+#wise-app .intro svg{display:block;width:100%;height:168px;border:2.5px solid var(--line);
+border-radius:14px;background:#fff}
+#wise-app .intro p{margin:10px 0 0;font-size:18px;color:var(--muted);font-weight:700}
+#wise-app .intro b{color:var(--ink)}
+#wise-app .wtop{position:sticky;top:0;z-index:40;display:flex;gap:8px;align-items:center;
+flex-wrap:nowrap;overflow-x:auto;background:var(--bg);padding:10px 0;margin:-18px 0 12px}
+#wise-app .wtop a,#wise-app .wtop button{font-size:15px;font-weight:800;color:var(--ink);
+background:#fff;border:2.5px solid var(--line);border-radius:999px;padding:9px 16px;min-height:44px;
+white-space:nowrap;text-decoration:none;cursor:pointer;box-shadow:none}
+#wise-app .wtop a:hover,#wise-app .wtop button:hover{background:var(--sun)}
+#wise-app #present .card{border-radius:20px}
+#wise-app #present table{font-size:23px}
+#wise-app #present .big{font-size:46px}
+@media (max-width:640px){#wise-app{padding:10px;font-size:19px}#wise-app .hd h1{font-size:32px}
+#wise-app .g2{grid-template-columns:1fr}#wise-app .intro svg{height:126px}
+#wise-app .ws-scene{height:120px}}
 @media (prefers-reduced-motion:reduce){#wise-app *{transition:none!important;animation:none!important}}
 </style>
+
+<nav id="w-top" class="wtop">
+  <a href="../../index.html" target="_blank" rel="noopener">홈으로 돌아가기</a>
+  <a href="../../browse.html" target="_blank" rel="noopener">둘러보기</a>
+  <a href="../../lesson/L02.html" target="_blank" rel="noopener">차시 페이지</a>
+  <a href="../../webapp/common/index.html" target="_blank" rel="noopener">사전·사후 설문</a>
+  <button type="button" id="w-restart">처음부터</button>
+</nav>
 
 <div class="hd">
   <h1>AI 검증 실험실</h1>
@@ -72,34 +154,44 @@ border:2.5px solid var(--line);color:var(--ink);font-size:14.5px;font-weight:700
 
 <!-- 입장 -->
 <section id="gate" class="card">
+  <div id="w-intro" class="hide"></div>
   <h2>들어가기</h2>
+  <p class="muted">선생님이 알려 준 방 번호와 내 닉네임만 쓰면 돼요.</p>
   <div class="grid" style="grid-template-columns:1fr 1fr">
     <div>
-      <label for="w-room">방 코드 6자리</label>
+      <label for="w-room">방 번호 6자리</label>
       <input id="w-room" inputmode="numeric" maxlength="6" placeholder="예: 482913">
     </div>
-    <div>
-      <label for="w-pw">비밀번호 4자리</label>
-      <input id="w-pw" inputmode="numeric" maxlength="4" placeholder="예: 1234">
-    </div>
-  </div>
-  <div class="grid" style="grid-template-columns:1fr 1fr">
     <div>
       <label for="w-nick">닉네임</label>
       <input id="w-nick" maxlength="12" placeholder="이름 말고 별명을 써요">
     </div>
+  </div>
+  <div class="grid" style="grid-template-columns:1fr 1fr">
     <div>
-      <label for="w-group">모둠</label>
+      <label for="w-code">나만 아는 숫자 4자리</label>
+      <input id="w-code" inputmode="numeric" maxlength="4" placeholder="예: 0412">
+    </div>
+    <div>
+      <label for="w-group">모둠 (없으면 비워 둬요)</label>
       <input id="w-group" maxlength="10" placeholder="예: 3모둠">
     </div>
   </div>
+  <p class="muted" style="margin-top:6px">이 숫자는 비밀번호가 아니에요.
+    사전 설문과 사후 설문을 이어 보는 데만 써요. 열두 시간 뒤에도 같은 숫자를 써 주세요.
+    잊어버려도 활동은 그대로 할 수 있어요.</p>
   <div class="row" style="margin-top:14px">
     <button id="w-enter">입장하기</button>
-    <button id="w-solo" class="ghost">혼자 체험해 보기</button>
+    <button id="w-solo" class="ghost">둘러보기</button>
     <button id="w-teacher" class="plain">선생님 화면</button>
   </div>
   <p id="w-gate-msg" class="muted" style="margin-top:10px"></p>
-  <div class="safe">이름, 사진, 친구 이야기 같은 개인정보는 넣지 않아요.</div>
+  <div class="note" id="w-prepost">처음 시작하기 전에는 <b>사전 설문</b>, 열두 시간을 마친 뒤에는
+    <b>사후 설문</b>을 합니다.
+    <a href="../common/index.html" target="_blank" rel="noopener">자기인식 설문 열기</a></div>
+  <div class="safe"><b>개인정보를 모으지 않아요.</b> 이름, 사진, 친구 이야기 같은 개인정보는 넣지 않아요.
+    학교, 학년, 반, 전화번호도 묻지 않습니다. 닉네임과 답만 저장합니다.
+    모인 자료는 수업 프로그램을 더 좋게 만드는 데만 쓰고, 학년도가 끝나면 지웁니다.</div>
 </section>
 
 <!-- 학생 활동 -->
@@ -109,7 +201,10 @@ border:2.5px solid var(--line);color:var(--ink);font-size:14.5px;font-weight:700
       <span class="pill" id="w-who"></span>
       <span class="muted" id="w-sync">저장 준비됨</span>
     </div>
+    <div class="steps hide" id="w-steps"></div>
+    <div class="note hide" id="w-note"></div>
   </div>
+  <div id="w-hud" class="hide"></div>
   <div id="activity"></div>
   <div class="card">
     <button id="w-submit">제출하기</button>
@@ -122,7 +217,10 @@ border:2.5px solid var(--line);color:var(--ink);font-size:14.5px;font-weight:700
 <section id="teacher" class="hide">
   <div class="card">
     <h2>선생님 화면</h2>
-    <div class="row">
+    <p class="muted">방을 만들면 여섯 자리 번호가 나옵니다. 학생에게 번호만 알려 주세요.</p>
+    <label for="w-pw">선생님 비밀번호 4자리 (이 화면을 다시 열 때 씁니다)</label>
+    <input id="w-pw" inputmode="numeric" maxlength="4" placeholder="예: 1234">
+    <div class="row" style="margin-top:12px">
       <button id="t-make">새 방 만들기</button>
       <button id="t-open" class="ghost">기존 방 열기</button>
       <button id="t-back" class="plain">돌아가기</button>
@@ -135,6 +233,7 @@ border:2.5px solid var(--line);color:var(--ink);font-size:14.5px;font-weight:700
       </div>
       <p class="muted" id="t-pw"></p>
       <div class="row" style="margin-top:12px">
+        <button id="t-present">결과 크게 띄우기</button>
         <button id="t-refresh" class="ghost">새로고침</button>
         <button id="t-csv" class="ghost">CSV 내려받기</button>
         <button id="t-lock" class="plain">방 잠그기</button>
@@ -143,10 +242,29 @@ border:2.5px solid var(--line);color:var(--ink);font-size:14.5px;font-weight:700
   </div>
   <div id="t-board" class="card hide">
     <h2>제출 현황 <span class="pill" id="t-count">0명</span></h2>
+    <p class="muted" id="t-note"></p>
     <div id="t-summary"></div>
-    <div class="scroll" style="margin-top:12px"><table id="t-table"></table></div>
+    <div class="row" style="margin-top:12px">
+      <button id="t-detail" class="plain">낱낱이 보기 켜기</button>
+    </div>
+    <div class="scroll hide" id="t-wrap" style="margin-top:12px"><table id="t-table"></table></div>
   </div>
 </section>
+
+<!-- 발표 -->
+<section id="present" class="hide">
+  <div class="card">
+    <div class="row" style="justify-content:space-between">
+      <h2 id="p-title">우리 반 결과</h2>
+      <button id="p-close" class="plain">닫기</button>
+    </div>
+    <div id="p-body" style="margin-top:12px"></div>
+  </div>
+</section>
+
+<div id="w-cele" class="hide"></div>
+<div id="w-busy" class="hide"></div>
+<div id="w-toast" class="hide"></div>
 
 <p class="foot">2026년 티처스랩 5기 교사연구회 A.N.D · CC BY-NC-SA</p>
 </div>
@@ -157,13 +275,17 @@ border:2.5px solid var(--line);color:var(--ink);font-size:14.5px;font-weight:700
 
   var APP = "verify-lab";
   var DB = "https://remind-c2610-default-rtdb.firebaseio.com";
-  var SHEET_ENDPOINT = "PASTE_YOUR_APPS_SCRIPT_DEPLOY_URL";
+  var SHEET_ENDPOINT = "https://script.google.com/macros/s/AKfycbzawwJFwOtjGU8VNx2KLAbfYSMaMAENueB6uWEVcmod3EEA3CuzXO7_oXHQHHW20x4/exec";
   var QUEUE_KEY = "wise_backup_queue";
   var LOCAL_KEY = "wise_" + APP + "_local";
+  var ACCENT = "#2563eb";
+  var COPYRIGHT_LINE = "2026년 티처스랩 5기 교사연구회 A.N.D · CC BY-NC-SA";
 
   var $ = function (id) { return document.getElementById(id); };
-  var me = { room: "", pw: "", nick: "", group: "", solo: false };
+  var me = { room: "", pw: "", nick: "", group: "", code: "", solo: false };
+  var CODE_KEY = "wise_student_code";
   var timer = null;
+  var draftTimer = null;
 
   /* ---------- 저장 ---------- */
 
@@ -201,6 +323,18 @@ border:2.5px solid var(--line);color:var(--ink);font-size:14.5px;font-weight:700
     } catch (e) {}
   }
 
+  /* 방을 만들었다는 것만 시트에 알린다. 학생 응답은 보내지 않는다. */
+  function sheetRoom(room) {
+    try {
+      if (SHEET_ENDPOINT.indexOf("http") !== 0) { return; }
+      fetch(SHEET_ENDPOINT, {
+        method: "POST", mode: "no-cors",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify({ rooms: [{ app: APP, room: room, at: Date.now() }] })
+      })["catch"](function () {});
+    } catch (e) {}
+  }
+
   /* ---------- 도구 ---------- */
 
   function onlyDigits(s, n) {
@@ -223,505 +357,1082 @@ border:2.5px solid var(--line);color:var(--ink);font-size:14.5px;font-weight:700
       .replace(/>/g, "&gt;").replace(/"/g, "&quot;");
   }
 
+  function pct(a, b) { return b ? Math.round(a * 100 / b) : 0; }
+
+  function barHtml(a, b) {
+    return '<div class="bar"><i style="width:' + pct(a, b) + '%"></i></div>';
+  }
+
   function show(id) {
-    var ids = ["gate", "stage", "teacher"];
+    var ids = ["gate", "stage", "teacher", "present"];
     for (var i = 0; i < ids.length; i++) {
       $(ids[i]).className = ids[i] === id ? "" : "hide";
     }
   }
 
+  /* 활동 화면이 부르는 골격 기능 */
+
+  function wiseDraft(obj) {
+    try { localStorage.setItem(LOCAL_KEY, JSON.stringify(obj)); } catch (e) {}
+    $("w-sync").textContent = "이 기기에 임시 저장됨";
+  }
+
+  function wiseStep(i, n) {
+    var h = "";
+    for (var k = 0; k < n; k++) { h += '<span class="' + (k <= i ? "on" : "") + '"></span>'; }
+    $("w-steps").innerHTML = h;
+    $("w-steps").className = "steps";
+  }
+
+  /* 여정 화면 전환. 활동이 만든 .quest 조각을 갈아 끼운다. */
+  /* 여정형 앱에서 다음 화면으로 가는 버튼을 화면마다 자동으로 붙인다.
+     허브로 돌아갔다가 다시 고르게 하면 학생이 거기서 멈춘다.
+     차시 코드가 이미 '...로 가기' 버튼을 만들어 두었으면 건드리지 않는다. */
+  function addNextButtons() {
+    var qs = document.querySelectorAll("#activity .quest");
+    if (qs.length < 3) { return; }
+    var ids = [], titles = [], i;
+    for (i = 0; i < qs.length; i++) {
+      ids.push(qs[i].getAttribute("data-q"));
+      var h = qs[i].querySelector("h2");
+      titles.push(h ? h.textContent.trim() : "다음");
+    }
+    for (i = 0; i < qs.length; i++) {
+      var id = ids[i];
+      if (id === "story" || id === "hub") { continue; }
+      if (i + 1 >= qs.length) { continue; }
+      if (hasForward(qs[i])) { continue; }
+      var row = document.createElement("div");
+      row.className = "row autonext";
+      row.style.marginTop = "10px";
+      var b = document.createElement("button");
+      b.type = "button";
+      b.setAttribute("data-next", ids[i + 1]);
+      b.textContent = "다음 : " + titles[i + 1];
+      b.onclick = function () { wiseGo(this.getAttribute("data-next")); };
+      row.appendChild(b);
+      var card = qs[i].querySelector(".card");
+      (card || qs[i]).appendChild(row);
+    }
+  }
+
+  /* 이미 앞으로 가는 버튼이 있는가. '교무실로' 같은 되돌아가기와
+     '다음 카드' 같은 같은 화면 안 이동은 세지 않는다. */
+  function hasForward(sec) {
+    var bs = sec.querySelectorAll("button");
+    for (var i = 0; i < bs.length; i++) {
+      var b = bs[i];
+      if (b.parentNode && /autonext/.test(b.parentNode.className || "")) { continue; }
+      var t = b.textContent || "";
+      var bid = b.id || "";
+      if (/(다음 카드|다음 문항|앞 카드|앞 문항|돌아가기|돌아가)/.test(t)) { continue; }
+      if (/-go$|^go-/.test(bid)) { return true; }
+      if (/(로 가기|으로 가기|보러 가기|하러 가기|넘어가|이어서 하기)/.test(t)) { return true; }
+    }
+    return false;
+  }
+
+  /* 차시 코드가 뒤늦게 만들어 내는 '…로 가기' 버튼과 겹치지 않게,
+     화면에 들어올 때마다 자동 버튼을 보일지 말지 다시 정한다. */
+  function syncNextButton(sec) {
+    if (!sec) { return; }
+    var row = sec.querySelector(".autonext");
+    if (!row) { return; }
+    row.style.display = hasForward(sec) ? "none" : "";
+  }
+
+  function wiseGo(id) {
+    var qs = document.querySelectorAll("#activity .quest");
+    for (var i = 0; i < qs.length; i++) {
+      qs[i].className = "quest" + (qs[i].getAttribute("data-q") === id ? " on" : "");
+    }
+    if (window.scrollTo) { window.scrollTo(0, 0); }
+    if (typeof activityEnter === "function") {
+      try { activityEnter(id); } catch (e) {}
+    }
+    for (var k = 0; k < qs.length; k++) {
+      if (qs[k].getAttribute("data-q") === id) { syncNextButton(qs[k]); }
+    }
+  }
+
+  /* 상단 진행 표시. 여러 칸을 한 줄로 보여 준다. */
+  function wiseHud(items) {
+    var h = "";
+    for (var i = 0; i < items.length; i++) {
+      var it = items[i];
+      h += '<span>' + esc(it.label) + ' ' + it.done + ' / ' + it.total + '</span>';
+    }
+    var first = items[0] || { done: 0, total: 1 };
+    h += '<span class="grow">' + barHtml(first.done, first.total) + '</span>';
+    $("w-hud").innerHTML = h;
+    $("w-hud").className = "hud";
+  }
+
+  /* 기다리는 동안 무엇을 하는 중인지 보여 준다. 화면이 멈춘 것처럼 보이지 않게 한다. */
+  function wiseSpinner(text, big) {
+    return '<div class="loading"><span class="spin' + (big ? " big" : "") + '"></span>' +
+      '<span>' + esc(text || "불러오는 중이에요") + '</span></div>';
+  }
+
+  function wiseSkeleton(lines) {
+    var n = lines || 3, h = "";
+    for (var i = 0; i < n; i++) {
+      h += '<div class="skel ' + (i % 3 === 1 ? "w80" : (i % 3 === 2 ? "w60" : "")) + '"></div>';
+    }
+    return h;
+  }
+
+  function wiseBusy(on, text) {
+    if (!on) { $("w-busy").className = "hide"; return; }
+    $("w-busy").innerHTML = '<div class="busy-wrap"><div class="box">' +
+      '<span class="spin big"></span><span>' + esc(text || "잠시만요") + '</span></div></div>';
+    $("w-busy").className = "";
+  }
+
+  /* 버튼을 누른 뒤 끝날 때까지 눌리지 않게 한다. */
+  function wiseButtonBusy(el, on, text) {
+    if (!el) { return; }
+    if (on) {
+      el.setAttribute("data-orig", el.textContent);
+      el.innerHTML = '<span class="spin"></span>' + esc(text || "하는 중");
+      el.disabled = true;
+    } else {
+      el.textContent = el.getAttribute("data-orig") || el.textContent;
+      el.disabled = false;
+    }
+  }
+
+  function wiseToast(text) {
+    $("w-toast").textContent = text;
+    $("w-toast").className = "toast";
+    setTimeout(function () { $("w-toast").className = "toast hide"; }, 2200);
+  }
+
+  function wiseCelebrate(title, lines, buttonText) {
+    var h = '<div class="box"><h2>' + esc(title) + '</h2>';
+    for (var i = 0; i < lines.length; i++) {
+      h += '<p class="muted" style="margin-top:6px">' + lines[i] + '</p>';
+    }
+    h += '<div class="row" style="justify-content:center;margin-top:16px">' +
+      '<button type="button" id="cele-close">' + esc(buttonText || "닫기") + '</button></div></div>';
+    $("w-cele").innerHTML = h;
+    $("w-cele").className = "cele";
+    var celeClose = function () { $("w-cele").className = "hide"; $("w-cele").innerHTML = ""; };
+    $("cele-close").onclick = celeClose;
+    $("w-cele").onclick = function (ev) { if (ev.target === $("w-cele")) { celeClose(); } };
+  }
+
+  /* 결과 카드를 그림으로 만들어 내려받는다. 교실에서 인쇄해 붙일 수 있다. */
+  function wiseCardPng(title, lines, filename) {
+    try {
+      var c = document.createElement("canvas");
+      c.width = 900; c.height = 560;
+      var g = c.getContext("2d");
+      g.fillStyle = "#ffffff"; g.fillRect(0, 0, 900, 560);
+      g.fillStyle = ACCENT; g.fillRect(0, 0, 900, 120);
+      g.fillStyle = "#ffffff"; g.font = "bold 40px sans-serif";
+      g.fillText(title, 40, 76);
+      g.fillStyle = "#111827"; g.font = "26px sans-serif";
+      for (var i = 0; i < lines.length && i < 10; i++) {
+        g.fillText(String(lines[i]).slice(0, 34), 40, 180 + i * 42);
+      }
+      g.fillStyle = "#6b7280"; g.font = "18px sans-serif";
+      g.fillText(COPYRIGHT_LINE, 40, 530);
+      var a = document.createElement("a");
+      a.href = c.toDataURL("image/png");
+      a.download = (filename || "wise_card") + ".png";
+      document.body.appendChild(a); a.click(); document.body.removeChild(a);
+      wiseToast("카드를 내려받았어요.");
+    } catch (e) { wiseToast("이 기기에서는 카드 저장이 안 돼요."); }
+  }
+
+  /* 교사 화면용 막대 그림. 캔버스로 그린다. */
+  function wiseBars(rows, width) {
+    var w = width || 620, h = 42 * rows.length + 24;
+    var c = document.createElement("canvas");
+    if (!c || typeof c.getContext !== "function") { return barTable(rows); }
+    c.width = w; c.height = h;
+    var g = c.getContext("2d");
+    g.fillStyle = "#ffffff"; g.fillRect(0, 0, w, h);
+    var max = 1;
+    for (var i = 0; i < rows.length; i++) { if (rows[i].value > max) { max = rows[i].value; } }
+    for (var k = 0; k < rows.length; k++) {
+      var y = 16 + k * 42;
+      g.fillStyle = "#374151"; g.font = "bold 16px sans-serif";
+      g.fillText(String(rows[k].label).slice(0, 14), 8, y + 20);
+      var x0 = 160, bw = (w - 200) * rows[k].value / max;
+      g.fillStyle = "#e5e7eb"; g.fillRect(x0, y, w - 200, 24);
+      g.fillStyle = rows[k].color || ACCENT; g.fillRect(x0, y, bw, 24);
+      g.fillStyle = "#111827"; g.font = "bold 15px sans-serif";
+      g.fillText(String(rows[k].value), x0 + bw + 8, y + 18);
+    }
+    return '<img alt="분포 그림" style="width:100%" src="' + c.toDataURL("image/png") + '">';
+  }
+
+  /* 캔버스를 못 쓰는 자리에서는 표로 대신한다. */
+  function barTable(rows) {
+    var h = '<div class="scroll"><table><tr><th>항목</th><th>수</th><th>분포</th></tr>';
+    var max = 1;
+    for (var i = 0; i < rows.length; i++) { if (rows[i].value > max) { max = rows[i].value; } }
+    for (var k = 0; k < rows.length; k++) {
+      h += "<tr><td>" + esc(rows[k].label) + "</td><td>" + rows[k].value + "</td><td>" +
+        barHtml(rows[k].value, max) + "</td></tr>";
+    }
+    return h + "</table></div>";
+  }
+
+  function wiseNote(text) {
+    if (!text) { $("w-note").className = "note hide"; return; }
+    $("w-note").innerHTML = text;
+    $("w-note").className = "note";
+  }
+
   /* ---------- 활동 (차시별) ---------- */
 
 
-  /* ---------- 문항 세트 ----------
-     verdict 는 어느 쪽이 맞는 답인가이다. 틀린 쪽이 아니다. 5단계에서만 보여 준다.
-     kind 는 어떤 방식으로 틀렸는지를 나타낸다. */
+  /* ---------- 자료 ---------- */
+  /* 전부 교과서 수준에서 확인할 수 있는 것만 담는다.
+     wrong 은 답변을 조각으로 나눈 것이고, bad 는 틀린 조각의 번호다. */
 
   var ITEMS = [
     {
-      id: 0,
-      q: "세종대왕이 훈민정음을 만든 때는 언제인가요?",
-      a: "1443년에 만들었습니다. 널리 알린 것은 1446년입니다.",
-      b: "1420년에 만들어 그해 바로 널리 알렸습니다.",
-      src: "초등 사회 교과서에서 옮겨 온 글입니다.\n훈민정음은 1443년에 만들어졌습니다.\n널리 알린 것은 1446년입니다.",
-      srcName: "초등 사회 교과서",
-      verdict: "a",
-      kind: "연도를 지어냈어요",
-      why: "가 쪽이 교과서와 같아요. 나 쪽은 연도를 지어냈어요."
+      q: "한글은 언제 반포되었나요?",
+      say: ["세종대왕은", "1443년에", "한글을", "온 백성에게", "반포했습니다."],
+      bad: [1],
+      conf: 98,
+      source: "옛날 책에서 본 것 같습니다. 어디였는지는 잘 모르겠습니다.",
+      check: "교과서",
+      truth: "1443년은 한글을 만든 해예요. 백성에게 알린 해는 1446년입니다.",
+      why: "만든 해와 알린 해가 다릅니다. 몽이는 두 해를 하나로 섞었어요."
     },
     {
-      id: 1,
-      q: "우리나라에서 가장 긴 강은 무엇인가요?",
-      a: "낙동강입니다. 길이는 약 510km입니다.",
-      b: "압록강입니다. 길이는 약 790km입니다.",
-      src: "나라에서 만든 지리 누리집에서 옮겨 온 글입니다.\n한반도에서 가장 긴 강은 압록강입니다. 약 790km입니다.\n남한에서 가장 긴 강은 낙동강입니다. 약 510km입니다.",
-      srcName: "국가 지리 정보 누리집",
-      verdict: "both",
-      kind: "물음이 흐릿해서 갈렸어요",
-      why: "둘 다 틀리지 않았어요. 한반도 전체인지 남한만인지 정하지 않아서 갈렸어요."
+      q: "태양계 행성은 몇 개인가요?",
+      say: ["태양계에는", "아홉 개의", "행성이", "있습니다."],
+      bad: [1],
+      conf: 95,
+      source: "예전 자료에서 배웠습니다. 최근 것은 확인하지 못했습니다.",
+      check: "교과서",
+      truth: "여덟 개예요. 2006년에 명왕성이 행성에서 빠졌습니다.",
+      why: "오래된 자료로 배우면 바뀐 사실을 모릅니다."
     },
     {
-      id: 2,
-      q: "초등학생이 읽을 만한 밤하늘 관찰 책을 알려 주세요.",
-      a: "여러 권이 있습니다. 도서관 검색으로 직접 확인해 보시기 바랍니다.",
-      b: "『밤하늘의 지도』(하늘출판사, 2019)를 추천합니다. 초등 5학년 필독서입니다.",
-      src: "학교 도서관에서 찾아본 결과입니다.\n『밤하늘의 지도』는 나오지 않습니다.\n하늘출판사도 나오지 않습니다.",
-      srcName: "학교 도서관 검색",
-      verdict: "a",
-      kind: "없는 책을 지어냈어요",
-      why: "나 쪽은 책 이름과 연도까지 붙여서 아주 그럴듯해요. 그런데 찾아보면 없어요."
+      q: "물은 몇 도에서 끓나요?",
+      say: ["물은", "언제나", "100도에서", "끓습니다."],
+      bad: [1],
+      conf: 99,
+      source: "과학 상식이라고만 알고 있습니다.",
+      check: "교과서",
+      truth: "1기압일 때 100도예요. 높은 산에서는 100도보다 낮은 온도에서 끓습니다.",
+      why: "조건을 빼고 말하면 반쯤만 맞는 답이 됩니다."
     },
     {
-      id: 3,
-      q: "우리 학교는 언제 문을 열었나요?",
-      a: "1952년 4월에 문을 열었습니다.",
-      b: "1961년 4월에 문을 열었습니다.",
-      src: "학교 누리집에서 옮겨 온 글입니다.\n1961년 4월 1일에 문을 열었습니다.\n1962년 2월에 첫 졸업식을 했습니다.",
-      srcName: "학교 누리집",
-      verdict: "b",
-      kind: "우리 동네 일을 잘못 알아요",
-      why: "나 쪽이 학교 누리집과 같아요. 우리 동네 일은 자료가 적어서 AI가 자주 틀려요."
+      q: "독도는 어느 행정구역에 속하나요?",
+      say: ["독도는", "강원도에", "속합니다."],
+      bad: [1],
+      conf: 92,
+      source: "동해에 있다는 것만 알고 있었습니다.",
+      check: "공공 누리집",
+      truth: "경상북도 울릉군에 속합니다.",
+      why: "가까운 것을 근거로 짐작하면 틀립니다. 공공 누리집에서 확인해야 합니다."
     },
     {
-      id: 4,
-      q: "지구에서 달까지의 거리는 얼마인가요?",
-      a: "약 384,400km입니다.",
-      b: "약 38,400km입니다.",
-      src: "초등 과학 교과서에서 옮겨 온 글입니다.\n지구에서 달까지는 약 384,400km입니다.",
-      srcName: "초등 과학 교과서",
-      verdict: "a",
-      kind: "자릿수를 틀렸어요",
-      why: "가 쪽이 맞아요. 나 쪽은 0 하나가 빠졌어요. 숫자는 자릿수를 꼭 봐야 해요."
+      q: "우리 학교 급식 잔반량은 하루에 얼마인가요?",
+      say: ["우리 학교는", "하루 42.7킬로그램의", "잔반이", "나옵니다."],
+      bad: [0, 1],
+      conf: 89,
+      source: "정확한 출처가 없습니다. 비슷한 학교 자료를 참고했습니다.",
+      check: "선생님·어른",
+      truth: "AI 는 우리 학교 잔반량을 알 수 없어요. 영양 선생님께 여쭤봐야 합니다.",
+      why: "알 수 없는 것을 숫자까지 붙여 말하는 것이 환각의 전형입니다."
     }
   ];
 
-  /* 1단계에서 먼저 보여 주는 그럴듯한 답 */
-  var HOOK = ITEMS[2];
-
-  var VERDICT_LABEL = {a: "가 쪽이 맞아요", b: "나 쪽이 맞아요", both: "둘 다 틀리지 않았어요"};
-
-  /* ---------- 상태 ---------- */
-
-  var step = 1;
-  var STEPS = [
-    {no:1, t:"나는 믿을까", m:5},
-    {no:2, t:"같은 질문, 다른 답", m:11},
-    {no:3, t:"자료와 맞춰 보기", m:12},
-    {no:4, t:"환각 사례 카드", m:7},
-    {no:5, t:"결과와 정리", m:5}
+  /* 훈련소. 같은 물음에 답 두 개를 놓고 진짜를 고른다. */
+  var TRAIN = [
+    {
+      q: "세종대왕이 한글을 만든 까닭은?",
+      a: {t:"백성이 글을 쉽게 익혀 뜻을 펴게 하려고 만들었습니다.", conf: 71, ok: true},
+      b: {t:"중국 글자를 더 빨리 쓰려고 만들었습니다.", conf: 97, ok: false},
+      why: "자신감이 높다고 맞는 답이 아니에요. 97%라고 말한 쪽이 틀렸습니다."
+    },
+    {
+      q: "우리나라에서 가장 큰 섬은?",
+      a: {t:"제주도입니다.", conf: 64, ok: true},
+      b: {t:"울릉도입니다.", conf: 93, ok: false},
+      why: "짧고 단호한 말투가 정확함을 뜻하지 않습니다."
+    },
+    {
+      q: "내일 우리 반 급식 메뉴는?",
+      a: {t:"저는 알 수 없어요. 학교 급식 안내를 보아야 합니다.", conf: 55, ok: true},
+      b: {t:"내일은 카레라이스와 요구르트가 나옵니다.", conf: 90, ok: false},
+      why: "모른다고 말하는 답이 더 좋은 답일 때가 있습니다."
+    }
   ];
 
-  var trust = null;      /* 1단계 투표 */
-  var suspect = {};      /* 2단계 어느 쪽이 의심스러운가 */
-  var diffNote = {};     /* 2단계 다른 곳 */
-  var checked = {};      /* 3단계 검증 3단계 체크 */
-  var verdict = {};      /* 3단계 판정 */
-  var myWord = {};       /* 3단계 내 말로 정리 */
-  var cards = [{}, {}];  /* 4단계 사례 카드 */
+  var METHODS = ["교과서", "공공 누리집", "선생님·어른"];
+  var STAMPS = [
+    {name: "사실", icon: "check"},
+    {name: "의심", icon: "again"},
+    {name: "거짓", icon: "red"}
+  ];
+
+  var st = {
+    tr: 0, trOk: 0, trPick: "",
+    i: 0, step: {}, method: {}, note: {}, verdict: {}, asked: {},
+    huntI: 0, huntPick: {}, huntDone: {},
+    badges: {}, classDist: null
+  };
 
   /* ---------- 화면 ---------- */
 
+  function q(id, inner) {
+    return '<section class="quest" data-q="' + id + '">' + inner + '</section>';
+  }
+
   function activityHtml() {
-    return '<div class="card"><div class="row" id="stepbar"></div>' +
-      '<p class="muted" id="steptip" style="margin-top:8px"></p></div>' +
-      '<div id="stage1"></div><div id="stage2"></div><div id="stage3"></div>' +
-      '<div id="stage4"></div><div id="stage5"></div>' +
-      '<div class="card"><div class="row">' +
-      '<button type="button" id="prevStep" class="plain" style="width:auto">이전 단계</button>' +
-      '<button type="button" id="nextStep" class="ghost" style="width:auto">다음 단계</button>' +
-      '</div></div>';
-  }
-
-  function stepBar() {
     var h = "";
-    for (var i = 0; i < STEPS.length; i++) {
-      var s = STEPS[i];
-      h += '<button type="button" class="chip stepbtn' + (step === s.no ? " on" : "") +
-        '" data-s="' + s.no + '" style="width:auto;margin:0">' +
-        s.no + ". " + esc(s.t) + ' <span style="opacity:.6">' + s.m + "분</span></button>";
-    }
-    $("stepbar").innerHTML = h;
-    var bs = document.querySelectorAll("#stepbar .stepbtn");
-    for (var j = 0; j < bs.length; j++) {
-      bs[j].onclick = function () { go(Number(this.getAttribute("data-s"))); };
-    }
-    var tips = ["",
-      "확인하기 전에는 사람도 속습니다. 먼저 느낌으로 골라 보세요.",
-      "두 도구가 내놓은 답입니다. 어디가 다른지 찾아보세요.",
-      "자료가 이 안에 있어요. 직접 맞춰 봅시다.",
-      "찾아낸 환각을 카드 두 장에 남깁니다.",
-      "맞았는지 보고 배운 것을 한 문장으로 씁니다."];
-    $("steptip").textContent = tips[step];
+
+    h += q("story",
+      '<div class="card"><span class="pill">이야기</span>' +
+      '<h2 style="margin-top:10px">사실 검증소</h2>' +
+      '<div class="card" style="margin:12px 0;background:var(--accent-soft)">' +
+      '<p style="font-size:19px;font-weight:700">"한글은 1443년에 반포되었습니다."</p>' +
+      '<p class="muted" style="margin-top:6px">몽이 · 자신감 98%</p></div>' +
+      '<p>몽이는 아주 자신 있게 말해요. 그런데 이 말은 <b>틀렸어요.</b></p>' +
+      '<p style="margin-top:8px">몽이는 배운 것만 알아요. 배우지 못한 것도 아는 것처럼 말할 때가 있어요. ' +
+      '이것을 <b>환각</b>이라고 불러요.</p>' +
+      '<p style="margin-top:8px">오늘 여러분은 <b>검증관</b>이 되어 몽이의 답을 심사해요. ' +
+      '도장은 세 개예요. 사실, 의심, 거짓.</p>' +
+      '<div class="row" style="margin-top:14px"><button type="button" id="go-hub">검증소로 들어가기</button></div></div>');
+
+    h += q("hub",
+      '<div class="card"><h2>검증소</h2>' +
+      '<p class="muted">훈련소부터 하면 쉬워요. 순서를 바꿔도 괜찮아요.</p>' +
+      '<div class="g2" style="margin-top:12px">' +
+      '<button type="button" class="tile" id="t-train">' + wiseIcon("star", 30) +
+      '<span>훈련소</span><small id="s-train">진짜와 가짜 고르기 3문항</small></button>' +
+      '<button type="button" class="tile" id="t-verify">' + wiseIcon("check", 30) +
+      '<span>검증실</span><small id="s-verify">3단계로 확인하고 도장 찍기</small></button>' +
+      '<button type="button" class="tile" id="t-hunt">' + wiseIcon("write", 30) +
+      '<span>환각 사냥</span><small id="s-hunt">틀린 조각을 짚어 내기</small></button>' +
+      '<button type="button" class="tile" id="t-class">' + wiseIcon("talk", 30) +
+      '<span>우리 반 판정</span><small id="s-class">갈린 문항 보기</small></button>' +
+      '<button type="button" class="tile" id="t-card">' + wiseIcon("id", 30) +
+      '<span>검증관 카드</span><small id="s-card">오늘의 기록</small></button>' +
+      '</div></div>' +
+      '<div class="card"><h3>내가 받은 배지</h3><div id="badges" class="row" style="margin-top:8px"></div></div>');
+
+    h += q("train",
+      '<div class="card"><span class="pill">훈련소</span>' +
+      '<h2 style="margin-top:10px">어느 쪽이 진짜일까</h2>' +
+      '<div id="trainbox"></div>' +
+      '<div class="row" style="margin-top:12px"><button type="button" class="plain back">검증소로</button></div></div>');
+
+    h += q("verify",
+      '<div class="card"><span class="pill">검증실</span>' +
+      '<h2 style="margin-top:10px" id="v-title">몽이의 답을 심사해요</h2>' +
+      '<div id="verifybox"></div>' +
+      '<div class="row" style="margin-top:12px">' +
+      '<button type="button" id="v-prev" class="plain">앞 문항</button>' +
+      '<button type="button" id="v-next" class="ghost">다음 문항</button>' +
+      '<span class="muted" id="v-pos"></span></div>' +
+      '<div class="row" style="margin-top:10px"><button type="button" class="plain back">검증소로</button></div></div>');
+
+    h += q("hunt",
+      '<div class="card"><span class="pill">환각 사냥</span>' +
+      '<h2 style="margin-top:10px">틀린 조각을 짚어 봐요</h2>' +
+      '<p class="muted">문장을 눌러 표시해요. 다 고르면 확인을 누릅니다.</p>' +
+      '<div id="huntbox"></div>' +
+      '<div class="row" style="margin-top:12px">' +
+      '<button type="button" id="h-prev" class="plain">앞 문항</button>' +
+      '<button type="button" id="h-next" class="ghost">다음 문항</button>' +
+      '<span class="muted" id="h-pos"></span></div>' +
+      '<div class="row" style="margin-top:10px"><button type="button" class="plain back">검증소로</button></div></div>');
+
+    h += q("class",
+      '<div class="card"><span class="pill">함께 보기</span>' +
+      '<h2 style="margin-top:10px">우리 반은 어떻게 판정했을까</h2>' +
+      '<div class="row" style="margin-top:10px">' +
+      '<button type="button" id="peek">우리 반 판정 불러오기</button></div>' +
+      '<div id="dist" style="margin-top:12px"></div>' +
+      '<div class="row" style="margin-top:10px"><button type="button" class="plain back">검증소로</button></div></div>');
+
+    h += q("card",
+      '<div class="card"><span class="pill">기록</span>' +
+      '<h2 style="margin-top:10px">나의 검증관 카드</h2>' +
+      '<div id="mine"></div>' +
+      '<div class="row" style="margin-top:12px">' +
+      '<button type="button" id="save-card" class="ghost">인증서 그림으로 저장</button>' +
+      '<button type="button" class="plain back">검증소로</button></div></div>' +
+      '<div class="safe">이름, 사진, 친구 이야기 같은 개인정보는 넣지 않아요.</div>');
+
+    return h;
   }
 
-  function go(n) {
-    if (n < 1 || n > 5) { return; }
-    if (n >= 5 && judged() < 3) {
-      $("w-msg").innerHTML = '<span class="warn">물음을 3개 넘게 골라야 결과를 볼 수 있어요. 지금 ' + judged() + '개예요.</span>';
-      n = 3;
+  /* ---------- 훈련소 ---------- */
+
+  function trainHtml() {
+    if (st.tr >= TRAIN.length) {
+      return '<p class="big">' + st.trOk + ' / ' + TRAIN.length + '</p>' +
+        '<p class="muted">자신감 수치는 정확도가 아니에요. 몽이는 틀릴 때도 당당해요.</p>' +
+        '<div class="row" style="margin-top:10px">' +
+        '<button type="button" id="train-go">검증실로 가기</button></div>';
     }
-    step = n;
-    for (var i = 1; i <= 5; i++) {
-      var el = $("stage" + i);
-      if (el) { el.style.display = (i === step ? "block" : "none"); }
+    var t = TRAIN[st.tr];
+    var h = '<p class="muted">' + (st.tr + 1) + ' / ' + TRAIN.length + '</p>' +
+      '<h3 style="margin:8px 0 12px">' + esc(t.q) + '</h3>';
+    var opts = [["a", t.a], ["b", t.b]];
+    for (var i = 0; i < opts.length; i++) {
+      var key = opts[i][0], o = opts[i][1];
+      var mark = "";
+      if (st.trPick) { mark = o.ok ? " on" : ""; }
+      h += '<button type="button" class="chip tr' + mark + '" data-k="' + key + '">' +
+        esc(o.t) + '<br><span class="muted">몽이 자신감 ' + o.conf + '%</span></button>';
     }
-    stepBar();
-    if (step === 5) { renderResult(); }
-    window.scrollTo(0, 0);
+    if (st.trPick) {
+      var picked = st.trPick === "a" ? t.a : t.b;
+      h += '<p class="' + (picked.ok ? "ok" : "warn") + '" style="margin-top:10px">' +
+        (picked.ok ? "맞았어요. " : "다시 봐요. ") + esc(t.why) + '</p>' +
+        '<div class="row" style="margin-top:10px"><button type="button" id="train-next">다음</button></div>';
+    }
+    return h;
   }
 
-  function judged() {
+  function bindTrain() {
+    $("trainbox").innerHTML = trainHtml();
+    var opts = document.querySelectorAll("#activity .tr");
+    for (var i = 0; i < opts.length; i++) {
+      opts[i].onclick = function () {
+        if (st.trPick) { return; }
+        st.trPick = this.getAttribute("data-k");
+        var t = TRAIN[st.tr];
+        if ((st.trPick === "a" ? t.a : t.b).ok) { st.trOk += 1; }
+        bindTrain();
+      };
+    }
+    if ($("train-next")) {
+      $("train-next").onclick = function () {
+        st.tr += 1;
+        st.trPick = "";
+        bindTrain();
+        paintHub();
+        if (st.tr >= TRAIN.length) { award("훈련 수료"); }
+      };
+    }
+    if ($("train-go")) { $("train-go").onclick = function () { wiseGo("verify"); }; }
+  }
+
+  /* ---------- 검증실 ---------- */
+
+  function sayLine(item) {
+    return item.say.join(" ");
+  }
+
+  function stepDone(i, name) {
+    var box = st.step[i] || [];
+    for (var k = 0; k < box.length; k++) { if (box[k] === name) { return true; } }
+    return false;
+  }
+
+  function markStep(i, name) {
+    if (!st.step[i]) { st.step[i] = []; }
+    if (!stepDone(i, name)) { st.step[i].push(name); }
+  }
+
+  function verifyHtml() {
+    var i = st.i, item = ITEMS[i];
+    var h = '<div class="card" style="margin:12px 0;background:var(--accent-soft)">' +
+      '<p class="muted">' + esc(item.q) + '</p>' +
+      '<p style="font-size:19px;font-weight:700;margin-top:6px">' + esc(sayLine(item)) + '</p>' +
+      '<p class="muted" style="margin-top:6px">몽이 · 자신감 ' + item.conf + '%</p></div>';
+
+    h += '<h3>1단계 출처 확인</h3>';
+    if (st.asked[i]) {
+      h += '<p class="note">몽이 : ' + esc(item.source) + '</p>';
+    } else {
+      h += '<button type="button" class="chip ask">출처를 물어보기</button>';
+    }
+
+    h += '<h3 style="margin-top:14px">2단계 대조하기</h3>' +
+      '<p class="muted">어떤 방법으로 확인할까요</p>';
+    for (var m = 0; m < METHODS.length; m++) {
+      h += '<button type="button" class="chip mth' + (st.method[i] === METHODS[m] ? " on" : "") +
+        '" data-m="' + esc(METHODS[m]) + '">' + esc(METHODS[m]) + '</button>';
+    }
+    if (st.method[i]) {
+      h += '<p class="note" style="margin-top:8px">' + esc(item.check) + '에서 확인한 것 : ' +
+        esc(item.truth) + '</p>';
+    }
+
+    h += '<h3 style="margin-top:14px">3단계 내 말로 정리</h3>' +
+      '<input id="note' + i + '" maxlength="80" placeholder="확인한 것을 한 줄로 써요" value="' +
+      esc(st.note[i] || "") + '">';
+
+    var ready = st.asked[i] && st.method[i] && (st.note[i] || "").length > 2;
+    h += '<h3 style="margin-top:16px">도장 찍기</h3>';
+    if (!ready) {
+      h += '<p class="muted">세 단계를 마치면 도장이 열려요.</p>';
+    }
+    h += '<div class="row">';
+    for (var s = 0; s < STAMPS.length; s++) {
+      h += '<button type="button" class="chip stamp' + (st.verdict[i] === STAMPS[s].name ? " on" : "") +
+        '" data-v="' + esc(STAMPS[s].name) + '" style="width:auto;margin:0"' +
+        (ready ? "" : " disabled") + '>' + wiseIcon(STAMPS[s].icon, 24) + esc(STAMPS[s].name) + '</button>';
+    }
+    h += '</div>';
+
+    if (st.verdict[i]) {
+      h += '<div class="card" style="margin-top:12px;border-color:var(--accent)">' +
+        '<p class="ok">확인한 사실</p><p style="font-size:18px;margin-top:6px">' + esc(item.truth) + '</p>' +
+        '<p class="muted" style="margin-top:6px">' + esc(item.why) + '</p></div>';
+    }
+    return h;
+  }
+
+  function bindVerify() {
+    $("verifybox").innerHTML = verifyHtml();
+    if ($("v-pos")) {
+      $("v-pos").textContent = (st.i + 1) + " / " + ITEMS.length + " · 도장 찍은 문항 " + verdictCount() + "개";
+    }
+    var asks = document.querySelectorAll("#activity .ask");
+    for (var a = 0; a < asks.length; a++) {
+      asks[a].onclick = function () {
+        var btn = this;
+        wiseButtonBusy(btn, true, "몽이에게 묻는 중");
+        setTimeout(function () {
+          st.asked[st.i] = true;
+          markStep(st.i, "출처");
+          bindVerify();
+        }, 520);
+      };
+    }
+    var mths = document.querySelectorAll("#activity .mth");
+    for (var m = 0; m < mths.length; m++) {
+      mths[m].onclick = function () {
+        var btn = this, pick = this.getAttribute("data-m");
+        wiseButtonBusy(btn, true, pick + " 확인 중");
+        setTimeout(function () {
+          st.method[st.i] = pick;
+          markStep(st.i, "대조");
+          bindVerify();
+        }, 620);
+      };
+    }
+    var note = $("note" + st.i);
+    if (note) {
+      note.oninput = function () {
+        st.note[st.i] = this.value.trim();
+        if (this.value.trim().length > 2) { markStep(st.i, "내 말"); }
+      };
+      note.onblur = function () { bindVerify(); };
+    }
+    var stamps = document.querySelectorAll("#activity .stamp");
+    for (var s = 0; s < stamps.length; s++) {
+      stamps[s].onclick = function () {
+        if (this.disabled) { return; }
+        st.verdict[st.i] = this.getAttribute("data-v");
+        bindVerify();
+        paintHub();
+        if (verdictCount() >= 3) { award("검증관"); }
+      };
+    }
+  }
+
+  function verdictCount() {
     var n = 0;
-    for (var k in verdict) { if (verdict.hasOwnProperty(k) && verdict[k]) { n++; } }
+    for (var k in st.verdict) { if (st.verdict.hasOwnProperty(k)) { n++; } }
     return n;
   }
 
-  /* 1단계 */
-  function build1() {
-    $("stage1").innerHTML = '<div class="card"><h2>이 답을 믿어도 될까요</h2>' +
-      '<p class="muted">' + esc(HOOK.q) + '</p>' +
-      '<div class="bucket" style="margin-top:12px"><p style="font-size:18px">' + esc(HOOK.b) + '</p></div>' +
-      '<div class="row" style="margin-top:14px">' +
-      '<button type="button" class="chip tv" data-v="believe" style="width:auto;margin:0">믿을 만하다</button>' +
-      '<button type="button" class="chip tv" data-v="doubt" style="width:auto;margin:0">의심스럽다</button>' +
-      '<button type="button" class="chip tv" data-v="check" style="width:auto;margin:0">확인해 봐야 안다</button>' +
-      '</div>' +
-      '<label for="why1">무엇을 보고 그렇게 생각했나요</label>' +
-      '<input id="why1" maxlength="70" placeholder="예: 출판사와 연도까지 있어서 진짜 같습니다">' +
-      '<div class="safe">이 답에는 함정이 있어요. 3단계에서 확인해 봅시다.</div></div>';
-    var bs = document.querySelectorAll("#stage1 .tv");
-    for (var i = 0; i < bs.length; i++) {
-      bs[i].onclick = function () { trust = this.getAttribute("data-v"); paint1(); };
+  /* ---------- 환각 사냥 ---------- */
+
+  function huntHtml() {
+    var i = st.huntI, item = ITEMS[i];
+    var picks = st.huntPick[i] || {};
+    var h = '<p class="muted">' + esc(item.q) + '</p><div class="row" style="margin-top:10px">';
+    for (var k = 0; k < item.say.length; k++) {
+      h += '<button type="button" class="chip pc' + (picks[k] ? " on" : "") +
+        '" data-p="' + k + '" style="width:auto;margin:0">' + esc(item.say[k]) + '</button>';
     }
-    paint1();
+    h += '</div>';
+    if (!st.huntDone[i]) {
+      h += '<div class="row" style="margin-top:12px">' +
+        '<button type="button" id="h-check">확인하기</button></div>';
+    } else {
+      var r = huntScore(i);
+      h += '<div class="card" style="margin-top:12px">' +
+        '<p><b>잡아냄 ' + r.hit + '</b> · 놓침 ' + r.miss + ' · 잘못 짚음 ' + r.wrong + '</p>' +
+        '<p class="muted" style="margin-top:6px">틀린 곳 : ' + esc(badWords(item)) + '</p>' +
+        '<p style="margin-top:6px">' + esc(item.truth) + '</p></div>';
+    }
+    return h;
   }
 
-  function paint1() {
-    var bs = document.querySelectorAll("#stage1 .tv");
-    for (var i = 0; i < bs.length; i++) {
-      bs[i].className = "chip tv" + (trust === bs[i].getAttribute("data-v") ? " on" : "");
-    }
+  function badWords(item) {
+    var out = [];
+    for (var k = 0; k < item.bad.length; k++) { out.push(item.say[item.bad[k]]); }
+    return out.join(" / ");
   }
 
-  /* 2단계 */
-  function build2() {
-    var h = '<div class="card"><h2>같은 물음에 두 도구가 이렇게 답했어요</h2>' +
-      '<p class="muted">도구 이름은 가와 나로만 적었습니다. 어느 회사인지가 아니라 답이 다르다는 점이 중요해요.</p></div>';
-    for (var i = 0; i < ITEMS.length; i++) {
-      var it = ITEMS[i];
-      h += '<div class="card"><h3>' + (i + 1) + ". " + esc(it.q) + "</h3>" +
-        '<div class="grid" style="grid-template-columns:1fr 1fr;margin-top:10px">' +
-        '<div class="bucket"><h3>도구 가</h3><p>' + esc(it.a) + "</p></div>" +
-        '<div class="bucket"><h3>도구 나</h3><p>' + esc(it.b) + "</p></div></div>" +
-        '<label for="d' + i + '">두 답이 어디가 다른가요</label>' +
-        '<input id="d' + i + '" maxlength="80" placeholder="예: 연도가 다릅니다">' +
-        '<div class="row" style="margin-top:10px">' +
-        '<button type="button" class="chip sp" data-i="' + i + '" data-v="a" style="width:auto;margin:0">가가 의심스럽다</button>' +
-        '<button type="button" class="chip sp" data-i="' + i + '" data-v="b" style="width:auto;margin:0">나가 의심스럽다</button>' +
-        '<button type="button" class="chip sp" data-i="' + i + '" data-v="none" style="width:auto;margin:0">모르겠다</button>' +
-        "</div></div>";
+  function huntScore(i) {
+    var item = ITEMS[i], picks = st.huntPick[i] || {};
+    var hit = 0, wrong = 0, miss = 0;
+    for (var k = 0; k < item.say.length; k++) {
+      var isBad = false;
+      for (var b = 0; b < item.bad.length; b++) { if (item.bad[b] === k) { isBad = true; } }
+      if (picks[k] && isBad) { hit++; }
+      if (picks[k] && !isBad) { wrong++; }
+      if (!picks[k] && isBad) { miss++; }
     }
-    $("stage2").innerHTML = h;
-    var bs = document.querySelectorAll("#stage2 .sp");
-    for (var k = 0; k < bs.length; k++) {
-      bs[k].onclick = function () {
-        suspect[this.getAttribute("data-i")] = this.getAttribute("data-v");
-        paint2();
+    return { hit: hit, wrong: wrong, miss: miss, perfect: miss === 0 && wrong === 0 && hit > 0 };
+  }
+
+  function caughtCount() {
+    var n = 0;
+    for (var k in st.huntDone) {
+      if (st.huntDone.hasOwnProperty(k) && huntScore(Number(k)).perfect) { n++; }
+    }
+    return n;
+  }
+
+  function bindHunt() {
+    $("huntbox").innerHTML = huntHtml();
+    if ($("h-pos")) {
+      $("h-pos").textContent = (st.huntI + 1) + " / " + ITEMS.length + " · 정확히 잡은 문항 " + caughtCount() + "개";
+    }
+    var pcs = document.querySelectorAll("#activity .pc");
+    for (var i = 0; i < pcs.length; i++) {
+      pcs[i].onclick = function () {
+        if (st.huntDone[st.huntI]) { return; }
+        var k = Number(this.getAttribute("data-p"));
+        if (!st.huntPick[st.huntI]) { st.huntPick[st.huntI] = {}; }
+        st.huntPick[st.huntI][k] = !st.huntPick[st.huntI][k];
+        bindHunt();
       };
     }
-    paint2();
-  }
-
-  function paint2() {
-    var bs = document.querySelectorAll("#stage2 .sp");
-    for (var i = 0; i < bs.length; i++) {
-      var k = bs[i].getAttribute("data-i"), v = bs[i].getAttribute("data-v");
-      bs[i].className = "chip sp" + (suspect[k] === v ? " on" : "");
-    }
-  }
-
-  /* 3단계 */
-  function build3() {
-    var h = '<div class="card"><h2>확인하는 세 걸음</h2>' +
-      '<p class="muted">① 어디서 나온 말인지 보기<br>② 교과서와 맞춰 보기<br>③ 내 말로 정리하기</p></div>';
-    for (var i = 0; i < ITEMS.length; i++) {
-      var it = ITEMS[i];
-      h += '<div class="card"><h3>' + (i + 1) + ". " + esc(it.q) + "</h3>" +
-        '<div class="grid" style="grid-template-columns:1fr 1fr;margin-top:8px">' +
-        '<div class="bucket"><h3>가</h3><p style="font-size:14px">' + esc(it.a) + "</p></div>" +
-        '<div class="bucket"><h3>나</h3><p style="font-size:14px">' + esc(it.b) + "</p></div></div>" +
-        '<div class="row" style="margin-top:12px">' +
-        '<button type="button" class="chip ck" data-i="' + i + '" data-k="0" style="width:auto;margin:0">① 어디서 나온 말인지 봤다</button>' +
-        '<button type="button" class="chip ck" data-i="' + i + '" data-k="1" style="width:auto;margin:0">② 자료와 맞춰 봤다</button>' +
-        "</div>" +
-        '<button type="button" class="ghost srcBtn" data-i="' + i + '" style="margin-top:10px">자료 열기 · ' +
-        esc(it.srcName) + "</button>" +
-        '<div id="src' + i + '" class="safe" style="display:none">' + esc(it.src) + "</div>" +
-        '<label>맞춰 보니 어느 쪽이 맞나요</label><div class="row">' +
-        '<button type="button" class="chip vd" data-i="' + i + '" data-v="a" style="width:auto;margin:0">가 쪽이 맞아요</button>' +
-        '<button type="button" class="chip vd" data-i="' + i + '" data-v="b" style="width:auto;margin:0">나 쪽이 맞아요</button>' +
-        '<button type="button" class="chip vd" data-i="' + i + '" data-v="both" style="width:auto;margin:0">둘 다 틀리지 않았어요</button>' +
-        "</div>" +
-        '<label for="w' + i + '">③ 내 말로 정리하기</label>' +
-        '<input id="w' + i + '" maxlength="90" placeholder="확인한 내용을 한 줄로 써요">' +
-        "</div>";
-    }
-    $("stage3").innerHTML = h;
-
-    var sb = document.querySelectorAll("#stage3 .srcBtn");
-    for (var s = 0; s < sb.length; s++) {
-      sb[s].onclick = function () {
-        var i = this.getAttribute("data-i");
-        var box = $("src" + i);
-        var open = box.style.display !== "none";
-        box.style.display = open ? "none" : "block";
-        this.textContent = (open ? "자료 열기 · " : "자료 닫기 · ") + ITEMS[i].srcName;
-        if (!open) { checked[i + "-1"] = true; paint3(); }
+    if ($("h-check")) {
+      $("h-check").onclick = function () {
+        var btn = this;
+        wiseButtonBusy(btn, true, "채점하는 중");
+        setTimeout(function () {
+          st.huntDone[st.huntI] = true;
+          bindHunt();
+          paintHub();
+          if (caughtCount() >= 2) { award("환각 사냥꾼"); }
+        }, 420);
       };
     }
-    var cb = document.querySelectorAll("#stage3 .ck");
-    for (var c = 0; c < cb.length; c++) {
-      cb[c].onclick = function () {
-        var key = this.getAttribute("data-i") + "-" + this.getAttribute("data-k");
-        checked[key] = !checked[key];
-        paint3();
-      };
-    }
-    var vb = document.querySelectorAll("#stage3 .vd");
-    for (var v = 0; v < vb.length; v++) {
-      vb[v].onclick = function () {
-        verdict[this.getAttribute("data-i")] = this.getAttribute("data-v");
-        paint3();
-      };
-    }
-    paint3();
   }
 
-  function paint3() {
-    var cb = document.querySelectorAll("#stage3 .ck");
-    for (var i = 0; i < cb.length; i++) {
-      var key = cb[i].getAttribute("data-i") + "-" + cb[i].getAttribute("data-k");
-      cb[i].className = "chip ck" + (checked[key] ? " on" : "");
-    }
-    var vb = document.querySelectorAll("#stage3 .vd");
-    for (var j = 0; j < vb.length; j++) {
-      var k = vb[j].getAttribute("data-i"), v = vb[j].getAttribute("data-v");
-      vb[j].className = "chip vd" + (verdict[k] === v ? " on" : "");
-    }
-  }
+  /* ---------- 우리 반 판정 ---------- */
 
-  /* 4단계 */
-  function build4() {
-    var h = '<div class="card"><h2>환각 사례 카드 두 장</h2>' +
-      '<p class="muted">AI가 사실이 아닌 것을 사실처럼 말한 경우를 골라 적어요.</p></div>';
-    for (var n = 0; n < 2; n++) {
-      h += '<div class="card"><h3>카드 ' + (n + 1) + '</h3>' +
-        '<label for="cq' + n + '">어떤 질문이었나요</label>' +
-        '<select id="cq' + n + '"><option value="">고르세요</option>';
-      for (var i = 0; i < ITEMS.length; i++) {
-        h += '<option value="' + i + '">' + esc(ITEMS[i].q) + "</option>";
+  function peek() {
+    if (me.solo) {
+      $("dist").innerHTML = '<p class="muted">둘러보기 중에는 우리 반 판정이 없어요. ' +
+        '검증과 사냥은 그대로 해 볼 수 있어요.</p>';
+      return;
+    }
+    $("dist").innerHTML = wiseSpinner("우리 반 판정을 불러오는 중이에요", true) + wiseSkeleton(3);
+    dbGet(me.room + "/entries").then(function (data) {
+      var tally = {};
+      for (var k in data) {
+        if (!data.hasOwnProperty(k)) { continue; }
+        var v = (data[k].payload || {}).verdicts || {};
+        for (var i in v) {
+          if (!v.hasOwnProperty(i)) { continue; }
+          if (!tally[i]) { tally[i] = {사실: 0, 의심: 0, 거짓: 0}; }
+          tally[i][v[i]] = (tally[i][v[i]] || 0) + 1;
+        }
       }
-      h += "</select>" +
-        '<label for="cw' + n + '">무엇이 틀렸나요</label>' +
-        '<input id="cw' + n + '" maxlength="80" placeholder="예: 없는 책 이름을 지어냈습니다">' +
-        '<label for="ch' + n + '">어떻게 확인했나요</label>' +
-        '<input id="ch' + n + '" maxlength="80" placeholder="예: 도서관에서 검색해 보니 없었습니다">' +
-        "</div>";
-    }
-    $("stage4").innerHTML = h;
+      st.classDist = tally;
+      $("dist").innerHTML = distHtml(tally);
+      paintHub();
+    })["catch"](function () {
+      $("dist").innerHTML = '<p class="warn">지금은 불러올 수 없어요. 잠시 뒤 다시 눌러요.</p>';
+    });
   }
 
-  /* 5단계 */
-  function build5() {
-    $("stage5").innerHTML = '<div id="res5"></div>' +
-      '<div class="card"><label for="learn">AI의 답을 받았을 때 가장 먼저 할 일은 무엇인가요</label>' +
-      '<textarea id="learn" maxlength="200" placeholder="예: 어디서 나온 이야기인지 출처를 확인하는 일입니다"></textarea></div>';
+  function distHtml(tally) {
+    var keys = [];
+    for (var i in tally) { if (tally.hasOwnProperty(i)) { keys.push(i); } }
+    if (!keys.length) { return '<p class="muted">아직 우리 반 판정이 모이지 않았어요.</p>'; }
+    keys.sort(function (a, b) { return agree(tally[a]) - agree(tally[b]); });
+    var h = '<p class="muted">판정이 갈린 문항부터 보여 줘요.</p><div class="scroll"><table>' +
+      '<tr><th>문항</th><th>사실</th><th>의심</th><th>거짓</th><th>내 도장</th></tr>';
+    for (var k = 0; k < keys.length; k++) {
+      var t = tally[keys[k]];
+      h += "<tr><td>" + esc(ITEMS[keys[k]] ? ITEMS[keys[k]].q : keys[k]) + "</td><td>" +
+        (t["사실"] || 0) + "</td><td>" + (t["의심"] || 0) + "</td><td>" + (t["거짓"] || 0) +
+        "</td><td>" + esc(st.verdict[keys[k]] || "-") + "</td></tr>";
+    }
+    return h + "</table></div>";
   }
 
-  function renderResult() {
-    var hit = 0, n = 0, h = '<div class="card"><h2>내가 고른 것과 맞는 답</h2><div class="scroll"><table>' +
-      "<tr><th>물음</th><th>내가 고른 것</th><th>맞는 답</th><th>어떻게 틀렸나</th></tr>";
-    for (var i = 0; i < ITEMS.length; i++) {
-      var it = ITEMS[i], mine = verdict[i];
-      if (!mine) {
-        h += "<tr><td>" + esc(it.q) + '</td><td class="muted">안 함</td><td>' +
-          esc(VERDICT_LABEL[it.verdict]) + "</td><td>" + esc(it.kind) + "</td></tr>";
-        continue;
-      }
-      n++;
-      var ok = mine === it.verdict;
-      if (ok) { hit++; }
-      h += "<tr><td>" + esc(it.q) + '</td><td style="color:' + (ok ? "#15803d" : "#b91c1c") + '">' +
-        esc(VERDICT_LABEL[mine]) + (ok ? " ✓" : " ✗") + "</td><td>" +
-        esc(VERDICT_LABEL[it.verdict]) + "</td><td>" + esc(it.kind) + "</td></tr>";
-    }
-    h += "</table></div>";
-    h += '<p style="font-size:22px;font-weight:800;margin-top:12px">' + hit + " / " + n + " 맞음</p></div>";
-
-    h += '<div class="card"><h2>왜 그럴까요</h2>';
-    for (var j = 0; j < ITEMS.length; j++) {
-      h += '<p style="margin:10px 0"><b>' + esc(ITEMS[j].q) + "</b><br>" +
-        '<span class="muted">' + esc(ITEMS[j].why) + "</span></p>";
-    }
-    h += "</div>";
-
-    if (trust === "believe") {
-      h += '<div class="safe">1단계에서 믿을 만하다고 하셨죠. 출판사와 연도까지 붙으면 사람도 속습니다. ' +
-        "그래서 확인이 필요합니다.</div>";
-    }
-    $("res5").innerHTML = h;
+  function agree(t) {
+    var sum = (t["사실"] || 0) + (t["의심"] || 0) + (t["거짓"] || 0);
+    if (!sum) { return 1; }
+    return Math.max(t["사실"] || 0, t["의심"] || 0, t["거짓"] || 0) / sum;
   }
 
-  /* ---------- 공통 고리 ---------- */
+  /* ---------- 검증관 카드 ---------- */
+
+  function methodCount() {
+    var box = {};
+    for (var k in st.method) {
+      if (!st.method.hasOwnProperty(k)) { continue; }
+      box[st.method[k]] = (box[st.method[k]] || 0) + 1;
+    }
+    return box;
+  }
+
+  function paintMine() {
+    if (!$("mine")) { return; }
+    var box = methodCount(), rows = [];
+    for (var m = 0; m < METHODS.length; m++) {
+      rows.push({ label: METHODS[m], value: box[METHODS[m]] || 0 });
+    }
+    var h = wiseBars(rows, 520);
+    h += '<p style="margin-top:10px">도장 찍은 문항 ' + verdictCount() + ' / ' + ITEMS.length +
+      '개 · 정확히 잡아낸 환각 ' + caughtCount() + '개 · 훈련소 ' + st.trOk + ' / ' + TRAIN.length + '</p>';
+    if (caughtCount()) {
+      h += '<p class="ok">그럴듯한 거짓말을 잡아냈어요. 확인하면 쓸 수 있어요.</p>';
+    }
+    $("mine").innerHTML = h;
+  }
+
+  /* ---------- 배지와 허브 ---------- */
+
+  function award(name) {
+    if (st.badges[name]) { return; }
+    st.badges[name] = true;
+    wiseToast("배지를 받았어요 : " + name);
+    paintHub();
+  }
+
+  function paintHub() {
+    if (!$("s-verify")) { return; }
+    $("s-train").textContent = st.tr >= TRAIN.length
+      ? ("맞힌 문제 " + st.trOk + " / " + TRAIN.length) : "진짜와 가짜 고르기 3문항";
+    $("s-verify").textContent = "도장 찍은 문항 " + verdictCount() + " / " + ITEMS.length;
+    $("s-hunt").textContent = "정확히 잡은 문항 " + caughtCount() + "개";
+    $("s-class").textContent = st.classDist ? "우리 반 판정을 보았어요" : "갈린 문항 보기";
+    $("s-card").textContent = "오늘의 기록";
+    var tiles = [["t-train", st.tr >= TRAIN.length], ["t-verify", verdictCount() >= 3],
+      ["t-hunt", caughtCount() >= 2], ["t-class", !!st.classDist], ["t-card", false]];
+    for (var i = 0; i < tiles.length; i++) {
+      if ($(tiles[i][0])) { $(tiles[i][0]).className = "tile" + (tiles[i][1] ? " done" : ""); }
+    }
+    var names = [];
+    for (var b in st.badges) { if (st.badges.hasOwnProperty(b)) { names.push(b); } }
+    $("badges").innerHTML = names.length
+      ? names.map(function (n) { return '<span class="pill">' + esc(n) + '</span>'; }).join(" ")
+      : '<span class="muted">아직 없어요. 훈련소부터 해 볼까요?</span>';
+    wiseHud([
+      { label: "검증", done: verdictCount(), total: ITEMS.length },
+      { label: "잡아낸 환각", done: caughtCount(), total: ITEMS.length },
+      { label: "훈련소", done: st.trOk, total: TRAIN.length }
+    ]);
+    paintMine();
+  }
+
+  /* ---------- 흐름 ---------- */
+
+  function activityEnter(id) {
+    if (id === "train") { bindTrain(); }
+    if (id === "verify") { bindVerify(); }
+    if (id === "hunt") { bindHunt(); }
+    if (id === "card") { paintMine(); }
+    if (id === "hub") { paintHub(); }
+  }
 
   function activityInit(saved) {
     if (saved) {
-      trust = saved.trust || null;
-      suspect = saved.suspect || {};
-      checked = saved.checked || {};
-      verdict = saved.verdict || {};
+      if (saved.verdicts) { st.verdict = saved.verdicts; }
+      if (saved.notes) { st.note = saved.notes; }
+      if (saved.methods0) { st.method = saved.methods0; }
     }
-    build1(); build2(); build3(); build4(); build5();
-    if (saved) {
-      if (saved.why1 && $("why1")) { $("why1").value = saved.why1; }
-      if (saved.learn && $("learn")) { $("learn").value = saved.learn; }
-      var i;
-      for (i = 0; i < ITEMS.length; i++) {
-        if (saved.diffNote && saved.diffNote[i] && $("d" + i)) { $("d" + i).value = saved.diffNote[i]; }
-        if (saved.myWord && saved.myWord[i] && $("w" + i)) { $("w" + i).value = saved.myWord[i]; }
-      }
-      if (saved.cards) {
-        for (i = 0; i < 2; i++) {
-          var c = saved.cards[i] || {};
-          if ($("cq" + i) && c.q !== undefined) { $("cq" + i).value = c.q; }
-          if ($("cw" + i) && c.what) { $("cw" + i).value = c.what; }
-          if ($("ch" + i) && c.how) { $("ch" + i).value = c.how; }
-        }
-      }
+    $("go-hub").onclick = function () { wiseGo("hub"); };
+    $("t-train").onclick = function () { wiseGo("train"); };
+    $("t-verify").onclick = function () { wiseGo("verify"); };
+    $("t-hunt").onclick = function () { wiseGo("hunt"); };
+    $("t-class").onclick = function () { wiseGo("class"); };
+    $("t-card").onclick = function () { wiseGo("card"); };
+    $("v-prev").onclick = function () { if (st.i > 0) { st.i -= 1; bindVerify(); } };
+    $("v-next").onclick = function () { if (st.i < ITEMS.length - 1) { st.i += 1; bindVerify(); } };
+    $("h-prev").onclick = function () { if (st.huntI > 0) { st.huntI -= 1; bindHunt(); } };
+    $("h-next").onclick = function () { if (st.huntI < ITEMS.length - 1) { st.huntI += 1; bindHunt(); } };
+    $("peek").onclick = peek;
+    $("save-card").onclick = function () {
+      wiseCardPng("AI 검증관 인증서 · " + me.nick, [
+        "도장 찍은 문항 " + verdictCount() + " / " + ITEMS.length,
+        "정확히 잡아낸 환각 " + caughtCount() + "개",
+        "훈련소 " + st.trOk + " / " + TRAIN.length,
+        "확인하면 쓸 수 있다."
+      ], "wise_l02_" + me.nick);
+      award("기록하는 검증관");
+    };
+    var backs = document.querySelectorAll("#activity .back");
+    for (var i = 0; i < backs.length; i++) {
+      backs[i].onclick = function () { wiseGo("hub"); };
     }
-    $("prevStep").onclick = function () { go(step - 1); };
-    $("nextStep").onclick = function () { go(step + 1); };
-    go(1);
+    wiseNote("자신감 수치가 높다고 맞는 답이 아니에요. 세 단계로 확인해요.");
+    wiseGo("story");
+    paintHub();
   }
 
-  function collectText() {
-    var i;
-    for (i = 0; i < ITEMS.length; i++) {
-      diffNote[i] = $("d" + i) ? $("d" + i).value.trim() : "";
-      myWord[i] = $("w" + i) ? $("w" + i).value.trim() : "";
+  function activityDraft() {
+    return { verdicts: st.verdict, notes: st.note, methods0: st.method };
+  }
+
+  function activityAutofill() {
+    for (var i = 0; i < ITEMS.length; i++) {
+      st.asked[i] = true;
+      st.method[i] = ITEMS[i].check;
+      st.note[i] = "확인했습니다";
+      st.verdict[i] = i === 0 ? "거짓" : (i % 2 ? "의심" : "거짓");
+      st.step[i] = ["출처", "대조", "내 말"];
+      st.huntPick[i] = {};
+      for (var b = 0; b < ITEMS[i].bad.length; b++) { st.huntPick[i][ITEMS[i].bad[b]] = true; }
+      st.huntDone[i] = true;
     }
-    for (i = 0; i < 2; i++) {
-      cards[i] = {
-        q: $("cq" + i) ? $("cq" + i).value : "",
-        what: $("cw" + i) ? $("cw" + i).value.trim() : "",
-        how: $("ch" + i) ? $("ch" + i).value.trim() : ""
-      };
-    }
+    st.tr = TRAIN.length;
+    st.trOk = TRAIN.length;
   }
 
   function activityCollect() {
-    collectText();
-    if (judged() < 3) {
-      $("w-msg").innerHTML = '<span class="warn">물음을 3개 넘게 골라 주세요. 지금 ' + judged() + '개예요.</span>';
-      go(3);
+    if (verdictCount() < 3) {
+      $("w-msg").innerHTML = '<span class="warn">문항 세 개 넘게 도장을 찍은 뒤에 제출해요. 지금 ' +
+        verdictCount() + '개예요.</span>';
       return null;
     }
-    var made = 0;
-    for (var i = 0; i < 2; i++) { if (cards[i].what) { made++; } }
-    if (made < 1) {
-      $("w-msg").innerHTML = '<span class="warn">환각 사례 카드를 한 장이라도 써 주세요.</span>';
-      go(4);
-      return null;
+    var hunt = {};
+    for (var k in st.huntDone) {
+      if (st.huntDone.hasOwnProperty(k)) { hunt[k] = huntScore(Number(k)); }
     }
-    var learn = $("learn") ? $("learn").value.trim() : "";
-    if (!learn) {
-      $("w-msg").innerHTML = '<span class="warn">마지막 칸에 배운 것을 한 문장 써 주세요.</span>';
-      go(5);
-      return null;
-    }
-    var hit = 0, n = 0;
-    for (var j = 0; j < ITEMS.length; j++) {
-      if (!verdict[j]) { continue; }
-      n++;
-      if (verdict[j] === ITEMS[j].verdict) { hit++; }
-    }
+    var badges = [];
+    for (var b in st.badges) { if (st.badges.hasOwnProperty(b)) { badges.push(b); } }
+    wiseCelebrate("검증을 마쳤어요", [
+      "도장 찍은 문항 <b>" + verdictCount() + "개</b>",
+      "정확히 잡아낸 환각 <b>" + caughtCount() + "개</b>",
+      "자신감 수치는 정확도가 아니에요.",
+      "다음 시간에는 AI의 치우침을 데이터에서 찾아봅니다."
+    ], "좋아요");
     return {
-      trust: trust,
-      why1: $("why1") ? $("why1").value.trim() : "",
-      suspect: suspect,
-      diffNote: diffNote,
-      checked: checked,
-      verdict: verdict,
-      myWord: myWord,
-      score: {hit: hit, of: n},
-      cards: cards,
-      learn: learn
+      train: { ok: st.trOk },
+      verdicts: st.verdict, steps: st.step, notes: st.note,
+      methods: methodCount(), hunt: hunt, caught: caughtCount(),
+      badges: badges
     };
   }
 
-  /* 자동 검사용. 수업 화면에는 영향이 없다. */
-  function activityAutofill() {
-    trust = "check";
-    for (var i = 0; i < ITEMS.length; i++) {
-      suspect[i] = "b";
-      verdict[i] = ITEMS[i].verdict;
-      checked[i + "-0"] = true;
-      checked[i + "-1"] = true;
-      if ($("d" + i)) { $("d" + i).value = "연도가 다릅니다."; }
-      if ($("w" + i)) { $("w" + i).value = "교과서와 맞춰 보았습니다."; }
-    }
-    if ($("cq0")) { $("cq0").value = "2"; }
-    if ($("cw0")) { $("cw0").value = "없는 책 이름을 지어냈습니다."; }
-    if ($("ch0")) { $("ch0").value = "도서관에서 검색해 보니 없었습니다."; }
-    if ($("why1")) { $("why1").value = "출판사와 연도까지 있어서 진짜 같았습니다."; }
-    if ($("learn")) { $("learn").value = "어디서 나온 이야기인지 출처를 먼저 확인합니다."; }
-  }
+  /* ---------- 교사 화면 ---------- */
 
   function teacherSummary(list) {
-    var n = 0, sum = 0, of = 0, dist = {}, cardList = [], learns = [];
-    var i, j;
-    for (i = 0; i < ITEMS.length; i++) { dist[i] = {a:0, b:0, both:0}; }
-    for (i = 0; i < list.length; i++) {
+    var tally = {}, mbox = {}, caught = 0, n = 0;
+    for (var i = 0; i < list.length; i++) {
       var p = list[i].payload || {};
-      if (!p.verdict) { continue; }
+      if (!p.verdicts) { continue; }
       n++;
-      if (p.score) { sum += p.score.hit; of += p.score.of; }
-      for (var k in p.verdict) {
-        if (!p.verdict.hasOwnProperty(k)) { continue; }
-        if (dist[k] && dist[k][p.verdict[k]] !== undefined) { dist[k][p.verdict[k]]++; }
+      caught += p.caught || 0;
+      for (var k in p.verdicts) {
+        if (!p.verdicts.hasOwnProperty(k)) { continue; }
+        if (!tally[k]) { tally[k] = {사실: 0, 의심: 0, 거짓: 0}; }
+        tally[k][p.verdicts[k]] = (tally[k][p.verdicts[k]] || 0) + 1;
       }
-      if (p.cards) {
-        for (j = 0; j < p.cards.length; j++) {
-          if (p.cards[j] && p.cards[j].what) {
-            cardList.push({nick: list[i].nick, what: p.cards[j].what, how: p.cards[j].how});
-          }
-        }
-      }
-      if (p.learn) { learns.push({nick: list[i].nick, t: p.learn}); }
+      var m = p.methods || {};
+      for (var mk in m) { if (m.hasOwnProperty(mk)) { mbox[mk] = (mbox[mk] || 0) + m[mk]; } }
     }
-    if (!n) { return '<p class="muted">아직 제출이 없어요.</p>'; }
+    var h = '<p class="muted">제출 ' + n + '명 · 정확히 잡아낸 환각 평균 ' +
+      (n ? (caught / n).toFixed(1) : 0) + '개</p>';
 
-    var h = '<p style="font-weight:700">제출 ' + n + '명 · 학급 정답률 ' +
-      (of ? Math.round(sum * 100 / of) : 0) + "%</p>";
-    h += '<div class="scroll"><table><tr><th>물음</th><th>가</th><th>나</th><th>둘 다</th><th>맞는 답</th></tr>';
-    for (i = 0; i < ITEMS.length; i++) {
-      h += "<tr><td>" + esc(ITEMS[i].q) + "</td><td>" + dist[i].a + "</td><td>" + dist[i].b +
-        "</td><td>" + dist[i].both + "</td><td>" + esc(VERDICT_LABEL[ITEMS[i].verdict]) + "</td></tr>";
+    var rows = [];
+    for (var mm = 0; mm < METHODS.length; mm++) {
+      rows.push({ label: METHODS[mm], value: mbox[METHODS[mm]] || 0 });
+    }
+    h += wiseBars(rows, 560);
+
+    h += '<div class="scroll" style="margin-top:12px"><table>' +
+      '<tr><th>문항</th><th>사실</th><th>의심</th><th>거짓</th><th>살펴볼 점</th></tr>';
+    for (var q2 = 0; q2 < ITEMS.length; q2++) {
+      var t = tally[q2];
+      if (!t) { continue; }
+      h += "<tr><td>" + esc(ITEMS[q2].q) + "</td><td>" + (t["사실"] || 0) + "</td><td>" +
+        (t["의심"] || 0) + "</td><td>" + (t["거짓"] || 0) + "</td><td>" +
+        (agree(t) < 0.6 ? '<span class="warn">판정 갈림</span>' :
+          ((t["사실"] || 0) > 0 ? '<span class="warn">사실로 본 학생 있음</span>' : "")) + "</td></tr>";
     }
     h += "</table></div>";
 
-    h += '<h3 style="margin-top:14px">학생이 만든 환각 사례 카드</h3>';
-    for (i = 0; i < Math.min(8, cardList.length); i++) {
-      h += '<p style="margin:6px 0"><span class="pill">' + esc(cardList[i].nick) + "</span> " +
-        esc(cardList[i].what) + ' <span class="muted">(' + esc(cardList[i].how) + ")</span></p>";
+    h += '<h3 style="margin-top:16px">학생이 쓴 정리 문장</h3><div class="scroll"><table>' +
+      '<tr><th>닉네임</th><th>문항</th><th>내 말로 정리</th></tr>';
+    for (var s = 0; s < list.length; s++) {
+      var notes = (list[s].payload || {}).notes || {};
+      for (var nk in notes) {
+        if (!notes.hasOwnProperty(nk) || !notes[nk]) { continue; }
+        h += "<tr><td>" + esc(list[s].nick) + "</td><td>" +
+          esc(ITEMS[nk] ? ITEMS[nk].q : nk) + "</td><td>" + esc(notes[nk]) + "</td></tr>";
+      }
     }
+    return h + "</table></div>";
+  }
 
-    h += '<h3 style="margin-top:14px">가장 먼저 할 일</h3>';
-    for (i = 0; i < Math.min(8, learns.length); i++) {
-      h += '<p style="margin:6px 0"><span class="pill">' + esc(learns[i].nick) + "</span> " +
-        esc(learns[i].t) + "</p>";
+  function presentHtml(list) {
+    var tally = {};
+    for (var i = 0; i < list.length; i++) {
+      var v = (list[i].payload || {}).verdicts || {};
+      for (var k in v) {
+        if (!v.hasOwnProperty(k)) { continue; }
+        if (!tally[k]) { tally[k] = {사실: 0, 의심: 0, 거짓: 0}; }
+        tally[k][v[k]] = (tally[k][v[k]] || 0) + 1;
+      }
+    }
+    var last = ITEMS.length - 1;
+    var t = tally[last] || {사실: 0, 의심: 0, 거짓: 0};
+    var h = '<p class="big">' + esc(ITEMS[last].q) + '</p>' +
+      wiseBars([
+        { label: "사실", value: t["사실"] || 0, color: "#16a34a" },
+        { label: "의심", value: t["의심"] || 0, color: "#eab308" },
+        { label: "거짓", value: t["거짓"] || 0, color: "#dc2626" }
+      ], 700) +
+      '<p class="muted" style="margin-top:10px">' + esc(ITEMS[last].truth) + '</p>';
+    h += '<h3 style="margin-top:18px">우리 반이 쓴 정리 문장</h3>';
+    var shown = 0;
+    for (var s = 0; s < list.length && shown < 5; s++) {
+      var notes = (list[s].payload || {}).notes || {};
+      for (var nk in notes) {
+        if (!notes.hasOwnProperty(nk) || !notes[nk] || shown >= 5) { continue; }
+        shown++;
+        h += '<p style="font-size:20px;margin:8px 0">' + esc(notes[nk]) + '</p>';
+      }
     }
     return h;
+  }
+
+  /* ---------- 그림 ---------- */
+
+  function wiseIcon(kind, size) {
+    var s = size || 30;
+    var ink = "#111";
+    var body = "";
+    if (kind === "id") {
+      body = '<circle cx="24" cy="18" r="9" fill="#FFE24B" stroke="' + ink + '" stroke-width="3"/>' +
+        '<path d="M9 42c0-9 7-14 15-14s15 5 15 14z" fill="#FFE24B" stroke="' + ink + '" stroke-width="3"/>';
+    } else if (kind === "loc") {
+      body = '<path d="M24 5c8 0 14 6 14 14 0 10-14 24-14 24S10 29 10 19c0-8 6-14 14-14z" fill="#2B59E0" stroke="' +
+        ink + '" stroke-width="3"/><circle cx="24" cy="19" r="5" fill="#fff"/>';
+    } else if (kind === "rel") {
+      body = '<circle cx="17" cy="17" r="8" fill="#7B4FE8" stroke="' + ink + '" stroke-width="3"/>' +
+        '<circle cx="32" cy="20" r="7" fill="#fff" stroke="' + ink + '" stroke-width="3"/>' +
+        '<path d="M6 42c0-8 5-12 11-12s11 4 11 12z" fill="#7B4FE8" stroke="' + ink + '" stroke-width="3"/>';
+    } else if (kind === "rec") {
+      body = '<rect x="10" y="7" width="28" height="34" rx="4" fill="#fff" stroke="' + ink + '" stroke-width="3"/>' +
+        '<path d="M17 17h14M17 25h14M17 33h8" stroke="' + ink + '" stroke-width="3" stroke-linecap="round"/>';
+    } else if (kind === "pub") {
+      body = '<circle cx="24" cy="24" r="17" fill="#00D45A" stroke="' + ink + '" stroke-width="3"/>' +
+        '<path d="M7 24h34M24 7c6 8 6 26 0 34M24 7c-6 8-6 26 0 34" fill="none" stroke="' + ink + '" stroke-width="2.5"/>';
+    } else if (kind === "green") {
+      body = '<circle cx="24" cy="24" r="16" fill="#16a34a" stroke="' + ink + '" stroke-width="3"/>' +
+        '<path d="M16 24l6 7 12-14" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>';
+    } else if (kind === "yellow") {
+      body = '<circle cx="24" cy="24" r="16" fill="#eab308" stroke="' + ink + '" stroke-width="3"/>' +
+        '<path d="M24 14v13" stroke="#fff" stroke-width="4" stroke-linecap="round"/>' +
+        '<circle cx="24" cy="33" r="2.6" fill="#fff"/>';
+    } else if (kind === "orange") {
+      body = '<circle cx="24" cy="24" r="16" fill="#ea580c" stroke="' + ink + '" stroke-width="3"/>' +
+        '<path d="M24 13l12 21H12z" fill="#fff" stroke="' + ink + '" stroke-width="2"/>';
+    } else if (kind === "red") {
+      body = '<circle cx="24" cy="24" r="16" fill="#dc2626" stroke="' + ink + '" stroke-width="3"/>' +
+        '<path d="M16 16l16 16M32 16L16 32" stroke="#fff" stroke-width="4" stroke-linecap="round"/>';
+    } else if (kind === "me") {
+      body = '<circle cx="24" cy="16" r="8" fill="#00D45A" stroke="' + ink + '" stroke-width="3"/>' +
+        '<path d="M10 42c0-9 6-14 14-14s14 5 14 14z" fill="#00D45A" stroke="' + ink + '" stroke-width="3"/>';
+    } else if (kind === "ai") {
+      body = '<rect x="9" y="12" width="30" height="24" rx="6" fill="#2B59E0" stroke="' + ink + '" stroke-width="3"/>' +
+        '<circle cx="18" cy="24" r="3.4" fill="#fff"/><circle cx="30" cy="24" r="3.4" fill="#fff"/>' +
+        '<path d="M24 12V6M18 40h12" stroke="' + ink + '" stroke-width="3" stroke-linecap="round"/>';
+    } else if (kind === "both") {
+      body = '<circle cx="17" cy="24" r="10" fill="#00D45A" stroke="' + ink + '" stroke-width="3"/>' +
+        '<rect x="24" y="15" width="18" height="18" rx="5" fill="#2B59E0" stroke="' + ink + '" stroke-width="3"/>';
+    } else if (kind === "write") {
+      body = '<path d="M10 38l4-11 20-20 7 7-20 20z" fill="#FFE24B" stroke="' + ink + '" stroke-width="3" stroke-linejoin="round"/>' +
+        '<path d="M8 42h32" stroke="' + ink + '" stroke-width="3" stroke-linecap="round"/>';
+    } else if (kind === "check") {
+      body = '<rect x="9" y="9" width="30" height="30" rx="7" fill="#fff" stroke="' + ink + '" stroke-width="3"/>' +
+        '<path d="M16 24l6 7 12-15" stroke="#00D45A" stroke-width="4.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>';
+    } else if (kind === "again") {
+      body = '<path d="M38 24a14 14 0 1 1-5-10.7" fill="none" stroke="' + ink + '" stroke-width="4"/>' +
+        '<path d="M36 6v10h-10" fill="none" stroke="' + ink + '" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>';
+    } else if (kind === "talk") {
+      body = '<rect x="7" y="10" width="34" height="22" rx="8" fill="#fff" stroke="' + ink + '" stroke-width="3"/>' +
+        '<path d="M16 32l0 8 9-8z" fill="#fff" stroke="' + ink + '" stroke-width="3" stroke-linejoin="round"/>' +
+        '<path d="M15 18h18M15 25h11" stroke="' + ink + '" stroke-width="3" stroke-linecap="round"/>';
+    } else if (kind === "moon") {
+      body = '<path d="M31 6a18 18 0 1 0 11 30A15 15 0 0 1 31 6z" fill="#FFE24B" stroke="' + ink + '" stroke-width="3"/>';
+    } else if (kind === "heart") {
+      body = '<path d="M24 40S8 30 8 19a8 8 0 0 1 16-3 8 8 0 0 1 16 3c0 11-16 21-16 21z" fill="#FF6B5A" stroke="' +
+        ink + '" stroke-width="3" stroke-linejoin="round"/>';
+    } else if (kind === "star") {
+      body = '<path d="M24 6l5 12 13 1-10 9 3 13-11-7-11 7 3-13-10-9 13-1z" fill="#FFE24B" stroke="' +
+        ink + '" stroke-width="3" stroke-linejoin="round"/>';
+    } else {
+      body = '<circle cx="24" cy="24" r="16" fill="#EBE3D2" stroke="' + ink + '" stroke-width="3"/>';
+    }
+    return '<svg class="wi" viewBox="0 0 48 48" width="' + s + '" height="' + s +
+      '" aria-hidden="true" focusable="false">' + body + '</svg>';
+  }
+
+  function wiseScene(kind) {
+    var ink = "#111";
+    var inner = "";
+    if (kind === "axis") {
+      inner = '<rect width="320" height="150" fill="#F6F7F9"/>' +
+        '<path d="M40 122h250M40 122V16" stroke="' + ink + '" stroke-width="3.5" stroke-linecap="round"/>' +
+        '<path d="M282 122l-10-6v12z M40 16l-6 10h12z" fill="' + ink + '"/>' +
+        '<rect x="52" y="76" width="72" height="40" rx="10" fill="#00D45A" stroke="' + ink + '" stroke-width="3"/>' +
+        '<text x="88" y="101" font-size="15" font-weight="800" text-anchor="middle" fill="#111">보조</text>' +
+        '<rect x="130" y="56" width="72" height="40" rx="10" fill="#FFE24B" stroke="' + ink + '" stroke-width="3"/>' +
+        '<text x="166" y="81" font-size="15" font-weight="800" text-anchor="middle" fill="#111">경계</text>' +
+        '<rect x="206" y="30" width="72" height="40" rx="10" fill="#FF6B5A" stroke="' + ink + '" stroke-width="3"/>' +
+        '<text x="242" y="55" font-size="15" font-weight="800" text-anchor="middle" fill="#111">대행</text>' +
+        '<text x="150" y="142" font-size="13" font-weight="700" text-anchor="middle" fill="#6b7280">생각을 누가 했나</text>' +
+        '<text x="14" y="70" font-size="13" font-weight="700" fill="#6b7280" transform="rotate(-90 14 70)">결과물</text>';
+    } else if (kind === "steps3") {
+      inner = '<rect width="320" height="120" fill="#F6F7F9"/>' +
+        '<rect x="12" y="28" width="86" height="60" rx="14" fill="#00D45A" stroke="' + ink + '" stroke-width="3"/>' +
+        '<text x="55" y="64" font-size="15" font-weight="800" text-anchor="middle">내 생각</text>' +
+        '<rect x="117" y="28" width="86" height="60" rx="14" fill="#FFE24B" stroke="' + ink + '" stroke-width="3"/>' +
+        '<text x="160" y="64" font-size="15" font-weight="800" text-anchor="middle">AI 검토</text>' +
+        '<rect x="222" y="28" width="86" height="60" rx="14" fill="#2B59E0" stroke="' + ink + '" stroke-width="3"/>' +
+        '<text x="265" y="64" font-size="15" font-weight="800" text-anchor="middle" fill="#fff">내 말로</text>' +
+        '<path d="M100 58h15M205 58h15" stroke="' + ink + '" stroke-width="4" stroke-linecap="round"/>';
+    } else if (kind === "signal") {
+      inner = '<rect width="320" height="120" fill="#F6F7F9"/>' +
+        '<rect x="16" y="18" width="288" height="84" rx="18" fill="#fff" stroke="' + ink + '" stroke-width="3"/>' +
+        '<circle cx="70" cy="60" r="22" fill="#16a34a" stroke="' + ink + '" stroke-width="3"/>' +
+        '<circle cx="130" cy="60" r="22" fill="#eab308" stroke="' + ink + '" stroke-width="3"/>' +
+        '<circle cx="190" cy="60" r="22" fill="#ea580c" stroke="' + ink + '" stroke-width="3"/>' +
+        '<circle cx="250" cy="60" r="22" fill="#dc2626" stroke="' + ink + '" stroke-width="3"/>';
+    } else if (kind === "room") {
+      inner = '<rect width="320" height="120" fill="#F6F7F9"/>' +
+        '<rect x="16" y="26" width="120" height="68" rx="14" fill="#fff" stroke="' + ink + '" stroke-width="3"/>' +
+        '<text x="76" y="58" font-size="14" font-weight="800" text-anchor="middle">방 코드</text>' +
+        '<text x="76" y="80" font-size="20" font-weight="900" text-anchor="middle" fill="#2B59E0">482913</text>' +
+        '<path d="M144 60h28" stroke="' + ink + '" stroke-width="4" stroke-linecap="round"/>' +
+        '<path d="M166 52l10 8-10 8z" fill="' + ink + '"/>' +
+        '<circle cx="212" cy="48" r="14" fill="#00D45A" stroke="' + ink + '" stroke-width="3"/>' +
+        '<path d="M192 94c0-12 9-18 20-18s20 6 20 18z" fill="#00D45A" stroke="' + ink + '" stroke-width="3"/>' +
+        '<circle cx="272" cy="48" r="14" fill="#FFE24B" stroke="' + ink + '" stroke-width="3"/>' +
+        '<path d="M252 94c0-12 9-18 20-18s20 6 20 18z" fill="#FFE24B" stroke="' + ink + '" stroke-width="3"/>';
+    } else {
+      inner = '<rect width="320" height="120" fill="#F6F7F9"/>';
+    }
+    var vb = kind === "axis" ? "0 0 320 150" : "0 0 320 120";
+    return '<svg class="ws-scene" viewBox="' + vb + '" aria-hidden="true">' + inner + '</svg>';
+  }
+
+
+  function activityIntro() {
+    return "<svg class=\"art\" viewBox=\"0 0 320 180\" role=\"img\" aria-hidden=\"true\" preserveAspectRatio=\"xMidYMid slice\"><rect width=\"320\" height=\"180\" fill=\"#F4EEE0\"/><g><rect x=\"20\" y=\"24\" width=\"130\" height=\"52\" rx=\"12\" fill=\"#FFFFFF\" stroke=\"#111111\" stroke-width=\"3\"/><path d=\"M38 76 l0 16 l16 -16z\" fill=\"#FFFFFF\" stroke=\"#111111\" stroke-width=\"3\" stroke-linejoin=\"round\"/></g><path d=\"M36 44 h96 M36 58 h68\" stroke=\"#111111\" stroke-width=\"5\" stroke-linecap=\"round\"/><g><rect x=\"20\" y=\"104\" width=\"130\" height=\"52\" rx=\"12\" fill=\"#FFE24B\" stroke=\"#111111\" stroke-width=\"3\"/><path d=\"M38 156 l0 16 l16 -16z\" fill=\"#FFE24B\" stroke=\"#111111\" stroke-width=\"3\" stroke-linejoin=\"round\"/></g><path d=\"M36 124 h96 M36 138 h54\" stroke=\"#111111\" stroke-width=\"5\" stroke-linecap=\"round\"/><text x=\"168\" y=\"60\" font-size=\"26\" font-weight=\"900\" fill=\"#2B59E0\">A</text><text x=\"168\" y=\"142\" font-size=\"26\" font-weight=\"900\" fill=\"#7B4FE8\">B</text><circle cx=\"248\" cy=\"86\" r=\"38\" fill=\"none\" stroke=\"#111111\" stroke-width=\"7\"/><circle cx=\"248\" cy=\"86\" r=\"30\" fill=\"#00D45A\" opacity=\".35\"/><path d=\"M276 116 l24 24\" stroke=\"#111111\" stroke-width=\"10\" stroke-linecap=\"round\"/><path d=\"M234 86 l9 10 18 -20\" stroke=\"#111111\" stroke-width=\"6\" fill=\"none\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg><p><b>2차시 · AI 검증 실험실</b><br>같은 질문에 두 도구가 내놓은 답을 나란히 놓고 다른 곳을 찾은 뒤, 앱 안에 든 근거 자료와 대조해 검증 3단계를 밟는다. 무엇이 환각이었는지 판정하고 사례 카드로 남긴다. 방 코드가 없으면 혼자 체험해 보기로 눌러 봐요.</p>";
   }
 
 
@@ -729,24 +1440,41 @@ border:2.5px solid var(--line);color:var(--ink);font-size:14.5px;font-weight:700
 
   function enter(solo) {
     var room = onlyDigits($("w-room").value, 6);
-    var pw = onlyDigits($("w-pw").value, 4);
     var nick = $("w-nick").value.trim();
     var group = $("w-group").value.trim();
+    var code = onlyDigits($("w-code").value, 4);
+    if (code) {
+      try { localStorage.setItem(CODE_KEY, code); } catch (e) {}
+    }
 
     if (!nick) { $("w-gate-msg").textContent = "닉네임을 써 주세요."; return; }
-    if (!solo && room.length !== 6) { $("w-gate-msg").textContent = "방 코드 6자리를 정확히 써 주세요."; return; }
+    if (!solo && room.length !== 6) { $("w-gate-msg").textContent = "방 번호 6자리를 정확히 써 주세요."; return; }
 
-    me = { room: solo ? "solo" : room, pw: pw, nick: nick, group: group, solo: !!solo };
+    me = { room: solo ? "solo" : room, pw: "", nick: nick, group: group,
+      code: code, solo: !!solo };
     $("w-who").textContent = me.nick + (me.group ? " · " + me.group : "") +
       (me.solo ? " · 혼자 체험" : " · " + me.room);
     $("activity").innerHTML = activityHtml();
     activityInit(loadLocal());
+    addNextButtons();
+    startDraft();
     show("stage");
   }
 
   function loadLocal() {
     try { return JSON.parse(localStorage.getItem(LOCAL_KEY) || "null"); }
     catch (e) { return null; }
+  }
+
+  function startDraft() {
+    if (draftTimer) { clearInterval(draftTimer); }
+    if (typeof activityDraft !== "function") { return; }
+    draftTimer = setInterval(function () {
+      try {
+        var d = activityDraft();
+        if (d) { wiseDraft(d); }
+      } catch (e) {}
+    }, 8000);
   }
 
   function submit() {
@@ -761,18 +1489,21 @@ border:2.5px solid var(--line);color:var(--ink);font-size:14.5px;font-weight:700
     }
 
     var record = {
-      nick: me.nick, group: me.group, app: APP,
+      nick: me.nick, group: me.group, code: me.code, app: APP,
       room: me.room, at: Date.now(), payload: payload
     };
 
-    $("w-sync").textContent = "저장 중...";
+    $("w-sync").innerHTML = '<span class="spin"></span>저장 중';
+    wiseButtonBusy($("w-submit"), true, "보내는 중");
     dbPush(me.room + "/entries", record).then(function () {
+      wiseButtonBusy($("w-submit"), false);
       $("w-sync").textContent = "저장됨";
       $("w-msg").innerHTML = '<span class="ok">제출했어요. 고쳐서 다시 제출해도 괜찮아요.</span>';
       sheetBackup(record);
     })["catch"](function () {
+      wiseButtonBusy($("w-submit"), false);
       $("w-sync").textContent = "저장 실패";
-      $("w-msg").innerHTML = '<span class="warn">인터넷이 불안정해요. 잠시 뒤 다시 제출해 주세요.</span>';
+      $("w-msg").innerHTML = '<span class="warn">인터넷이 불안정해요. 쓴 내용은 이 기기에 남아 있어요. 잠시 뒤 다시 제출해 주세요.</span>';
     });
   }
 
@@ -781,9 +1512,13 @@ border:2.5px solid var(--line);color:var(--ink);font-size:14.5px;font-weight:700
   function teacherMake() {
     var code = makeCode();
     var pw = onlyDigits($("w-pw").value, 4) || "0000";
+    wiseBusy(true, "방을 만드는 중");
     dbPut(code + "/meta", { app: APP, pw: pw, at: Date.now(), locked: false })
-      .then(function () { teacherOpen(code, pw); })
-      ["catch"](function () { alert("방을 만들지 못했어요. 인터넷을 확인해 주세요."); });
+      .then(function () { wiseBusy(false); sheetRoom(code); teacherOpen(code, pw); })
+      ["catch"](function () {
+        wiseBusy(false);
+        alert("방을 만들지 못했어요. 인터넷을 확인해 주세요.");
+      });
   }
 
   function teacherOpen(code, pw) {
@@ -792,6 +1527,7 @@ border:2.5px solid var(--line);color:var(--ink);font-size:14.5px;font-weight:700
     $("t-pw").textContent = "비밀번호 " + (pw || "-") + " · 이 화면을 닫아도 방은 사라지지 않아요.";
     $("t-room").className = "";
     $("t-board").className = "card";
+    $("t-summary").innerHTML = wiseSpinner("제출을 불러오는 중이에요", true) + wiseSkeleton(3);
     teacherRefresh();
     if (timer) { clearInterval(timer); }
     timer = setInterval(teacherRefresh, 3000);
@@ -810,10 +1546,35 @@ border:2.5px solid var(--line);color:var(--ink);font-size:14.5px;font-weight:700
       for (var n in latest) { if (latest.hasOwnProperty(n)) { list.push(latest[n]); } }
 
       $("t-count").textContent = list.length + "명";
+      $("t-note").textContent = noteFor(list, rows.length);
       $("t-summary").innerHTML = teacherSummary(list);
       $("t-table").innerHTML = teacherTable(list);
       window.__wiseRows = list;
+      if ($("present").className === "") { paintPresent(list); }
     })["catch"](function () {});
+  }
+
+  function noteFor(list, tries) {
+    if (!list.length) { return "아직 제출이 없어요. 학생에게 방 코드를 알려 주세요."; }
+    var groups = {}, n = 0;
+    for (var i = 0; i < list.length; i++) {
+      var g = list[i].group || "모둠 없음";
+      if (!groups[g]) { groups[g] = 0; n++; }
+      groups[g] += 1;
+    }
+    var last = 0;
+    for (var k = 0; k < list.length; k++) { if (list[k].at > last) { last = list[k].at; } }
+    return "모둠 " + n + "개 · 제출 시도 " + tries + "회 · 마지막 제출 " +
+      new Date(last).toLocaleTimeString("ko-KR");
+  }
+
+  function paintPresent(list) {
+    var html = "";
+    try {
+      html = (typeof presentHtml === "function") ? presentHtml(list) : teacherSummary(list);
+    } catch (e) { html = teacherSummary(list); }
+    $("p-title").textContent = "우리 반 결과 · " + list.length + "명";
+    $("p-body").innerHTML = html;
   }
 
   function teacherTable(list) {
@@ -856,7 +1617,11 @@ border:2.5px solid var(--line);color:var(--ink);font-size:14.5px;font-weight:700
   $("w-solo").onclick = function () { enter(true); };
   $("w-teacher").onclick = function () { show("teacher"); };
   $("w-submit").onclick = submit;
-  $("w-leave").onclick = function () { if (timer) { clearInterval(timer); } show("gate"); };
+  $("w-leave").onclick = function () {
+    if (timer) { clearInterval(timer); }
+    if (draftTimer) { clearInterval(draftTimer); }
+    show("gate");
+  };
 
   $("t-make").onclick = teacherMake;
   $("t-open").onclick = function () {
@@ -866,6 +1631,16 @@ border:2.5px solid var(--line);color:var(--ink);font-size:14.5px;font-weight:700
   $("t-back").onclick = function () { if (timer) { clearInterval(timer); } show("gate"); };
   $("t-refresh").onclick = teacherRefresh;
   $("t-csv").onclick = download;
+  $("t-detail").onclick = function () {
+    var open = $("t-wrap").className.indexOf("hide") < 0;
+    $("t-wrap").className = open ? "scroll hide" : "scroll";
+    this.textContent = open ? "낱낱이 보기 켜기" : "낱낱이 보기 끄기";
+  };
+  $("t-present").onclick = function () {
+    paintPresent(window.__wiseRows || []);
+    show("present");
+  };
+  $("p-close").onclick = function () { show("teacher"); };
   $("t-lock").onclick = function () {
     dbPut(me.room + "/meta/locked", true).then(function () { alert("방을 잠갔어요."); });
   };
@@ -878,6 +1653,46 @@ border:2.5px solid var(--line);color:var(--ink);font-size:14.5px;font-weight:700
     } else { fallbackCopy(code, done); }
   };
 
+  /* 상단바는 어느 화면에서나 계속 보인다. 링크는 새 창으로 열어 삽입 화면을 가두지 않는다. */
+  try {
+    var savedCode = localStorage.getItem(CODE_KEY);
+    if (savedCode && $("w-code")) { $("w-code").value = savedCode; }
+  } catch (e) {}
+
+  /* 미리보기 모드. 주소에 ?shot=화면이름 을 붙이면 둘러보기로 들어가 그 화면을 연다.
+     교사 안내 자료의 화면 캡처를 자동으로 뜨기 위한 것이다. fill=1 이면 예시값을 채운다. */
+  function shotMode() {
+    var q = "";
+    try { q = window.location && window.location.search ? window.location.search : ""; } catch (e) { return; }
+    if (q.indexOf("shot=") < 0) { return; }
+    var val = q.split("shot=")[1].split("&")[0];
+    try { val = decodeURIComponent(val); } catch (e) {}
+    $("w-nick").value = "미리보기";
+    enter(true);
+    if (q.indexOf("fill=1") >= 0 && typeof activityAutofill === "function") {
+      try { activityAutofill(); } catch (e) {}
+    }
+    if (val && val !== "stage") {
+      try { wiseGo(val); } catch (e) {}
+    }
+  }
+
+  try { shotMode(); } catch (e) {}
+
+  $("w-restart").onclick = function () {
+    if (timer) { clearInterval(timer); }
+    if (draftTimer) { clearInterval(draftTimer); }
+    show("gate");
+  };
+
+  /* 입장 화면에 이 활동을 소개하는 그림을 깐다. 혼자 열어 본 학생을 위한 것이다. */
+  if (typeof activityIntro === "function") {
+    try {
+      $("w-intro").innerHTML = activityIntro();
+      $("w-intro").className = "intro";
+    } catch (e) {}
+  }
+
   /* 자동 검사용 통로. 수업 화면에는 영향이 없다. */
   if (typeof window !== "undefined") {
     window.__wiseTest = {
@@ -886,6 +1701,7 @@ border:2.5px solid var(--line);color:var(--ink);font-size:14.5px;font-weight:700
       activityInit: activityInit,
       activityCollect: activityCollect,
       teacherSummary: teacherSummary,
+      presentHtml: (typeof presentHtml === "function") ? presentHtml : null,
       activityAutofill: (typeof activityAutofill === "function") ? activityAutofill : null,
       setMe: function (v) { me = v; }
     };

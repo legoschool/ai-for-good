@@ -22,7 +22,7 @@ def read(p):
         return f.read()
 
 
-def core_of(html, slug, app_name, subtitle, accent, soft):
+def core_of(html, slug, app_name, subtitle, accent, soft, lid=None):
     """차시마다 다를 수밖에 없는 것을 지운 나머지가 공통 골격이다."""
     s = html.find(ACT_START)
     e = html.find(ACT_END)
@@ -30,8 +30,9 @@ def core_of(html, slug, app_name, subtitle, accent, soft):
         return None
     core = html[:s] + html[e:]
     # 긴 것부터 바꾼다. 앱 이름이 학습 주제의 앞부분과 겹치는 차시가 있다. (7차시)
+    # 상단바가 차시 페이지로 돌아가므로 차시 아이디도 자리표시자로 바꾼다.
     pairs = [(subtitle, "<SUBTITLE>"), (app_name, "<APP>"), (slug, "<SLUG>"),
-             (accent, "<ACCENT>"), (soft, "<SOFT>")]
+             (accent, "<ACCENT>"), (soft, "<SOFT>"), (lid, "<LID>")]
     for value, token in sorted(pairs, key=lambda x: -len(x[0] or "")):
         if value:
             core = core.replace(value, token)
@@ -47,14 +48,15 @@ def main():
         m = data["modules"][l["module"] - 1]
         targets.append((l["id"], l["webapp"]["slug"], l["webapp"]["name"],
                         "%d차시 · %s" % (l["no"], l["shortTitle"]),
-                        m["color"], soft[m["color"]]))
+                        m["color"], soft[m["color"]], l["id"]))
+    # 공통 설문 앱의 상단바는 1차시 페이지를 가리킨다. 자리표시자를 같게 맞춘다.
     targets.append(("common", "survey", "AI적정활용 자기인식 설문",
-                    "공통 · 1차시 전과 12차시 뒤에 같은 8문항", "#1d4ed8", "#eff6ff"))
+                    "공통 · 1차시 전과 12차시 뒤에 같은 8문항", "#1d4ed8", "#eff6ff", "L01"))
 
     hashes = {}
-    for lid, slug, name, line, accent, softc in targets:
+    for lid, slug, name, line, accent, softc, navid in targets:
         p = os.path.join(T.ROOT, "out", "webapp", lid, "index.html")
-        core = core_of(read(p), slug, name, line, accent, softc)
+        core = core_of(read(p), slug, name, line, accent, softc, navid)
         if core is None:
             print("실패  %s : 활동 구역 표시를 찾지 못했다" % lid)
             return 1
@@ -80,7 +82,10 @@ def main():
         ("비밀번호 4자리 제한", 'onlyDigits($("w-pw").value, 4)'),
         ("6자리 아니면 입장 거부", 'room.length !== 6'),
         ("입력칸 maxlength 6", 'id="w-room" inputmode="numeric" maxlength="6"'),
-        ("입력칸 maxlength 4", 'id="w-pw" inputmode="numeric" maxlength="4"'),
+        ("교사 비밀번호 4자리", 'id="w-pw" inputmode="numeric" maxlength="4"'),
+        ("학생에게 비밀번호를 묻지 않음", '방 번호와 내 닉네임만'),
+        ("개인정보 미수집 안내", '개인정보를 모으지 않아요'),
+        ("사전·사후 설문 안내", '사후 설문'),
     ]
     ok = True
     for label, needle in checks:
@@ -94,7 +99,7 @@ def main():
     flow = ["w-room", "w-pw", "w-nick", "w-group", "w-enter", "w-solo", "w-teacher",
             "t-make", "t-open", "t-code", "t-copy", "t-csv", "t-lock", "t-refresh",
             "makeCode", "teacherMake", "teacherOpen", "fallbackCopy"]
-    for lid, slug, _, _, _, _ in targets:
+    for lid, slug, _, _, _, _, _ in targets:
         html = read(os.path.join(T.ROOT, "out", "webapp", lid, "index.html"))
         missing = [f for f in flow if f not in html]
         mark = "OK " if not missing else "NG "

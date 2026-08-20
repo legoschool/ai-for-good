@@ -1,69 +1,151 @@
+<meta charset="utf-8">
 <div id="wise-app">
 <style>
+/* 티처스랩 결. 사이트·슬라이드·인쇄물과 같은 규격이다.
+   크림 바탕, 검정 테두리, 번지지 않는 그림자, 굵은 제목. */
 #wise-app *,#wise-app *::before,#wise-app *::after{box-sizing:border-box}
-#wise-app{--ink:#101010;--muted:#6F6A61;--line:#111111;--paper:#FFFFFF;--bg:#F4EEE0;
---green:#00D45A;--green-d:#00B84D;--blue:#2B59E0;--purple:#7B4FE8;--sun:#FFE24B;
+#wise-app{--ink:#101010;--ink2:#33312D;--muted:#6F6A61;--line:#111111;--paper:#FFFFFF;
+--bg:#F4EEE0;--bg-d:#EBE3D2;--green:#00D45A;--sun:#FFE24B;
 --accent:#d97706;--accent-soft:#fffbeb;
-font-family:"Pretendard","Malgun Gothic","맑은 고딕",system-ui,sans-serif;
-color:var(--ink);background:var(--bg);line-height:1.65;font-size:17px;
-padding:16px;max-width:1000px;margin:0 auto}
-#wise-app h1,#wise-app h2,#wise-app h3{margin:0;font-weight:800;line-height:1.3;
-letter-spacing:-.02em;color:var(--ink)}
-#wise-app .hd{position:relative;background:var(--accent);color:#fff;
-border:2.5px solid var(--line);padding:20px 22px;margin-bottom:16px;overflow:hidden}
-#wise-app .hd::before{content:"";position:absolute;inset:0;opacity:.4;mix-blend-mode:overlay;
-background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='hn'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23hn)'/%3E%3C/svg%3E")}
-#wise-app .hd>*{position:relative;z-index:2}
-#wise-app .hd h1{font-size:24px;font-weight:900;color:#fff}
-#wise-app .hd p{margin:6px 0 0;font-size:14.5px;opacity:.94;font-weight:600}
-#wise-app .card{background:var(--paper);border:2.5px solid var(--line);padding:18px;margin-bottom:14px}
-#wise-app .card h2{font-size:19px;font-weight:900;margin-bottom:10px}
-#wise-app .card h3{font-size:16px;font-weight:800}
+--shadow:5px 5px 0 var(--line);
+font-family:"Pretendard","Malgun Gothic","맑은 고딕","Apple SD Gothic Neo",system-ui,sans-serif;
+color:var(--ink2);background:var(--bg);line-height:1.75;font-size:21px;
+padding:18px;max-width:1040px;margin:0 auto;-webkit-text-size-adjust:100%}
+#wise-app h1,#wise-app h2,#wise-app h3{margin:0;color:var(--ink);font-weight:900;line-height:1.28;
+letter-spacing:-.028em}
+#wise-app .hd{background:var(--accent);color:#fff;border:3px solid var(--line);border-radius:18px;
+padding:20px 22px;margin-bottom:16px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+#wise-app .hd::after{content:"";position:absolute;right:-40px;top:-60px;width:200px;height:200px;
+border-radius:50%;background:rgba(255,255,255,.12)}
+#wise-app .hd h1{font-size:28px;color:#fff}
+#wise-app .hd p{margin:6px 0 0;font-size:19px;opacity:.95;font-weight:700}
+#wise-app .card{background:var(--paper);border:3px solid var(--line);border-radius:16px;padding:20px;
+margin-bottom:16px;box-shadow:var(--shadow)}
+#wise-app .card h2{font-size:27px;margin-bottom:10px}
+#wise-app .card h3{font-size:22px}
 #wise-app .row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
-#wise-app label{display:block;font-size:14px;color:var(--muted);margin:10px 0 4px;font-weight:700}
+#wise-app label{display:block;font-size:19px;color:var(--muted);margin:12px 0 4px;font-weight:800}
 #wise-app input,#wise-app textarea,#wise-app select{
-width:100%;font:inherit;font-size:18px;padding:12px 14px;border:2px solid var(--line);
-background:#fff;color:var(--ink)}
+width:100%;font:inherit;font-size:20px;padding:14px 15px;border:2.5px solid var(--line);
+border-radius:12px;background:#fff;color:var(--ink)}
 #wise-app input:focus,#wise-app textarea:focus,#wise-app select:focus{
-outline:3px solid var(--green);outline-offset:1px}
-#wise-app textarea{min-height:96px;resize:vertical}
-#wise-app button{font:inherit;font-size:16px;font-weight:800;min-height:48px;padding:12px 18px;
-border:2.5px solid var(--line);background:var(--green);color:var(--ink);cursor:pointer}
-#wise-app button:hover{background:var(--green-d)}
-#wise-app button.ghost{background:#fff;color:var(--ink)}
-#wise-app button.ghost:hover{background:var(--sun)}
-#wise-app button.plain{background:#fff;color:var(--muted)}
-#wise-app button:disabled{opacity:.4;cursor:not-allowed}
-#wise-app button:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
-#wise-app .code{font-size:36px;font-weight:900;letter-spacing:.14em;color:var(--ink);
-background:var(--green);border:2.5px solid var(--line);padding:2px 14px}
-#wise-app .muted{color:var(--muted);font-size:14.5px}
-#wise-app .pill{display:inline-block;padding:4px 12px;border:2px solid var(--line);
-border-radius:999px;background:var(--sun);color:var(--ink);font-size:13px;font-weight:800}
-#wise-app .hide{display:none}
-#wise-app .bucket{border:2.5px dashed var(--line);padding:14px;min-height:120px;background:#fff}
-#wise-app .bucket h3{font-size:15px;margin-bottom:8px}
+outline:3px solid var(--sun);outline-offset:2px}
+#wise-app textarea{min-height:104px;resize:vertical}
+#wise-app button{font:inherit;font-size:21px;font-weight:900;min-height:58px;padding:13px 20px;
+border-radius:12px;border:2.5px solid var(--line);background:var(--green);color:var(--ink);
+cursor:pointer;box-shadow:3px 3px 0 var(--line)}
+#wise-app button:hover{background:var(--sun)}
+#wise-app button:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--line)}
+#wise-app button.ghost{background:#fff}
+#wise-app button.plain{background:#fff;color:var(--muted);box-shadow:none}
+#wise-app button:disabled{opacity:.45;cursor:not-allowed;box-shadow:none}
+#wise-app .code{font-size:38px;font-weight:900;letter-spacing:.16em;color:var(--accent)}
+#wise-app .muted{color:var(--muted);font-size:19px}
+#wise-app .pill{display:inline-block;padding:5px 13px;border-radius:999px;background:var(--sun);
+border:2.5px solid var(--line);color:var(--ink);font-size:15px;font-weight:900}
+#wise-app .tag{display:inline-block;padding:3px 10px;border-radius:999px;background:#fff;
+border:2px solid var(--line);color:var(--ink2);font-size:14px;font-weight:800;margin-right:4px}
+#wise-app .hide{display:none !important}
+#wise-app .bucket{border:3px dashed var(--line);border-radius:14px;padding:12px;min-height:120px;
+background:#fff}
+#wise-app .bucket h3{font-size:18px;margin-bottom:8px}
 #wise-app .grid{display:grid;gap:12px}
-#wise-app .chip{display:block;width:100%;text-align:left;padding:12px 14px;margin-bottom:8px;
-border:2px solid var(--line);background:#fff;color:var(--ink);font-weight:700;min-height:48px;
-cursor:pointer;font-size:15.5px}
-#wise-app .chip:hover{background:var(--sun)}
-#wise-app .chip.on{background:var(--green);font-weight:800}
-#wise-app .bar{height:16px;border:2px solid var(--line);background:#fff;overflow:hidden}
+#wise-app .g2{display:grid;gap:14px;grid-template-columns:1fr 1fr}
+#wise-app .chip{display:block;width:100%;text-align:left;padding:15px 17px;margin-bottom:10px;font-size:21px;
+border:2.5px solid var(--line);border-radius:12px;background:#fff;color:var(--ink);font-weight:700;
+min-height:52px;box-shadow:3px 3px 0 var(--line)}
+#wise-app .chip:hover{background:var(--bg-d)}
+#wise-app .chip.on{background:var(--accent);color:#fff}
+#wise-app .bar{height:16px;border-radius:8px;background:#fff;border:2.5px solid var(--line);
+overflow:hidden}
 #wise-app .bar>i{display:block;height:100%;background:var(--green)}
-#wise-app table{width:100%;border-collapse:collapse;font-size:14.5px}
-#wise-app th,#wise-app td{border:2px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
-#wise-app th{background:var(--bg);font-weight:800}
+#wise-app .steps{display:flex;gap:6px;margin:12px 0 0}
+#wise-app .steps>span{flex:1;height:10px;border-radius:6px;background:#fff;border:2px solid var(--line)}
+#wise-app .steps>span.on{background:var(--green)}
+#wise-app table{width:100%;border-collapse:collapse;font-size:17px}
+#wise-app th,#wise-app td{border:2px solid var(--line);padding:9px 11px;text-align:left;
+vertical-align:top}
+#wise-app th{background:var(--bg-d);font-weight:900;color:var(--ink)}
 #wise-app .scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
-#wise-app .safe{margin-top:14px;padding:13px 16px;background:var(--sun);
-border:2.5px solid var(--line);color:var(--ink);font-size:14.5px;font-weight:700}
-#wise-app .ok{color:#0B7A3B;font-weight:800}
-#wise-app .warn{color:#B0450A;font-weight:800}
-#wise-app .foot{text-align:center;color:var(--muted);font-size:12.5px;padding:16px 0;font-weight:600}
-@media (max-width:640px){#wise-app{padding:10px;font-size:16px}#wise-app .hd h1{font-size:20px}
-#wise-app .code{font-size:28px}}
+#wise-app .safe{margin-top:14px;padding:14px 16px;border-radius:12px;background:#FFF3D6;
+border:2.5px solid var(--line);color:var(--ink2);font-size:16px;font-weight:700}
+#wise-app .note{padding:13px 15px;border-radius:12px;background:var(--sun);
+border:2.5px solid var(--line);color:var(--ink);font-size:17px;font-weight:800;margin-top:12px}
+#wise-app .ok{color:#0B7A3B;font-weight:900}
+#wise-app .warn{color:#B03A00;font-weight:900}
+#wise-app .big{font-size:34px;font-weight:900;line-height:1.2;color:var(--ink)}
+#wise-app .foot{text-align:center;color:var(--muted);font-size:14px;padding:16px 0;font-weight:700}
+#wise-app .wi{vertical-align:middle;margin-right:8px;flex:none}
+#wise-app .ws-scene{display:block;width:100%;height:164px;border:2.5px solid var(--line);
+border-radius:14px;background:#fff;margin:10px 0 6px}
+#wise-app .iconrow{display:flex;align-items:center;gap:8px}
+#wise-app .quest{display:none}
+#wise-app .quest.on{display:block;animation:wfade .34s cubic-bezier(.22,.61,.36,1)}
+@keyframes wfade{from{opacity:0;transform:translateY(14px) scale(.99)}to{opacity:1;transform:none}}
+#wise-app .spin{display:inline-block;width:20px;height:20px;border-radius:50%;
+border:3px solid var(--bg-d);border-top-color:var(--ink);animation:wspin .7s linear infinite;
+vertical-align:middle;margin-right:8px}
+#wise-app .spin.big{width:34px;height:34px;border-width:4px}
+@keyframes wspin{to{transform:rotate(360deg)}}
+#wise-app .loading{display:flex;align-items:center;gap:10px;font-weight:800;color:var(--ink);
+padding:14px 0}
+#wise-app .skel{height:16px;border-radius:8px;background:var(--bg-d);margin:8px 0;
+animation:wpulse 1.1s ease-in-out infinite}
+#wise-app .skel.w60{width:60%}
+#wise-app .skel.w80{width:80%}
+@keyframes wpulse{0%,100%{opacity:1}50%{opacity:.45}}
+#wise-app button.busy{position:relative;color:var(--muted)}
+#wise-app .busy-wrap{position:fixed;inset:0;background:rgba(244,238,224,.72);display:flex;
+align-items:center;justify-content:center;z-index:65}
+#wise-app .busy-wrap .box{background:#fff;border:3px solid var(--line);border-radius:18px;
+padding:20px 26px;box-shadow:6px 6px 0 var(--line);display:flex;align-items:center;gap:12px;
+font-weight:900;color:var(--ink)}
+#wise-app .fade-in{animation:wfade .28s ease-out}
+#wise-app .hud{display:flex;gap:12px;align-items:center;flex-wrap:wrap;background:#fff;
+border:2.5px solid var(--line);border-radius:14px;padding:11px 15px;margin-bottom:14px;
+font-weight:800;font-size:17px;color:var(--ink);box-shadow:3px 3px 0 var(--line)}
+#wise-app .hud .grow{flex:1;min-width:120px}
+#wise-app .tile{font-size:22px;border:3px solid var(--line);border-radius:16px;padding:16px;background:#fff;
+text-align:left;font-weight:800;font-size:20px;min-height:118px;display:flex;flex-direction:column;gap:6px;
+box-shadow:var(--shadow);color:var(--ink)}
+#wise-app .tile small{font-weight:700;color:var(--muted);font-size:16px}
+#wise-app .tile.done{background:var(--sun)}
+#wise-app .cele{position:fixed;inset:0;background:rgba(17,17,17,.6);display:flex;align-items:center;
+justify-content:center;padding:20px;z-index:60}
+#wise-app .cele .box{background:#fff;border:3px solid var(--line);border-radius:22px;padding:26px;
+max-width:460px;width:100%;text-align:center;box-shadow:8px 8px 0 var(--line)}
+#wise-app .cele h2{font-size:28px;margin-bottom:10px}
+#wise-app .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--ink);
+color:#fff;padding:13px 22px;border-radius:999px;font-weight:800;font-size:17px;z-index:70;
+border:2.5px solid var(--line)}
+#wise-app canvas{max-width:100%;height:auto;border-radius:12px}
+#wise-app .intro{margin:-4px 0 16px}
+#wise-app .intro svg{display:block;width:100%;height:168px;border:2.5px solid var(--line);
+border-radius:14px;background:#fff}
+#wise-app .intro p{margin:10px 0 0;font-size:18px;color:var(--muted);font-weight:700}
+#wise-app .intro b{color:var(--ink)}
+#wise-app .wtop{position:sticky;top:0;z-index:40;display:flex;gap:8px;align-items:center;
+flex-wrap:nowrap;overflow-x:auto;background:var(--bg);padding:10px 0;margin:-18px 0 12px}
+#wise-app .wtop a,#wise-app .wtop button{font-size:15px;font-weight:800;color:var(--ink);
+background:#fff;border:2.5px solid var(--line);border-radius:999px;padding:9px 16px;min-height:44px;
+white-space:nowrap;text-decoration:none;cursor:pointer;box-shadow:none}
+#wise-app .wtop a:hover,#wise-app .wtop button:hover{background:var(--sun)}
+#wise-app #present .card{border-radius:20px}
+#wise-app #present table{font-size:23px}
+#wise-app #present .big{font-size:46px}
+@media (max-width:640px){#wise-app{padding:10px;font-size:19px}#wise-app .hd h1{font-size:32px}
+#wise-app .g2{grid-template-columns:1fr}#wise-app .intro svg{height:126px}
+#wise-app .ws-scene{height:120px}}
 @media (prefers-reduced-motion:reduce){#wise-app *{transition:none!important;animation:none!important}}
 </style>
+
+<nav id="w-top" class="wtop">
+  <a href="../../index.html" target="_blank" rel="noopener">홈으로 돌아가기</a>
+  <a href="../../browse.html" target="_blank" rel="noopener">둘러보기</a>
+  <a href="../../lesson/L06.html" target="_blank" rel="noopener">차시 페이지</a>
+  <a href="../../webapp/common/index.html" target="_blank" rel="noopener">사전·사후 설문</a>
+  <button type="button" id="w-restart">처음부터</button>
+</nav>
 
 <div class="hd">
   <h1>AI 신호등 판정단</h1>
@@ -72,34 +154,44 @@ border:2.5px solid var(--line);color:var(--ink);font-size:14.5px;font-weight:700
 
 <!-- 입장 -->
 <section id="gate" class="card">
+  <div id="w-intro" class="hide"></div>
   <h2>들어가기</h2>
+  <p class="muted">선생님이 알려 준 방 번호와 내 닉네임만 쓰면 돼요.</p>
   <div class="grid" style="grid-template-columns:1fr 1fr">
     <div>
-      <label for="w-room">방 코드 6자리</label>
+      <label for="w-room">방 번호 6자리</label>
       <input id="w-room" inputmode="numeric" maxlength="6" placeholder="예: 482913">
     </div>
-    <div>
-      <label for="w-pw">비밀번호 4자리</label>
-      <input id="w-pw" inputmode="numeric" maxlength="4" placeholder="예: 1234">
-    </div>
-  </div>
-  <div class="grid" style="grid-template-columns:1fr 1fr">
     <div>
       <label for="w-nick">닉네임</label>
       <input id="w-nick" maxlength="12" placeholder="이름 말고 별명을 써요">
     </div>
+  </div>
+  <div class="grid" style="grid-template-columns:1fr 1fr">
     <div>
-      <label for="w-group">모둠</label>
+      <label for="w-code">나만 아는 숫자 4자리</label>
+      <input id="w-code" inputmode="numeric" maxlength="4" placeholder="예: 0412">
+    </div>
+    <div>
+      <label for="w-group">모둠 (없으면 비워 둬요)</label>
       <input id="w-group" maxlength="10" placeholder="예: 3모둠">
     </div>
   </div>
+  <p class="muted" style="margin-top:6px">이 숫자는 비밀번호가 아니에요.
+    사전 설문과 사후 설문을 이어 보는 데만 써요. 열두 시간 뒤에도 같은 숫자를 써 주세요.
+    잊어버려도 활동은 그대로 할 수 있어요.</p>
   <div class="row" style="margin-top:14px">
     <button id="w-enter">입장하기</button>
-    <button id="w-solo" class="ghost">혼자 체험해 보기</button>
+    <button id="w-solo" class="ghost">둘러보기</button>
     <button id="w-teacher" class="plain">선생님 화면</button>
   </div>
   <p id="w-gate-msg" class="muted" style="margin-top:10px"></p>
-  <div class="safe">이름, 사진, 친구 이야기 같은 개인정보는 넣지 않아요.</div>
+  <div class="note" id="w-prepost">처음 시작하기 전에는 <b>사전 설문</b>, 열두 시간을 마친 뒤에는
+    <b>사후 설문</b>을 합니다.
+    <a href="../common/index.html" target="_blank" rel="noopener">자기인식 설문 열기</a></div>
+  <div class="safe"><b>개인정보를 모으지 않아요.</b> 이름, 사진, 친구 이야기 같은 개인정보는 넣지 않아요.
+    학교, 학년, 반, 전화번호도 묻지 않습니다. 닉네임과 답만 저장합니다.
+    모인 자료는 수업 프로그램을 더 좋게 만드는 데만 쓰고, 학년도가 끝나면 지웁니다.</div>
 </section>
 
 <!-- 학생 활동 -->
@@ -109,7 +201,10 @@ border:2.5px solid var(--line);color:var(--ink);font-size:14.5px;font-weight:700
       <span class="pill" id="w-who"></span>
       <span class="muted" id="w-sync">저장 준비됨</span>
     </div>
+    <div class="steps hide" id="w-steps"></div>
+    <div class="note hide" id="w-note"></div>
   </div>
+  <div id="w-hud" class="hide"></div>
   <div id="activity"></div>
   <div class="card">
     <button id="w-submit">제출하기</button>
@@ -122,7 +217,10 @@ border:2.5px solid var(--line);color:var(--ink);font-size:14.5px;font-weight:700
 <section id="teacher" class="hide">
   <div class="card">
     <h2>선생님 화면</h2>
-    <div class="row">
+    <p class="muted">방을 만들면 여섯 자리 번호가 나옵니다. 학생에게 번호만 알려 주세요.</p>
+    <label for="w-pw">선생님 비밀번호 4자리 (이 화면을 다시 열 때 씁니다)</label>
+    <input id="w-pw" inputmode="numeric" maxlength="4" placeholder="예: 1234">
+    <div class="row" style="margin-top:12px">
       <button id="t-make">새 방 만들기</button>
       <button id="t-open" class="ghost">기존 방 열기</button>
       <button id="t-back" class="plain">돌아가기</button>
@@ -135,6 +233,7 @@ border:2.5px solid var(--line);color:var(--ink);font-size:14.5px;font-weight:700
       </div>
       <p class="muted" id="t-pw"></p>
       <div class="row" style="margin-top:12px">
+        <button id="t-present">결과 크게 띄우기</button>
         <button id="t-refresh" class="ghost">새로고침</button>
         <button id="t-csv" class="ghost">CSV 내려받기</button>
         <button id="t-lock" class="plain">방 잠그기</button>
@@ -143,10 +242,29 @@ border:2.5px solid var(--line);color:var(--ink);font-size:14.5px;font-weight:700
   </div>
   <div id="t-board" class="card hide">
     <h2>제출 현황 <span class="pill" id="t-count">0명</span></h2>
+    <p class="muted" id="t-note"></p>
     <div id="t-summary"></div>
-    <div class="scroll" style="margin-top:12px"><table id="t-table"></table></div>
+    <div class="row" style="margin-top:12px">
+      <button id="t-detail" class="plain">낱낱이 보기 켜기</button>
+    </div>
+    <div class="scroll hide" id="t-wrap" style="margin-top:12px"><table id="t-table"></table></div>
   </div>
 </section>
+
+<!-- 발표 -->
+<section id="present" class="hide">
+  <div class="card">
+    <div class="row" style="justify-content:space-between">
+      <h2 id="p-title">우리 반 결과</h2>
+      <button id="p-close" class="plain">닫기</button>
+    </div>
+    <div id="p-body" style="margin-top:12px"></div>
+  </div>
+</section>
+
+<div id="w-cele" class="hide"></div>
+<div id="w-busy" class="hide"></div>
+<div id="w-toast" class="hide"></div>
 
 <p class="foot">2026년 티처스랩 5기 교사연구회 A.N.D · CC BY-NC-SA</p>
 </div>
@@ -157,13 +275,17 @@ border:2.5px solid var(--line);color:var(--ink);font-size:14.5px;font-weight:700
 
   var APP = "signal-judges";
   var DB = "https://remind-c2610-default-rtdb.firebaseio.com";
-  var SHEET_ENDPOINT = "PASTE_YOUR_APPS_SCRIPT_DEPLOY_URL";
+  var SHEET_ENDPOINT = "https://script.google.com/macros/s/AKfycbzawwJFwOtjGU8VNx2KLAbfYSMaMAENueB6uWEVcmod3EEA3CuzXO7_oXHQHHW20x4/exec";
   var QUEUE_KEY = "wise_backup_queue";
   var LOCAL_KEY = "wise_" + APP + "_local";
+  var ACCENT = "#d97706";
+  var COPYRIGHT_LINE = "2026년 티처스랩 5기 교사연구회 A.N.D · CC BY-NC-SA";
 
   var $ = function (id) { return document.getElementById(id); };
-  var me = { room: "", pw: "", nick: "", group: "", solo: false };
+  var me = { room: "", pw: "", nick: "", group: "", code: "", solo: false };
+  var CODE_KEY = "wise_student_code";
   var timer = null;
+  var draftTimer = null;
 
   /* ---------- 저장 ---------- */
 
@@ -201,6 +323,18 @@ border:2.5px solid var(--line);color:var(--ink);font-size:14.5px;font-weight:700
     } catch (e) {}
   }
 
+  /* 방을 만들었다는 것만 시트에 알린다. 학생 응답은 보내지 않는다. */
+  function sheetRoom(room) {
+    try {
+      if (SHEET_ENDPOINT.indexOf("http") !== 0) { return; }
+      fetch(SHEET_ENDPOINT, {
+        method: "POST", mode: "no-cors",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify({ rooms: [{ app: APP, room: room, at: Date.now() }] })
+      })["catch"](function () {});
+    } catch (e) {}
+  }
+
   /* ---------- 도구 ---------- */
 
   function onlyDigits(s, n) {
@@ -223,99 +357,1108 @@ border:2.5px solid var(--line);color:var(--ink);font-size:14.5px;font-weight:700
       .replace(/>/g, "&gt;").replace(/"/g, "&quot;");
   }
 
+  function pct(a, b) { return b ? Math.round(a * 100 / b) : 0; }
+
+  function barHtml(a, b) {
+    return '<div class="bar"><i style="width:' + pct(a, b) + '%"></i></div>';
+  }
+
   function show(id) {
-    var ids = ["gate", "stage", "teacher"];
+    var ids = ["gate", "stage", "teacher", "present"];
     for (var i = 0; i < ids.length; i++) {
       $(ids[i]).className = ids[i] === id ? "" : "hide";
     }
   }
 
-  /* ---------- 활동 (차시별) ---------- */
+  /* 활동 화면이 부르는 골격 기능 */
 
+  function wiseDraft(obj) {
+    try { localStorage.setItem(LOCAL_KEY, JSON.stringify(obj)); } catch (e) {}
+    $("w-sync").textContent = "이 기기에 임시 저장됨";
+  }
 
-  var CARDS = ["숙제를 AI가 다 써 준다", "모르는 개념을 다시 설명해 달라고 한다", "친구와 다툰 일을 AI에게만 말한다", "발표 아이디어를 여러 개 받아 본다", "AI로 만든 그림을 표기하고 쓴다", "친구 사진을 넣어 그림을 만든다", "독후감을 AI가 완성한다", "글의 표현을 다듬어 달라고 한다", "시험 문제를 AI로 미리 풀어 본다", "조사 자료의 출처를 확인해 달라고 한다", "친구 이름을 넣어 고민을 물어본다", "어려운 낱말 뜻을 물어본다", "일기를 AI가 대신 쓴다", "내 주장을 쓴 뒤 근거가 부족한지 물어본다", "힘든 마음을 AI에게만 털어놓는다", "번역을 부탁하고 어색한 곳을 내가 고친다", "모둠 발표 자료를 AI가 전부 만든다", "학급 규칙 아이디어를 받아 함께 고른다", "수행평가 답을 AI에게 받는다", "AI가 알려 준 사실을 교과서와 대조한다"];
-  var BUCKETS = [{"label": "초록 · 그냥 써도 돼"}, {"label": "노랑 · 조건을 지키면 돼"}, {"label": "주황 · 아주 조심해서만"}, {"label": "빨강 · 쓰면 안 돼"}];
-  var ASK_REASON = true;
+  function wiseStep(i, n) {
+    var h = "";
+    for (var k = 0; k < n; k++) { h += '<span class="' + (k <= i ? "on" : "") + '"></span>'; }
+    $("w-steps").innerHTML = h;
+    $("w-steps").className = "steps";
+  }
 
-  function activityHtml() {
-    var h = '<div class="card"><h2>카드를 알맞은 칸에 놓아요</h2>' +
-      '<p class="muted">칸을 고르면 색이 바뀌어요. 왜 그렇게 생각했는지도 한 줄 써 주세요.</p></div>';
-    for (var i = 0; i < CARDS.length; i++) {
-      h += '<div class="card"><h3>' + (i + 1) + '. ' + esc(CARDS[i]) + '</h3><div class="row">';
-      for (var b = 0; b < BUCKETS.length; b++) {
-        h += '<button type="button" class="chip pick" data-c="' + i + '" data-b="' + b +
-          '" style="width:auto;margin:0">' + esc(BUCKETS[b].label) + '</button>';
-      }
-      h += '</div>';
-      if (ASK_REASON) {
-        h += '<label for="r' + i + '">왜 그렇게 생각했나요</label>' +
-          '<input id="r' + i + '" maxlength="80" placeholder="한 줄로 써요">';
-      }
-      h += '</div>';
+  /* 여정 화면 전환. 활동이 만든 .quest 조각을 갈아 끼운다. */
+  /* 여정형 앱에서 다음 화면으로 가는 버튼을 화면마다 자동으로 붙인다.
+     허브로 돌아갔다가 다시 고르게 하면 학생이 거기서 멈춘다.
+     차시 코드가 이미 '...로 가기' 버튼을 만들어 두었으면 건드리지 않는다. */
+  function addNextButtons() {
+    var qs = document.querySelectorAll("#activity .quest");
+    if (qs.length < 3) { return; }
+    var ids = [], titles = [], i;
+    for (i = 0; i < qs.length; i++) {
+      ids.push(qs[i].getAttribute("data-q"));
+      var h = qs[i].querySelector("h2");
+      titles.push(h ? h.textContent.trim() : "다음");
+    }
+    for (i = 0; i < qs.length; i++) {
+      var id = ids[i];
+      if (id === "story" || id === "hub") { continue; }
+      if (i + 1 >= qs.length) { continue; }
+      if (hasForward(qs[i])) { continue; }
+      var row = document.createElement("div");
+      row.className = "row autonext";
+      row.style.marginTop = "10px";
+      var b = document.createElement("button");
+      b.type = "button";
+      b.setAttribute("data-next", ids[i + 1]);
+      b.textContent = "다음 : " + titles[i + 1];
+      b.onclick = function () { wiseGo(this.getAttribute("data-next")); };
+      row.appendChild(b);
+      var card = qs[i].querySelector(".card");
+      (card || qs[i]).appendChild(row);
+    }
+  }
+
+  /* 이미 앞으로 가는 버튼이 있는가. '교무실로' 같은 되돌아가기와
+     '다음 카드' 같은 같은 화면 안 이동은 세지 않는다. */
+  function hasForward(sec) {
+    var bs = sec.querySelectorAll("button");
+    for (var i = 0; i < bs.length; i++) {
+      var b = bs[i];
+      if (b.parentNode && /autonext/.test(b.parentNode.className || "")) { continue; }
+      var t = b.textContent || "";
+      var bid = b.id || "";
+      if (/(다음 카드|다음 문항|앞 카드|앞 문항|돌아가기|돌아가)/.test(t)) { continue; }
+      if (/-go$|^go-/.test(bid)) { return true; }
+      if (/(로 가기|으로 가기|보러 가기|하러 가기|넘어가|이어서 하기)/.test(t)) { return true; }
+    }
+    return false;
+  }
+
+  /* 차시 코드가 뒤늦게 만들어 내는 '…로 가기' 버튼과 겹치지 않게,
+     화면에 들어올 때마다 자동 버튼을 보일지 말지 다시 정한다. */
+  function syncNextButton(sec) {
+    if (!sec) { return; }
+    var row = sec.querySelector(".autonext");
+    if (!row) { return; }
+    row.style.display = hasForward(sec) ? "none" : "";
+  }
+
+  function wiseGo(id) {
+    var qs = document.querySelectorAll("#activity .quest");
+    for (var i = 0; i < qs.length; i++) {
+      qs[i].className = "quest" + (qs[i].getAttribute("data-q") === id ? " on" : "");
+    }
+    if (window.scrollTo) { window.scrollTo(0, 0); }
+    if (typeof activityEnter === "function") {
+      try { activityEnter(id); } catch (e) {}
+    }
+    for (var k = 0; k < qs.length; k++) {
+      if (qs[k].getAttribute("data-q") === id) { syncNextButton(qs[k]); }
+    }
+  }
+
+  /* 상단 진행 표시. 여러 칸을 한 줄로 보여 준다. */
+  function wiseHud(items) {
+    var h = "";
+    for (var i = 0; i < items.length; i++) {
+      var it = items[i];
+      h += '<span>' + esc(it.label) + ' ' + it.done + ' / ' + it.total + '</span>';
+    }
+    var first = items[0] || { done: 0, total: 1 };
+    h += '<span class="grow">' + barHtml(first.done, first.total) + '</span>';
+    $("w-hud").innerHTML = h;
+    $("w-hud").className = "hud";
+  }
+
+  /* 기다리는 동안 무엇을 하는 중인지 보여 준다. 화면이 멈춘 것처럼 보이지 않게 한다. */
+  function wiseSpinner(text, big) {
+    return '<div class="loading"><span class="spin' + (big ? " big" : "") + '"></span>' +
+      '<span>' + esc(text || "불러오는 중이에요") + '</span></div>';
+  }
+
+  function wiseSkeleton(lines) {
+    var n = lines || 3, h = "";
+    for (var i = 0; i < n; i++) {
+      h += '<div class="skel ' + (i % 3 === 1 ? "w80" : (i % 3 === 2 ? "w60" : "")) + '"></div>';
     }
     return h;
   }
 
-  var choice = {};
+  function wiseBusy(on, text) {
+    if (!on) { $("w-busy").className = "hide"; return; }
+    $("w-busy").innerHTML = '<div class="busy-wrap"><div class="box">' +
+      '<span class="spin big"></span><span>' + esc(text || "잠시만요") + '</span></div></div>';
+    $("w-busy").className = "";
+  }
 
-  function activityInit(saved) {
-    if (saved && saved.choice) { choice = saved.choice; }
-    var btns = document.querySelectorAll("#activity .pick");
-    for (var i = 0; i < btns.length; i++) {
-      btns[i].onclick = function () {
-        var c = this.getAttribute("data-c");
-        choice[c] = this.getAttribute("data-b");
-        paint();
+  /* 버튼을 누른 뒤 끝날 때까지 눌리지 않게 한다. */
+  function wiseButtonBusy(el, on, text) {
+    if (!el) { return; }
+    if (on) {
+      el.setAttribute("data-orig", el.textContent);
+      el.innerHTML = '<span class="spin"></span>' + esc(text || "하는 중");
+      el.disabled = true;
+    } else {
+      el.textContent = el.getAttribute("data-orig") || el.textContent;
+      el.disabled = false;
+    }
+  }
+
+  function wiseToast(text) {
+    $("w-toast").textContent = text;
+    $("w-toast").className = "toast";
+    setTimeout(function () { $("w-toast").className = "toast hide"; }, 2200);
+  }
+
+  function wiseCelebrate(title, lines, buttonText) {
+    var h = '<div class="box"><h2>' + esc(title) + '</h2>';
+    for (var i = 0; i < lines.length; i++) {
+      h += '<p class="muted" style="margin-top:6px">' + lines[i] + '</p>';
+    }
+    h += '<div class="row" style="justify-content:center;margin-top:16px">' +
+      '<button type="button" id="cele-close">' + esc(buttonText || "닫기") + '</button></div></div>';
+    $("w-cele").innerHTML = h;
+    $("w-cele").className = "cele";
+    var celeClose = function () { $("w-cele").className = "hide"; $("w-cele").innerHTML = ""; };
+    $("cele-close").onclick = celeClose;
+    $("w-cele").onclick = function (ev) { if (ev.target === $("w-cele")) { celeClose(); } };
+  }
+
+  /* 결과 카드를 그림으로 만들어 내려받는다. 교실에서 인쇄해 붙일 수 있다. */
+  function wiseCardPng(title, lines, filename) {
+    try {
+      var c = document.createElement("canvas");
+      c.width = 900; c.height = 560;
+      var g = c.getContext("2d");
+      g.fillStyle = "#ffffff"; g.fillRect(0, 0, 900, 560);
+      g.fillStyle = ACCENT; g.fillRect(0, 0, 900, 120);
+      g.fillStyle = "#ffffff"; g.font = "bold 40px sans-serif";
+      g.fillText(title, 40, 76);
+      g.fillStyle = "#111827"; g.font = "26px sans-serif";
+      for (var i = 0; i < lines.length && i < 10; i++) {
+        g.fillText(String(lines[i]).slice(0, 34), 40, 180 + i * 42);
+      }
+      g.fillStyle = "#6b7280"; g.font = "18px sans-serif";
+      g.fillText(COPYRIGHT_LINE, 40, 530);
+      var a = document.createElement("a");
+      a.href = c.toDataURL("image/png");
+      a.download = (filename || "wise_card") + ".png";
+      document.body.appendChild(a); a.click(); document.body.removeChild(a);
+      wiseToast("카드를 내려받았어요.");
+    } catch (e) { wiseToast("이 기기에서는 카드 저장이 안 돼요."); }
+  }
+
+  /* 교사 화면용 막대 그림. 캔버스로 그린다. */
+  function wiseBars(rows, width) {
+    var w = width || 620, h = 42 * rows.length + 24;
+    var c = document.createElement("canvas");
+    if (!c || typeof c.getContext !== "function") { return barTable(rows); }
+    c.width = w; c.height = h;
+    var g = c.getContext("2d");
+    g.fillStyle = "#ffffff"; g.fillRect(0, 0, w, h);
+    var max = 1;
+    for (var i = 0; i < rows.length; i++) { if (rows[i].value > max) { max = rows[i].value; } }
+    for (var k = 0; k < rows.length; k++) {
+      var y = 16 + k * 42;
+      g.fillStyle = "#374151"; g.font = "bold 16px sans-serif";
+      g.fillText(String(rows[k].label).slice(0, 14), 8, y + 20);
+      var x0 = 160, bw = (w - 200) * rows[k].value / max;
+      g.fillStyle = "#e5e7eb"; g.fillRect(x0, y, w - 200, 24);
+      g.fillStyle = rows[k].color || ACCENT; g.fillRect(x0, y, bw, 24);
+      g.fillStyle = "#111827"; g.font = "bold 15px sans-serif";
+      g.fillText(String(rows[k].value), x0 + bw + 8, y + 18);
+    }
+    return '<img alt="분포 그림" style="width:100%" src="' + c.toDataURL("image/png") + '">';
+  }
+
+  /* 캔버스를 못 쓰는 자리에서는 표로 대신한다. */
+  function barTable(rows) {
+    var h = '<div class="scroll"><table><tr><th>항목</th><th>수</th><th>분포</th></tr>';
+    var max = 1;
+    for (var i = 0; i < rows.length; i++) { if (rows[i].value > max) { max = rows[i].value; } }
+    for (var k = 0; k < rows.length; k++) {
+      h += "<tr><td>" + esc(rows[k].label) + "</td><td>" + rows[k].value + "</td><td>" +
+        barHtml(rows[k].value, max) + "</td></tr>";
+    }
+    return h + "</table></div>";
+  }
+
+  function wiseNote(text) {
+    if (!text) { $("w-note").className = "note hide"; return; }
+    $("w-note").innerHTML = text;
+    $("w-note").className = "note";
+  }
+
+  /* ---------- 활동 (차시별) ---------- */
+
+
+  /* ---------- 자료 ---------- */
+
+  var SIGNALS = [
+    {name:"초록불", say:"그냥 써도 돼", icon:"green"},
+    {name:"노랑불", say:"조건을 지키면 돼", icon:"yellow"},
+    {name:"주황불", say:"아주 조심해서만", icon:"orange"},
+    {name:"빨간불", say:"쓰면 안 돼", icon:"red"}
+  ];
+
+  var REASONS = [
+    "내 생각을 대신하게 되나",
+    "기록이 남아 되돌리기 어렵나",
+    "다른 사람에게 영향을 주나",
+    "내가 배우는 데 도움이 되나"
+  ];
+
+  var CARDS = [
+    "숙제를 AI가 다 써 준다",
+    "모르는 개념을 다시 설명해 달라고 한다",
+    "친구와 다툰 일을 AI에게만 말한다",
+    "발표 아이디어를 여러 개 받아 본다",
+    "AI로 만든 그림을 표기하고 쓴다",
+    "친구 사진을 넣어 그림을 만든다",
+    "독후감을 AI가 완성한다",
+    "글의 표현을 다듬어 달라고 한다",
+    "시험 문제를 AI로 미리 풀어 본다",
+    "조사 자료의 출처를 확인해 달라고 한다",
+    "친구 이름을 넣어 고민을 물어본다",
+    "어려운 낱말 뜻을 물어본다",
+    "일기를 AI가 대신 쓴다",
+    "내 주장을 쓴 뒤 근거가 부족한지 물어본다",
+    "힘든 마음을 AI에게만 털어놓는다",
+    "번역을 부탁하고 어색한 곳을 내가 고친다",
+    "모둠 발표 자료를 AI가 전부 만든다",
+    "학급 규칙 아이디어를 받아 함께 고른다",
+    "수행평가 답을 AI에게 받는다",
+    "AI가 알려 준 사실을 교과서와 대조한다"
+  ];
+
+  /* 신호 익히기 놀이. 정답이 분명한 것만 넣는다. 판정 활동의 준비 운동이다. */
+  var QUIZ = [
+    {q:"노랑불은 어떤 뜻일까요?", opts:["그냥 써도 돼", "조건을 지키면 돼", "쓰면 안 돼"], ans:1,
+     why:"노랑불은 조건을 지키면 써도 된다는 뜻이에요."},
+    {q:"주황불과 빨간불은 무엇이 다를까요?",
+     opts:["주황은 아주 조심해서만, 빨강은 아예 안 돼", "둘은 똑같아요", "주황이 더 세게 막아요"], ans:0,
+     why:"주황은 조건이 아주 까다로운 것이고, 빨강은 하지 않는 것이에요."},
+    {q:"신호를 정하는 사람은 누구일까요?", opts:["AI", "우리 반", "아무도 아니에요"], ans:1,
+     why:"기준을 정하는 사람은 사람이에요. 우리 반이 함께 정해요."}
+  ];
+
+  var st = {
+    i: 0, round: 1, first: {}, second: {}, why: {}, cond: {}, badges: {},
+    quiz: 0, quizOk: 0, quizPick: -1, classDist: null, done20: false, opened: false,
+    order: null
+  };
+
+  /* 화면이 뚝뚝 끊기지 않게 아주 짧게 뜸을 들인다.
+     움직임을 줄이기로 한 기기에서는 기다리지 않고 바로 그린다. */
+  function softDelay(fn, ms) {
+    var reduce = false;
+    try {
+      reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    } catch (e) {}
+    if (reduce) { fn(); return; }
+    setTimeout(fn, ms || 220);
+  }
+
+  /* ---------- 화면 ---------- */
+
+  function q(id, inner) {
+    return '<section class="quest" data-q="' + id + '">' + inner + '</section>';
+  }
+
+  function activityHtml() {
+    var h = "";
+
+    h += q("story",
+      '<div class="card"><span class="pill">이야기</span>' +
+      '<h2 style="margin-top:10px">신호등 마을 판정소</h2>' +
+      wiseScene("signal") +
+      '<p style="margin-top:10px">우리 반이 AI를 쓸 때마다 물음이 생겨요. ' +
+      '"이건 써도 될까?" 마을 사람들은 늘 다투었어요.</p>' +
+      '<p style="margin-top:8px">그래서 판정소가 문을 열었어요. ' +
+      '오늘 여러분은 <b>판정단원</b>이 되어 상황 카드 스무 장을 판정해요.</p>' +
+      '<p class="muted" style="margin-top:8px">정답은 미리 정해져 있지 않아요. ' +
+      '까닭을 댈 수 있으면 그것이 우리 반의 기준이 돼요.</p>' +
+      '<div class="row" style="margin-top:14px"><button type="button" id="go-hub">판정소로 들어가기</button></div></div>');
+
+    h += q("hub",
+      '<div class="card"><h2>판정소</h2>' +
+      '<p class="muted">순서대로 해도 되고, 하고 싶은 곳부터 해도 돼요.</p>' +
+      '<div class="g2" style="margin-top:12px">' +
+      '<button type="button" class="tile" id="t-quiz">' + wiseIcon("star", 30) +
+      '<span>신호 익히기 놀이</span><small id="s-quiz">세 문제로 몸풀기</small></button>' +
+      '<button type="button" class="tile" id="t-judge">' + wiseIcon("check", 30) +
+      '<span>1차 판정하기</span><small id="s-judge">상황 카드 20장</small></button>' +
+      '<button type="button" class="tile" id="t-class">' + wiseIcon("talk", 30) +
+      '<span>우리 반과 견주기</span><small id="s-class">갈린 카드 찾기</small></button>' +
+      '<button type="button" class="tile" id="t-again">' + wiseIcon("again", 30) +
+      '<span>2차 판정하기</span><small id="s-again">생각이 바뀌었다면</small></button>' +
+      '<button type="button" class="tile" id="t-cond">' + wiseIcon("write", 30) +
+      '<span>조건 작성소</span><small id="s-cond">노랑과 주황에 조건 달기</small></button>' +
+      '<button type="button" class="tile" id="t-card">' + wiseIcon("id", 30) +
+      '<span>판정단 카드</span><small id="s-card">오늘의 내 기록</small></button>' +
+      '</div></div>' +
+      '<div class="card"><h3>내가 받은 배지</h3><div id="badges" class="row" style="margin-top:8px"></div></div>');
+
+    h += q("quiz",
+      '<div class="card"><span class="pill">몸풀기</span><h2 style="margin-top:10px">신호 익히기 놀이</h2>' +
+      '<div id="quizbox"></div>' +
+      '<div class="row" style="margin-top:12px"><button type="button" class="plain back">판정소로</button></div></div>');
+
+    h += q("judge",
+      '<div class="card"><span class="pill" id="round-tag">1차 판정</span>' +
+      '<h2 style="margin-top:10px" id="judge-title">상황 카드를 판정해요</h2>' +
+      '<div id="stage6"></div>' +
+      '<div class="row" style="margin-top:12px">' +
+      '<button type="button" id="prev" class="plain">앞 카드</button>' +
+      '<button type="button" id="next" class="ghost">다음 카드</button>' +
+      '<span class="muted" id="pos"></span></div>' +
+      '<div class="row" style="margin-top:10px"><button type="button" class="plain back">판정소로</button></div></div>');
+
+    h += q("class",
+      '<div class="card"><span class="pill">함께 보기</span><h2 style="margin-top:10px">우리 반은 어떻게 보았을까</h2>' +
+      '<p class="muted">의견이 갈린 카드부터 보여 줘요. 다른 생각을 들어 보고 2차 판정을 해요.</p>' +
+      '<div class="row" style="margin-top:10px"><button type="button" id="peek">우리 반 분포 불러오기</button>' +
+      '<button type="button" id="to-again" class="ghost">2차 판정 시작</button></div>' +
+      '<div id="dist" style="margin-top:12px"></div>' +
+      '<div class="row" style="margin-top:10px"><button type="button" class="plain back">판정소로</button></div></div>');
+
+    h += q("cond",
+      '<div class="card"><span class="pill">작성소</span><h2 style="margin-top:10px">조건을 달아요</h2>' +
+      '<p class="muted">노랑불과 주황불로 판정한 카드에 "어떤 조건이면 되는가"를 씁니다. ' +
+      '이 문장이 7차시 우리 반 약속의 재료가 돼요.</p>' +
+      '<div id="conds"></div>' +
+      '<div class="row" style="margin-top:12px"><button type="button" class="plain back">판정소로</button></div></div>');
+
+    h += q("card",
+      '<div class="card"><span class="pill">기록</span><h2 style="margin-top:10px">나의 판정단 카드</h2>' +
+      '<div id="mine"></div>' +
+      '<div class="row" style="margin-top:12px">' +
+      '<button type="button" id="save-card" class="ghost">카드 그림으로 저장</button>' +
+      '<button type="button" class="plain back">판정소로</button></div></div>' +
+      '<div class="safe">이름, 사진, 친구 이야기 같은 개인정보는 넣지 않아요.</div>');
+
+    return h;
+  }
+
+  /* ---------- 몸풀기 놀이 ---------- */
+
+  function quizHtml() {
+    if (st.quiz >= QUIZ.length) {
+      return '<p class="big">' + st.quizOk + ' / ' + QUIZ.length + '</p>' +
+        '<p class="muted">몸풀기 끝. 이제 진짜 판정을 해 봐요.</p>' +
+        '<div class="row" style="margin-top:10px">' +
+        '<button type="button" id="quiz-go">1차 판정하러 가기</button></div>';
+    }
+    var item = QUIZ[st.quiz];
+    var h = '<p class="muted">' + (st.quiz + 1) + ' / ' + QUIZ.length + '</p>' +
+      '<h3 style="margin:8px 0 12px">' + esc(item.q) + '</h3>';
+    for (var i = 0; i < item.opts.length; i++) {
+      var mark = "";
+      if (st.quizPick >= 0) {
+        if (i === item.ans) { mark = " on"; }
+      }
+      h += '<button type="button" class="chip qz' + mark + '" data-o="' + i + '">' +
+        esc(item.opts[i]) + '</button>';
+    }
+    if (st.quizPick >= 0) {
+      h += '<p class="' + (st.quizPick === item.ans ? "ok" : "warn") + '" style="margin-top:10px">' +
+        (st.quizPick === item.ans ? "맞았어요. " : "다시 봐요. ") + esc(item.why) + '</p>' +
+        '<div class="row" style="margin-top:10px"><button type="button" id="quiz-next">다음</button></div>';
+    }
+    return h;
+  }
+
+  function bindQuiz() {
+    $("quizbox").innerHTML = quizHtml();
+    var opts = document.querySelectorAll("#activity .qz");
+    for (var i = 0; i < opts.length; i++) {
+      opts[i].onclick = function () {
+        if (st.quizPick >= 0) { return; }
+        st.quizPick = Number(this.getAttribute("data-o"));
+        if (st.quizPick === QUIZ[st.quiz].ans) { st.quizOk += 1; }
+        bindQuiz();
       };
     }
-    if (saved && saved.reasons) {
-      for (var k in saved.reasons) {
-        if (saved.reasons.hasOwnProperty(k) && $("r" + k)) { $("r" + k).value = saved.reasons[k]; }
-      }
+    if ($("quiz-next")) {
+      $("quiz-next").onclick = function () { st.quiz += 1; st.quizPick = -1; bindQuiz(); paintHub(); };
     }
-    paint();
+    if ($("quiz-go")) {
+      $("quiz-go").onclick = function () {
+        if (st.quizOk === QUIZ.length) { award("몸풀기 완주"); }
+        wiseGo("judge");
+      };
+    }
+  }
+
+  /* ---------- 판정 ---------- */
+
+  function cardHtml(i) {
+    var h = '<div class="card" style="margin:12px 0 0">' +
+      '<h3 style="font-size:20px">' + esc(CARDS[i]) + '</h3>' +
+      '<label>신호를 고르세요</label>';
+    for (var s = 0; s < SIGNALS.length; s++) {
+      h += '<button type="button" class="chip pick" data-c="' + i + '" data-b="' + s + '">' +
+        wiseIcon(SIGNALS[s].icon, 28) + esc(SIGNALS[s].name) + ' · ' + esc(SIGNALS[s].say) + '</button>';
+    }
+    h += '<label>왜 그렇게 보았나요</label>';
+    for (var r = 0; r < REASONS.length; r++) {
+      h += '<button type="button" class="chip why" data-c="' + i + '" data-r="' + r + '">' +
+        esc(REASONS[r]) + '</button>';
+    }
+    if (st.round === 2 && st.first[i] !== undefined) {
+      h += '<p class="muted" style="margin-top:10px">1차에서 나는 ' +
+        esc(SIGNALS[st.first[i]].name) + '으로 보았어요.</p>';
+    }
+    h += '<p id="saved6" style="margin-top:10px;min-height:26px"></p>';
+    h += '</div>';
+    return h;
+  }
+
+  function bind() {
+    var picks = document.querySelectorAll("#activity .pick");
+    for (var i = 0; i < picks.length; i++) {
+      picks[i].onclick = function () {
+        var c = this.getAttribute("data-c"), b = Number(this.getAttribute("data-b"));
+        if (st.round === 1) { st.first[c] = b; } else { st.second[c] = b; }
+        mark();
+        updatePos();
+        paintMine();
+        paintConds();
+        paintHub();
+        advanceIfReady(c);
+      };
+    }
+    var whys = document.querySelectorAll("#activity .why");
+    for (var j = 0; j < whys.length; j++) {
+      whys[j].onclick = function () {
+        var c = this.getAttribute("data-c");
+        st.why[c] = Number(this.getAttribute("data-r"));
+        mark();
+        paintHub();
+        advanceIfReady(c);
+      };
+    }
+    mark();
+  }
+
+  function advanceIfReady(c) {
+    var cur = st.round === 1 ? st.first : st.second;
+    if (cur[c] === undefined || st.why[c] === undefined) { return; }
+    if (st.i >= CARDS.length - 1) {
+      showSaved("마지막 카드까지 판정했어요.");
+      return;
+    }
+    showSaved("기록했어요. 다음 카드로 넘어가요.");
+    softDelay(function () {
+      if (st.i < CARDS.length - 1) { st.i += 1; paint(); }
+    }, 520);
+  }
+
+  function showSaved(text) {
+    if (!$("saved6")) { return; }
+    $("saved6").innerHTML = '<span class="ok">' + esc(text) + '</span>';
+    $("saved6").className = "fade-in";
+  }
+
+  function mark() {
+    var cur = st.round === 1 ? st.first : st.second;
+    var picks = document.querySelectorAll("#activity .pick");
+    for (var i = 0; i < picks.length; i++) {
+      var c = picks[i].getAttribute("data-c"), b = Number(picks[i].getAttribute("data-b"));
+      picks[i].className = "chip pick" + (cur[c] === b ? " on" : "");
+    }
+    var whys = document.querySelectorAll("#activity .why");
+    for (var j = 0; j < whys.length; j++) {
+      var c2 = whys[j].getAttribute("data-c"), r = Number(whys[j].getAttribute("data-r"));
+      whys[j].className = "chip why" + (st.why[c2] === r ? " on" : "");
+    }
   }
 
   function paint() {
-    var btns = document.querySelectorAll("#activity .pick");
-    for (var i = 0; i < btns.length; i++) {
-      var c = btns[i].getAttribute("data-c");
-      var b = btns[i].getAttribute("data-b");
-      btns[i].className = "chip pick" + (choice[c] === b ? " on" : "");
+    if ($("stage6")) {
+      $("stage6").innerHTML = cardHtml(cur());
+      $("stage6").className = "fade-in";
+      bind();
     }
+    if ($("pos")) {
+      $("pos").textContent = (st.i + 1) + " / " + CARDS.length + " · 판정한 카드 " +
+        countOf(st.round === 1 ? st.first : st.second) + "장";
+    }
+    if ($("round-tag")) { $("round-tag").textContent = st.round === 1 ? "1차 판정" : "2차 판정"; }
+    if ($("prev")) { $("prev").disabled = st.i <= 0; }
+    if ($("next")) { $("next").disabled = st.i >= CARDS.length - 1; }
+    paintHud();
+  }
+
+  /* 지금 보고 있는 카드 번호. 2차 판정에서는 갈린 카드부터 도는 차례가 따로 있다. */
+  function cur() {
+    if (st.order && st.order[st.i] !== undefined) { return st.order[st.i]; }
+    return st.i;
+  }
+
+  /* 학급 분포를 보았으면 갈린 카드를 앞에 세운다. 보지 않았으면 원래 차례로 둔다. */
+  function buildOrder() {
+    if (!st.classDist) { st.order = null; return false; }
+    var scored = [], rest = [], i;
+    for (i = 0; i < CARDS.length; i++) {
+      if (st.classDist[i]) { scored.push(i); } else { rest.push(i); }
+    }
+    if (!scored.length) { st.order = null; return false; }
+    scored.sort(function (a, b) {
+      return splitScore(st.classDist[a]) - splitScore(st.classDist[b]);
+    });
+    st.order = scored.concat(rest);
+    return true;
+  }
+
+  function startRound2() {
+    if (countOf(st.first) < 5) {
+      wiseToast("1차 판정을 다섯 장 넘게 마친 뒤에 열려요.");
+      return;
+    }
+    st.round = 2;
+    st.i = 0;
+    if (buildOrder()) {
+      wiseNote("의견이 갈린 카드부터 보여 줘요. 생각이 달라졌으면 색을 바꿔요.");
+    } else {
+      wiseNote("우리 반 분포를 아직 보지 않았어요. 원래 차례로 다시 판정해요.");
+    }
+    wiseGo("judge");
+  }
+
+  function updatePos() {
+    if (!$("pos")) { return; }
+    $("pos").textContent = (st.i + 1) + " / " + CARDS.length + " · 판정한 카드 " +
+      countOf(st.round === 1 ? st.first : st.second) + "장";
+  }
+
+  function countOf(obj) {
+    var n = 0;
+    for (var k in obj) { if (obj.hasOwnProperty(k)) { n++; } }
+    return n;
+  }
+
+  function changedCount() {
+    var n = 0;
+    for (var k in st.second) {
+      if (st.second.hasOwnProperty(k) && st.first[k] !== undefined && st.first[k] !== st.second[k]) { n++; }
+    }
+    return n;
+  }
+
+  function paintHud() {
+    wiseHud([
+      { label: "판정", done: countOf(st.first), total: CARDS.length },
+      { label: "근거", done: countOf(st.why), total: CARDS.length },
+      { label: "생각 바꾼 카드", done: changedCount(), total: CARDS.length }
+    ]);
+  }
+
+  /* 글자를 칠 때마다 허브 전체를 다시 그리지 않는다. 숫자 한 칸만 고친다. */
+  function paintHubQuiet() {
+    if ($("s-cond")) { $("s-cond").textContent = "조건을 쓴 카드 " + countOf(st.cond) + "장"; }
+  }
+
+  /* ---------- 배지와 허브 ---------- */
+
+  function award(name) {
+    if (st.badges[name]) { return; }
+    st.badges[name] = true;
+    wiseToast("배지를 받았어요 : " + name);
+    paintHub();
+  }
+
+  function paintHub() {
+    if (!$("s-judge")) { return; }
+    $("s-quiz").textContent = st.quiz >= QUIZ.length ? ("맞힌 문제 " + st.quizOk + " / " + QUIZ.length) : "세 문제로 몸풀기";
+    $("s-judge").textContent = "판정한 카드 " + countOf(st.first) + " / " + CARDS.length;
+    $("s-class").textContent = st.classDist ? "우리 반 분포를 보았어요" : "갈린 카드 찾기";
+    $("s-again").textContent = countOf(st.second) ? ("다시 판정한 카드 " + countOf(st.second) + "장") : "생각이 바뀌었다면";
+    $("s-cond").textContent = "조건을 쓴 카드 " + countOf(readCond()) + "장";
+    $("s-card").textContent = "오늘의 내 기록";
+    var tiles = [["t-judge", countOf(st.first) >= 10], ["t-quiz", st.quiz >= QUIZ.length],
+      ["t-class", !!st.classDist], ["t-again", countOf(st.second) > 0],
+      ["t-cond", countOf(readCond()) > 0], ["t-card", false]];
+    for (var i = 0; i < tiles.length; i++) {
+      if ($(tiles[i][0])) { $(tiles[i][0]).className = "tile" + (tiles[i][1] ? " done" : ""); }
+    }
+    var names = [];
+    for (var k in st.badges) { if (st.badges.hasOwnProperty(k)) { names.push(k); } }
+    $("badges").innerHTML = names.length
+      ? names.map(function (n) { return '<span class="pill">' + esc(n) + '</span>'; }).join(" ")
+      : '<span class="muted">아직 없어요. 판정을 해 보면 받을 수 있어요.</span>';
+
+    if (countOf(st.first) >= 10) { award("판정단원"); }
+    if (countOf(st.why) >= 10) { award("근거 왕"); }
+    if (changedCount() >= 1) { award("생각을 바꾼 용기"); }
+    if (countOf(st.cond) >= 3) { award("조건 작가"); }
+    if (countOf(st.first) >= CARDS.length && !st.done20) {
+      st.done20 = true;
+      award("스무 장 완주");
+      wiseCelebrate("스무 장을 다 판정했어요", [
+        "이제 우리 반과 견줘 보고, 생각이 달라졌으면 2차 판정을 해 봐요."
+      ], "좋아요");
+    }
+    paintHud();
+  }
+
+  /* ---------- 우리 반 분포 ---------- */
+
+  function peek() {
+    if (me.solo) {
+      $("dist").innerHTML = '<p class="muted">혼자 체험 중에는 우리 반 분포가 없어요. ' +
+        '판정과 조건 쓰기는 그대로 해 볼 수 있어요.</p>';
+      return;
+    }
+    $("dist").innerHTML = wiseSpinner("우리 반 판정을 모으는 중이에요", true) + wiseSkeleton(4);
+    wiseButtonBusy($("peek"), true, "불러오는 중");
+    dbGet(me.room + "/entries").then(function (data) {
+      var tally = {};
+      for (var k in data) {
+        if (!data.hasOwnProperty(k)) { continue; }
+        var p = data[k].payload || {};
+        var f = p.second || p.first || {};
+        for (var c in f) {
+          if (!f.hasOwnProperty(c)) { continue; }
+          if (!tally[c]) { tally[c] = [0, 0, 0, 0]; }
+          tally[c][Number(f[c])] += 1;
+        }
+      }
+      st.classDist = tally;
+      wiseButtonBusy($("peek"), false);
+      $("dist").innerHTML = distHtml(tally);
+      $("dist").className = "fade-in";
+      paintHub();
+    })["catch"](function () {
+      wiseButtonBusy($("peek"), false);
+      $("dist").innerHTML = '<p class="warn">지금은 불러올 수 없어요. 잠시 뒤 다시 눌러요.</p>';
+    });
+  }
+
+  function distHtml(tally) {
+    var keys = [];
+    for (var c in tally) { if (tally.hasOwnProperty(c)) { keys.push(c); } }
+    if (!keys.length) { return '<p class="muted">아직 우리 반 판정이 모이지 않았어요.</p>'; }
+    keys.sort(function (a, b) { return splitScore(tally[a]) - splitScore(tally[b]); });
+    var h = '<div class="scroll"><table>' +
+      '<tr><th>상황</th><th>초록</th><th>노랑</th><th>주황</th><th>빨강</th><th>나</th></tr>';
+    for (var i = 0; i < keys.length && i < 8; i++) {
+      var c2 = keys[i], t = tally[c2];
+      var mineV = st.second[c2] !== undefined ? st.second[c2] : st.first[c2];
+      var split = splitScore(t) < 0.6;
+      h += "<tr><td>" + esc(CARDS[c2]) + (split ? ' <span class="warn">갈림</span>' : "") +
+        "</td><td>" + t[0] + "</td><td>" + t[1] + "</td><td>" + t[2] + "</td><td>" + t[3] + "</td><td>" +
+        (mineV === undefined ? "-" : esc(SIGNALS[mineV].name)) + "</td></tr>";
+    }
+    return h + "</table></div>";
+  }
+
+  function splitScore(arr) {
+    var sum = arr[0] + arr[1] + arr[2] + arr[3];
+    if (!sum) { return 1; }
+    return Math.max(arr[0], arr[1], arr[2], arr[3]) / sum;
+  }
+
+  /* ---------- 조건 작성소 ---------- */
+
+  function paintConds() {
+    if (!$("conds")) { return; }
+    stashCond();
+    var cur = countOf(st.second) ? st.second : st.first;
+    var h = "", n = 0;
+    for (var i = 0; i < CARDS.length; i++) {
+      var v = cur[i];
+      if (v !== 1 && v !== 2) { continue; }
+      n++;
+      h += '<label for="cd' + i + '">' + esc(CARDS[i]) + ' · ' + esc(SIGNALS[v].name) + '</label>' +
+        '<input id="cd' + i + '" maxlength="70" value="' + esc(st.cond[i] || "") +
+        '" placeholder="예: 출처를 확인하고 내 말로 다시 쓴다면">';
+    }
+    if (!n) {
+      h = '<p class="muted">노랑불이나 주황불로 판정한 카드가 아직 없어요. ' +
+        '판정을 더 해 보면 여기에 칸이 생겨요.</p>';
+    }
+    $("conds").innerHTML = h;
+    bindCond();
+  }
+
+  /* 화면을 다시 그리기 전에 쓴 조건을 상태로 옮긴다. 입력이 날아가지 않게 한다. */
+  function stashCond() {
+    for (var i = 0; i < CARDS.length; i++) {
+      var el = $("cd" + i);
+      if (el && typeof el.value === "string") {
+        var v = el.value.trim();
+        if (v) { st.cond[i] = v; }
+        else if (el.parentNode && st.cond[i]) { delete st.cond[i]; }
+      }
+    }
+  }
+
+  function bindCond() {
+    for (var i = 0; i < CARDS.length; i++) {
+      var el = $("cd" + i);
+      if (!el) { continue; }
+      el.oninput = function () {
+        stashCond();
+        paintHubQuiet();
+      };
+    }
+  }
+
+  function readCond() {
+    stashCond();
+    return st.cond;
+  }
+
+  /* ---------- 판정단 카드 ---------- */
+
+  function paintMine() {
+    if (!$("mine")) { return; }
+    var cur = countOf(st.second) ? st.second : st.first;
+    var c = [0, 0, 0, 0], n = 0;
+    for (var k in cur) {
+      if (!cur.hasOwnProperty(k)) { continue; }
+      c[cur[k]] += 1;
+      n++;
+    }
+    if (!n) { $("mine").innerHTML = '<p class="muted">아직 판정한 카드가 없어요.</p>'; return; }
+    var rows = [];
+    for (var s = 0; s < 4; s++) {
+      rows.push({ label: SIGNALS[s].name, value: c[s],
+        color: ["#16a34a", "#eab308", "#ea580c", "#dc2626"][s] });
+    }
+    var h = wiseBars(rows, 560);
+    h += '<p style="margin-top:10px">판정한 카드 ' + n + '장 · 근거를 고른 카드 ' + countOf(st.why) +
+      '장 · 생각을 바꾼 카드 ' + changedCount() + '장</p>';
+    if (changedCount()) {
+      h += '<p class="ok">생각을 바꾼 것은 잘못이 아니에요. 근거가 더 좋아진 거예요.</p>';
+    }
+    $("mine").innerHTML = h;
+  }
+
+  /* ---------- 흐름 ---------- */
+
+  function activityEnter(id) {
+    if (id === "quiz") { bindQuiz(); }
+    if (id === "judge") {
+      if ($("stage6")) { $("stage6").innerHTML = wiseSpinner("상황 카드를 꺼내는 중이에요") + wiseSkeleton(3); }
+      softDelay(paint, 200);
+    }
+    if (id === "cond") { paintConds(); }
+    if (id === "card") {
+      if ($("mine")) { $("mine").innerHTML = wiseSpinner("오늘 기록을 모으는 중이에요") + wiseSkeleton(3); }
+      softDelay(paintMine, 240);
+    }
+    if (id === "hub") { paintHub(); }
+  }
+
+  function activityInit(saved) {
+    if (saved) {
+      if (saved.first) { st.first = saved.first; }
+      if (saved.second) { st.second = saved.second; }
+      if (saved.why) { st.why = saved.why; }
+      if (saved.cond) { st.cond = saved.cond; }
+      if (saved.quizOk) { st.quizOk = saved.quizOk; }
+      if (countOf(st.first) >= CARDS.length) { st.done20 = true; }
+      if (countOf(st.first)) {
+        wiseToast("지난번에 판정하던 것이 남아 있어요. 이어서 하면 돼요.");
+      }
+    }
+    $("go-hub").onclick = function () {
+      if (st.opened) { wiseGo("hub"); return; }
+      st.opened = true;
+      wiseBusy(true, "판정소 문을 여는 중");
+      softDelay(function () { wiseBusy(false); wiseGo("hub"); }, 520);
+    };
+    $("t-quiz").onclick = function () { wiseGo("quiz"); };
+    $("t-judge").onclick = function () {
+      st.round = 1; st.i = 0; st.order = null;
+      wiseNote("판정소를 돌아다니며 스무 장을 판정해요. 신호와 근거를 모두 고르면 다음 카드로 넘어가요.");
+      wiseGo("judge");
+    };
+    $("t-class").onclick = function () { wiseGo("class"); };
+    $("t-again").onclick = startRound2;
+    $("t-cond").onclick = function () { wiseGo("cond"); };
+    $("t-card").onclick = function () { wiseGo("card"); };
+    $("prev").onclick = function () { if (st.i > 0) { st.i -= 1; paint(); } };
+    $("next").onclick = function () { if (st.i < CARDS.length - 1) { st.i += 1; paint(); } };
+    $("peek").onclick = peek;
+    $("to-again").onclick = startRound2;
+    $("save-card").onclick = function () {
+      var btn = this;
+      wiseButtonBusy(btn, true, "그림 만드는 중");
+      var cur = countOf(st.second) ? st.second : st.first;
+      var c = [0, 0, 0, 0];
+      for (var k in cur) { if (cur.hasOwnProperty(k)) { c[cur[k]] += 1; } }
+      wiseCardPng("AI 신호등 판정단 " + me.nick, [
+        "초록불 " + c[0] + "장  노랑불 " + c[1] + "장",
+        "주황불 " + c[2] + "장  빨간불 " + c[3] + "장",
+        "근거를 고른 카드 " + countOf(st.why) + "장",
+        "생각을 바꾼 카드 " + changedCount() + "장",
+        "오늘 나는 까닭을 들어 판정했다."
+      ], "wise_l06_" + me.nick);
+      wiseButtonBusy(btn, false);
+    };
+    var backs = document.querySelectorAll("#activity .back");
+    for (var i = 0; i < backs.length; i++) {
+      backs[i].onclick = function () { wiseGo("hub"); };
+    }
+    wiseNote("판정소를 돌아다니며 스무 장을 판정해요. 신호와 근거를 모두 고르면 다음 카드로 넘어가요.");
+    wiseGo("story");
+    paintHub();
+    paintMine();
+    paintConds();
+  }
+
+  function activityDraft() {
+    return { first: st.first, second: st.second, why: st.why, cond: readCond(), quizOk: st.quizOk };
+  }
+
+  function activityAutofill() {
+    for (var i = 0; i < 8; i++) {
+      st.first[i] = i % 4;
+      st.why[i] = i % 4;
+    }
+    st.second[0] = 3;
+    st.cond[1] = "출처를 밝히고 내 말로 다시 쓴다면";
+    st.cond[2] = "선생님께 먼저 말하고 쓴다면";
+    paintConds();
+    paintMine();
+    paintHub();
   }
 
   function activityCollect() {
-    var done = 0, reasons = {};
-    for (var i = 0; i < CARDS.length; i++) {
-      if (choice[i] !== undefined) { done++; }
-      if (ASK_REASON && $("r" + i)) { reasons[i] = $("r" + i).value.trim(); }
-    }
-    if (done === 0) {
-      $("w-msg").innerHTML = '<span class="warn">카드를 하나라도 놓아 주세요.</span>';
+    var n1 = countOf(st.first);
+    if (n1 < 5) {
+      $("w-msg").innerHTML = '<span class="warn">상황 카드를 다섯 장 넘게 판정한 뒤에 제출해요. 지금 ' +
+        n1 + '장이에요.</span>';
       return null;
     }
-    return { choice: choice, reasons: reasons, done: done, total: CARDS.length };
+    var noWhy = 0;
+    for (var k in st.first) {
+      if (st.first.hasOwnProperty(k) && st.why[k] === undefined) { noWhy++; }
+    }
+    if (noWhy > n1 / 2) {
+      $("w-msg").innerHTML = '<span class="warn">근거를 고르지 않은 판정이 ' + noWhy +
+        '장이에요. 근거를 함께 골라 주세요.</span>';
+      return null;
+    }
+    var badges = [];
+    for (var b in st.badges) { if (st.badges.hasOwnProperty(b)) { badges.push(b); } }
+    wiseCelebrate("판정을 마쳤어요", [
+      "판정한 카드 <b>" + n1 + "장</b>",
+      "생각을 바꾼 카드 <b>" + changedCount() + "장</b>",
+      "받은 배지 " + (badges.length ? badges.join(", ") : "없음"),
+      "다음 시간에는 이 조건들을 모아 우리 반 약속을 만들어요."
+    ], "좋아요");
+    return {
+      first: st.first, second: st.second, why: st.why, cond: readCond(),
+      judged: n1, changed: changedCount(), quizOk: st.quizOk, badges: badges
+    };
+  }
+
+  /* ---------- 교사 화면 ---------- */
+
+  function tally(list) {
+    var rows = [];
+    for (var i = 0; i < CARDS.length; i++) {
+      var c = [0, 0, 0, 0], sum = 0;
+      for (var k = 0; k < list.length; k++) {
+        var p = list[k].payload || {};
+        var f = (p.second && p.second[i] !== undefined) ? p.second : (p.first || {});
+        if (f[i] === undefined) { continue; }
+        c[Number(f[i])] += 1;
+        sum++;
+      }
+      rows.push({ i: i, c: c, sum: sum, agree: sum ? splitScore(c) : 1 });
+    }
+    return rows;
   }
 
   function teacherSummary(list) {
-    var h = '<div class="scroll"><table><tr><th>카드</th>';
-    for (var b = 0; b < BUCKETS.length; b++) { h += "<th>" + esc(BUCKETS[b].label) + "</th>"; }
-    h += "<th>갈림</th></tr>";
-    for (var i = 0; i < CARDS.length; i++) {
-      var counts = [], max = 0, sum = 0;
-      for (var b = 0; b < BUCKETS.length; b++) { counts[b] = 0; }
-      for (var k = 0; k < list.length; k++) {
-        var v = list[k].payload && list[k].payload.choice ? list[k].payload.choice[i] : undefined;
-        if (v !== undefined) { counts[v] = (counts[v] || 0) + 1; sum++; }
+    var rows = tally(list);
+    var changed = 0, whyCount = [0, 0, 0, 0], conds = 0;
+    for (var k = 0; k < list.length; k++) {
+      var p = list[k].payload || {};
+      changed += p.changed || 0;
+      var w = p.why || {};
+      for (var q2 in w) { if (w.hasOwnProperty(q2)) { whyCount[Number(w[q2])] += 1; } }
+      var cd = p.cond || {};
+      for (var c3 in cd) { if (cd.hasOwnProperty(c3) && cd[c3]) { conds++; } }
+    }
+    var h = '<p class="muted">2차 판정에서 생각을 바꾼 횟수 ' + changed + '회 · 학생이 쓴 조건 ' +
+      conds + '개</p>';
+
+    var reasonRows = [];
+    for (var r = 0; r < REASONS.length; r++) {
+      reasonRows.push({ label: REASONS[r].slice(0, 12), value: whyCount[r] });
+    }
+    h += wiseBars(reasonRows, 560);
+
+    h += '<div class="scroll" style="margin-top:12px"><table><tr><th>상황</th><th>초록</th><th>노랑</th>' +
+      '<th>주황</th><th>빨강</th><th>살펴볼 점</th></tr>';
+    for (var i = 0; i < rows.length; i++) {
+      if (!rows[i].sum) { continue; }
+      h += "<tr><td>" + esc(CARDS[rows[i].i]) + "</td><td>" + rows[i].c[0] + "</td><td>" +
+        rows[i].c[1] + "</td><td>" + rows[i].c[2] + "</td><td>" + rows[i].c[3] + "</td><td>" +
+        (rows[i].agree < 0.6 ? '<span class="warn">의견 갈림</span>' : "") + "</td></tr>";
+    }
+    h += "</table></div>";
+
+    h += '<h3 style="margin-top:16px">학생이 쓴 조건</h3><div class="scroll"><table>' +
+      '<tr><th>닉네임</th><th>상황</th><th>조건</th></tr>';
+    for (var m = 0; m < list.length; m++) {
+      var cc = (list[m].payload || {}).cond || {};
+      for (var key in cc) {
+        if (!cc.hasOwnProperty(key) || !cc[key]) { continue; }
+        h += "<tr><td>" + esc(list[m].nick) + "</td><td>" + esc(CARDS[key] || key) +
+          "</td><td>" + esc(cc[key]) + "</td></tr>";
       }
-      for (var b2 = 0; b2 < BUCKETS.length; b2++) { if (counts[b2] > max) { max = counts[b2]; } }
-      var split = sum > 0 && max / sum < 0.7;
-      h += "<tr><td>" + esc(CARDS[i]) + "</td>";
-      for (var b3 = 0; b3 < BUCKETS.length; b3++) { h += "<td>" + counts[b3] + "</td>"; }
-      h += "<td>" + (split ? '<span class="warn">의견 갈림</span>' : "") + "</td></tr>";
     }
     return h + "</table></div>";
+  }
+
+  function presentHtml(list) {
+    var rows = tally(list);
+    rows.sort(function (a, b) { return a.agree - b.agree; });
+    var h = '<p class="muted">의견이 가장 갈린 상황이에요. 근거를 들어 이야기해 봐요.</p>';
+    for (var i = 0; i < rows.length && i < 3; i++) {
+      var r = rows[i];
+      if (!r.sum) { continue; }
+      var bars = [];
+      for (var s = 0; s < 4; s++) {
+        bars.push({ label: SIGNALS[s].name, value: r.c[s],
+          color: ["#16a34a", "#eab308", "#ea580c", "#dc2626"][s] });
+      }
+      h += '<div class="card"><p class="big">' + esc(CARDS[r.i]) + '</p>' +
+        wiseBars(bars, 700) + '</div>';
+    }
+    return h;
+  }
+
+  /* ---------- 그림 ---------- */
+
+  function wiseIcon(kind, size) {
+    var s = size || 30;
+    var ink = "#111";
+    var body = "";
+    if (kind === "id") {
+      body = '<circle cx="24" cy="18" r="9" fill="#FFE24B" stroke="' + ink + '" stroke-width="3"/>' +
+        '<path d="M9 42c0-9 7-14 15-14s15 5 15 14z" fill="#FFE24B" stroke="' + ink + '" stroke-width="3"/>';
+    } else if (kind === "loc") {
+      body = '<path d="M24 5c8 0 14 6 14 14 0 10-14 24-14 24S10 29 10 19c0-8 6-14 14-14z" fill="#2B59E0" stroke="' +
+        ink + '" stroke-width="3"/><circle cx="24" cy="19" r="5" fill="#fff"/>';
+    } else if (kind === "rel") {
+      body = '<circle cx="17" cy="17" r="8" fill="#7B4FE8" stroke="' + ink + '" stroke-width="3"/>' +
+        '<circle cx="32" cy="20" r="7" fill="#fff" stroke="' + ink + '" stroke-width="3"/>' +
+        '<path d="M6 42c0-8 5-12 11-12s11 4 11 12z" fill="#7B4FE8" stroke="' + ink + '" stroke-width="3"/>';
+    } else if (kind === "rec") {
+      body = '<rect x="10" y="7" width="28" height="34" rx="4" fill="#fff" stroke="' + ink + '" stroke-width="3"/>' +
+        '<path d="M17 17h14M17 25h14M17 33h8" stroke="' + ink + '" stroke-width="3" stroke-linecap="round"/>';
+    } else if (kind === "pub") {
+      body = '<circle cx="24" cy="24" r="17" fill="#00D45A" stroke="' + ink + '" stroke-width="3"/>' +
+        '<path d="M7 24h34M24 7c6 8 6 26 0 34M24 7c-6 8-6 26 0 34" fill="none" stroke="' + ink + '" stroke-width="2.5"/>';
+    } else if (kind === "green") {
+      body = '<circle cx="24" cy="24" r="16" fill="#16a34a" stroke="' + ink + '" stroke-width="3"/>' +
+        '<path d="M16 24l6 7 12-14" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>';
+    } else if (kind === "yellow") {
+      body = '<circle cx="24" cy="24" r="16" fill="#eab308" stroke="' + ink + '" stroke-width="3"/>' +
+        '<path d="M24 14v13" stroke="#fff" stroke-width="4" stroke-linecap="round"/>' +
+        '<circle cx="24" cy="33" r="2.6" fill="#fff"/>';
+    } else if (kind === "orange") {
+      body = '<circle cx="24" cy="24" r="16" fill="#ea580c" stroke="' + ink + '" stroke-width="3"/>' +
+        '<path d="M24 13l12 21H12z" fill="#fff" stroke="' + ink + '" stroke-width="2"/>';
+    } else if (kind === "red") {
+      body = '<circle cx="24" cy="24" r="16" fill="#dc2626" stroke="' + ink + '" stroke-width="3"/>' +
+        '<path d="M16 16l16 16M32 16L16 32" stroke="#fff" stroke-width="4" stroke-linecap="round"/>';
+    } else if (kind === "me") {
+      body = '<circle cx="24" cy="16" r="8" fill="#00D45A" stroke="' + ink + '" stroke-width="3"/>' +
+        '<path d="M10 42c0-9 6-14 14-14s14 5 14 14z" fill="#00D45A" stroke="' + ink + '" stroke-width="3"/>';
+    } else if (kind === "ai") {
+      body = '<rect x="9" y="12" width="30" height="24" rx="6" fill="#2B59E0" stroke="' + ink + '" stroke-width="3"/>' +
+        '<circle cx="18" cy="24" r="3.4" fill="#fff"/><circle cx="30" cy="24" r="3.4" fill="#fff"/>' +
+        '<path d="M24 12V6M18 40h12" stroke="' + ink + '" stroke-width="3" stroke-linecap="round"/>';
+    } else if (kind === "both") {
+      body = '<circle cx="17" cy="24" r="10" fill="#00D45A" stroke="' + ink + '" stroke-width="3"/>' +
+        '<rect x="24" y="15" width="18" height="18" rx="5" fill="#2B59E0" stroke="' + ink + '" stroke-width="3"/>';
+    } else if (kind === "write") {
+      body = '<path d="M10 38l4-11 20-20 7 7-20 20z" fill="#FFE24B" stroke="' + ink + '" stroke-width="3" stroke-linejoin="round"/>' +
+        '<path d="M8 42h32" stroke="' + ink + '" stroke-width="3" stroke-linecap="round"/>';
+    } else if (kind === "check") {
+      body = '<rect x="9" y="9" width="30" height="30" rx="7" fill="#fff" stroke="' + ink + '" stroke-width="3"/>' +
+        '<path d="M16 24l6 7 12-15" stroke="#00D45A" stroke-width="4.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>';
+    } else if (kind === "again") {
+      body = '<path d="M38 24a14 14 0 1 1-5-10.7" fill="none" stroke="' + ink + '" stroke-width="4"/>' +
+        '<path d="M36 6v10h-10" fill="none" stroke="' + ink + '" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>';
+    } else if (kind === "talk") {
+      body = '<rect x="7" y="10" width="34" height="22" rx="8" fill="#fff" stroke="' + ink + '" stroke-width="3"/>' +
+        '<path d="M16 32l0 8 9-8z" fill="#fff" stroke="' + ink + '" stroke-width="3" stroke-linejoin="round"/>' +
+        '<path d="M15 18h18M15 25h11" stroke="' + ink + '" stroke-width="3" stroke-linecap="round"/>';
+    } else if (kind === "moon") {
+      body = '<path d="M31 6a18 18 0 1 0 11 30A15 15 0 0 1 31 6z" fill="#FFE24B" stroke="' + ink + '" stroke-width="3"/>';
+    } else if (kind === "heart") {
+      body = '<path d="M24 40S8 30 8 19a8 8 0 0 1 16-3 8 8 0 0 1 16 3c0 11-16 21-16 21z" fill="#FF6B5A" stroke="' +
+        ink + '" stroke-width="3" stroke-linejoin="round"/>';
+    } else if (kind === "star") {
+      body = '<path d="M24 6l5 12 13 1-10 9 3 13-11-7-11 7 3-13-10-9 13-1z" fill="#FFE24B" stroke="' +
+        ink + '" stroke-width="3" stroke-linejoin="round"/>';
+    } else {
+      body = '<circle cx="24" cy="24" r="16" fill="#EBE3D2" stroke="' + ink + '" stroke-width="3"/>';
+    }
+    return '<svg class="wi" viewBox="0 0 48 48" width="' + s + '" height="' + s +
+      '" aria-hidden="true" focusable="false">' + body + '</svg>';
+  }
+
+  function wiseScene(kind) {
+    var ink = "#111";
+    var inner = "";
+    if (kind === "axis") {
+      inner = '<rect width="320" height="150" fill="#F6F7F9"/>' +
+        '<path d="M40 122h250M40 122V16" stroke="' + ink + '" stroke-width="3.5" stroke-linecap="round"/>' +
+        '<path d="M282 122l-10-6v12z M40 16l-6 10h12z" fill="' + ink + '"/>' +
+        '<rect x="52" y="76" width="72" height="40" rx="10" fill="#00D45A" stroke="' + ink + '" stroke-width="3"/>' +
+        '<text x="88" y="101" font-size="15" font-weight="800" text-anchor="middle" fill="#111">보조</text>' +
+        '<rect x="130" y="56" width="72" height="40" rx="10" fill="#FFE24B" stroke="' + ink + '" stroke-width="3"/>' +
+        '<text x="166" y="81" font-size="15" font-weight="800" text-anchor="middle" fill="#111">경계</text>' +
+        '<rect x="206" y="30" width="72" height="40" rx="10" fill="#FF6B5A" stroke="' + ink + '" stroke-width="3"/>' +
+        '<text x="242" y="55" font-size="15" font-weight="800" text-anchor="middle" fill="#111">대행</text>' +
+        '<text x="150" y="142" font-size="13" font-weight="700" text-anchor="middle" fill="#6b7280">생각을 누가 했나</text>' +
+        '<text x="14" y="70" font-size="13" font-weight="700" fill="#6b7280" transform="rotate(-90 14 70)">결과물</text>';
+    } else if (kind === "steps3") {
+      inner = '<rect width="320" height="120" fill="#F6F7F9"/>' +
+        '<rect x="12" y="28" width="86" height="60" rx="14" fill="#00D45A" stroke="' + ink + '" stroke-width="3"/>' +
+        '<text x="55" y="64" font-size="15" font-weight="800" text-anchor="middle">내 생각</text>' +
+        '<rect x="117" y="28" width="86" height="60" rx="14" fill="#FFE24B" stroke="' + ink + '" stroke-width="3"/>' +
+        '<text x="160" y="64" font-size="15" font-weight="800" text-anchor="middle">AI 검토</text>' +
+        '<rect x="222" y="28" width="86" height="60" rx="14" fill="#2B59E0" stroke="' + ink + '" stroke-width="3"/>' +
+        '<text x="265" y="64" font-size="15" font-weight="800" text-anchor="middle" fill="#fff">내 말로</text>' +
+        '<path d="M100 58h15M205 58h15" stroke="' + ink + '" stroke-width="4" stroke-linecap="round"/>';
+    } else if (kind === "signal") {
+      inner = '<rect width="320" height="120" fill="#F6F7F9"/>' +
+        '<rect x="16" y="18" width="288" height="84" rx="18" fill="#fff" stroke="' + ink + '" stroke-width="3"/>' +
+        '<circle cx="70" cy="60" r="22" fill="#16a34a" stroke="' + ink + '" stroke-width="3"/>' +
+        '<circle cx="130" cy="60" r="22" fill="#eab308" stroke="' + ink + '" stroke-width="3"/>' +
+        '<circle cx="190" cy="60" r="22" fill="#ea580c" stroke="' + ink + '" stroke-width="3"/>' +
+        '<circle cx="250" cy="60" r="22" fill="#dc2626" stroke="' + ink + '" stroke-width="3"/>';
+    } else if (kind === "room") {
+      inner = '<rect width="320" height="120" fill="#F6F7F9"/>' +
+        '<rect x="16" y="26" width="120" height="68" rx="14" fill="#fff" stroke="' + ink + '" stroke-width="3"/>' +
+        '<text x="76" y="58" font-size="14" font-weight="800" text-anchor="middle">방 코드</text>' +
+        '<text x="76" y="80" font-size="20" font-weight="900" text-anchor="middle" fill="#2B59E0">482913</text>' +
+        '<path d="M144 60h28" stroke="' + ink + '" stroke-width="4" stroke-linecap="round"/>' +
+        '<path d="M166 52l10 8-10 8z" fill="' + ink + '"/>' +
+        '<circle cx="212" cy="48" r="14" fill="#00D45A" stroke="' + ink + '" stroke-width="3"/>' +
+        '<path d="M192 94c0-12 9-18 20-18s20 6 20 18z" fill="#00D45A" stroke="' + ink + '" stroke-width="3"/>' +
+        '<circle cx="272" cy="48" r="14" fill="#FFE24B" stroke="' + ink + '" stroke-width="3"/>' +
+        '<path d="M252 94c0-12 9-18 20-18s20 6 20 18z" fill="#FFE24B" stroke="' + ink + '" stroke-width="3"/>';
+    } else {
+      inner = '<rect width="320" height="120" fill="#F6F7F9"/>';
+    }
+    var vb = kind === "axis" ? "0 0 320 150" : "0 0 320 120";
+    return '<svg class="ws-scene" viewBox="' + vb + '" aria-hidden="true">' + inner + '</svg>';
+  }
+
+
+  function activityIntro() {
+    return "<svg class=\"art\" viewBox=\"0 0 320 180\" role=\"img\" aria-hidden=\"true\" preserveAspectRatio=\"xMidYMid slice\"><rect width=\"320\" height=\"180\" fill=\"#F4EEE0\"/><rect x=\"112\" y=\"16\" width=\"96\" height=\"148\" rx=\"18\" fill=\"#111111\" stroke=\"#111111\" stroke-width=\"3\"/><circle cx=\"160\" cy=\"42\" r=\"14\" fill=\"#00D45A\" stroke=\"#FFFFFF\" stroke-width=\"3\"/><circle cx=\"160\" cy=\"76\" r=\"14\" fill=\"#FFE24B\" stroke=\"#FFFFFF\" stroke-width=\"3\"/><circle cx=\"160\" cy=\"110\" r=\"14\" fill=\"#FF9F45\" stroke=\"#FFFFFF\" stroke-width=\"3\"/><circle cx=\"160\" cy=\"144\" r=\"14\" fill=\"#FF6B5A\" stroke=\"#FFFFFF\" stroke-width=\"3\"/><path d=\"M84 42 h-46 M84 76 h-46 M84 110 h-46 M84 144 h-46\" stroke=\"#111111\" stroke-width=\"4\" stroke-linecap=\"round\"/><path d=\"M236 42 h46 M236 76 h46 M236 110 h46 M236 144 h46\" stroke=\"#111111\" stroke-width=\"4\" stroke-linecap=\"round\"/></svg><p><b>6차시 · AI 신호등 판정단</b><br>상황 카드 20장을 4색 신호로 분류하고 학급 집계를 실시간으로 띄워, 의견이 갈린 카드를 다시 토의한다. 방 코드가 없으면 혼자 체험해 보기로 눌러 봐요.</p>";
   }
 
 
@@ -323,24 +1466,41 @@ border:2.5px solid var(--line);color:var(--ink);font-size:14.5px;font-weight:700
 
   function enter(solo) {
     var room = onlyDigits($("w-room").value, 6);
-    var pw = onlyDigits($("w-pw").value, 4);
     var nick = $("w-nick").value.trim();
     var group = $("w-group").value.trim();
+    var code = onlyDigits($("w-code").value, 4);
+    if (code) {
+      try { localStorage.setItem(CODE_KEY, code); } catch (e) {}
+    }
 
     if (!nick) { $("w-gate-msg").textContent = "닉네임을 써 주세요."; return; }
-    if (!solo && room.length !== 6) { $("w-gate-msg").textContent = "방 코드 6자리를 정확히 써 주세요."; return; }
+    if (!solo && room.length !== 6) { $("w-gate-msg").textContent = "방 번호 6자리를 정확히 써 주세요."; return; }
 
-    me = { room: solo ? "solo" : room, pw: pw, nick: nick, group: group, solo: !!solo };
+    me = { room: solo ? "solo" : room, pw: "", nick: nick, group: group,
+      code: code, solo: !!solo };
     $("w-who").textContent = me.nick + (me.group ? " · " + me.group : "") +
       (me.solo ? " · 혼자 체험" : " · " + me.room);
     $("activity").innerHTML = activityHtml();
     activityInit(loadLocal());
+    addNextButtons();
+    startDraft();
     show("stage");
   }
 
   function loadLocal() {
     try { return JSON.parse(localStorage.getItem(LOCAL_KEY) || "null"); }
     catch (e) { return null; }
+  }
+
+  function startDraft() {
+    if (draftTimer) { clearInterval(draftTimer); }
+    if (typeof activityDraft !== "function") { return; }
+    draftTimer = setInterval(function () {
+      try {
+        var d = activityDraft();
+        if (d) { wiseDraft(d); }
+      } catch (e) {}
+    }, 8000);
   }
 
   function submit() {
@@ -355,18 +1515,21 @@ border:2.5px solid var(--line);color:var(--ink);font-size:14.5px;font-weight:700
     }
 
     var record = {
-      nick: me.nick, group: me.group, app: APP,
+      nick: me.nick, group: me.group, code: me.code, app: APP,
       room: me.room, at: Date.now(), payload: payload
     };
 
-    $("w-sync").textContent = "저장 중...";
+    $("w-sync").innerHTML = '<span class="spin"></span>저장 중';
+    wiseButtonBusy($("w-submit"), true, "보내는 중");
     dbPush(me.room + "/entries", record).then(function () {
+      wiseButtonBusy($("w-submit"), false);
       $("w-sync").textContent = "저장됨";
       $("w-msg").innerHTML = '<span class="ok">제출했어요. 고쳐서 다시 제출해도 괜찮아요.</span>';
       sheetBackup(record);
     })["catch"](function () {
+      wiseButtonBusy($("w-submit"), false);
       $("w-sync").textContent = "저장 실패";
-      $("w-msg").innerHTML = '<span class="warn">인터넷이 불안정해요. 잠시 뒤 다시 제출해 주세요.</span>';
+      $("w-msg").innerHTML = '<span class="warn">인터넷이 불안정해요. 쓴 내용은 이 기기에 남아 있어요. 잠시 뒤 다시 제출해 주세요.</span>';
     });
   }
 
@@ -375,9 +1538,13 @@ border:2.5px solid var(--line);color:var(--ink);font-size:14.5px;font-weight:700
   function teacherMake() {
     var code = makeCode();
     var pw = onlyDigits($("w-pw").value, 4) || "0000";
+    wiseBusy(true, "방을 만드는 중");
     dbPut(code + "/meta", { app: APP, pw: pw, at: Date.now(), locked: false })
-      .then(function () { teacherOpen(code, pw); })
-      ["catch"](function () { alert("방을 만들지 못했어요. 인터넷을 확인해 주세요."); });
+      .then(function () { wiseBusy(false); sheetRoom(code); teacherOpen(code, pw); })
+      ["catch"](function () {
+        wiseBusy(false);
+        alert("방을 만들지 못했어요. 인터넷을 확인해 주세요.");
+      });
   }
 
   function teacherOpen(code, pw) {
@@ -386,6 +1553,7 @@ border:2.5px solid var(--line);color:var(--ink);font-size:14.5px;font-weight:700
     $("t-pw").textContent = "비밀번호 " + (pw || "-") + " · 이 화면을 닫아도 방은 사라지지 않아요.";
     $("t-room").className = "";
     $("t-board").className = "card";
+    $("t-summary").innerHTML = wiseSpinner("제출을 불러오는 중이에요", true) + wiseSkeleton(3);
     teacherRefresh();
     if (timer) { clearInterval(timer); }
     timer = setInterval(teacherRefresh, 3000);
@@ -404,10 +1572,35 @@ border:2.5px solid var(--line);color:var(--ink);font-size:14.5px;font-weight:700
       for (var n in latest) { if (latest.hasOwnProperty(n)) { list.push(latest[n]); } }
 
       $("t-count").textContent = list.length + "명";
+      $("t-note").textContent = noteFor(list, rows.length);
       $("t-summary").innerHTML = teacherSummary(list);
       $("t-table").innerHTML = teacherTable(list);
       window.__wiseRows = list;
+      if ($("present").className === "") { paintPresent(list); }
     })["catch"](function () {});
+  }
+
+  function noteFor(list, tries) {
+    if (!list.length) { return "아직 제출이 없어요. 학생에게 방 코드를 알려 주세요."; }
+    var groups = {}, n = 0;
+    for (var i = 0; i < list.length; i++) {
+      var g = list[i].group || "모둠 없음";
+      if (!groups[g]) { groups[g] = 0; n++; }
+      groups[g] += 1;
+    }
+    var last = 0;
+    for (var k = 0; k < list.length; k++) { if (list[k].at > last) { last = list[k].at; } }
+    return "모둠 " + n + "개 · 제출 시도 " + tries + "회 · 마지막 제출 " +
+      new Date(last).toLocaleTimeString("ko-KR");
+  }
+
+  function paintPresent(list) {
+    var html = "";
+    try {
+      html = (typeof presentHtml === "function") ? presentHtml(list) : teacherSummary(list);
+    } catch (e) { html = teacherSummary(list); }
+    $("p-title").textContent = "우리 반 결과 · " + list.length + "명";
+    $("p-body").innerHTML = html;
   }
 
   function teacherTable(list) {
@@ -450,7 +1643,11 @@ border:2.5px solid var(--line);color:var(--ink);font-size:14.5px;font-weight:700
   $("w-solo").onclick = function () { enter(true); };
   $("w-teacher").onclick = function () { show("teacher"); };
   $("w-submit").onclick = submit;
-  $("w-leave").onclick = function () { if (timer) { clearInterval(timer); } show("gate"); };
+  $("w-leave").onclick = function () {
+    if (timer) { clearInterval(timer); }
+    if (draftTimer) { clearInterval(draftTimer); }
+    show("gate");
+  };
 
   $("t-make").onclick = teacherMake;
   $("t-open").onclick = function () {
@@ -460,6 +1657,16 @@ border:2.5px solid var(--line);color:var(--ink);font-size:14.5px;font-weight:700
   $("t-back").onclick = function () { if (timer) { clearInterval(timer); } show("gate"); };
   $("t-refresh").onclick = teacherRefresh;
   $("t-csv").onclick = download;
+  $("t-detail").onclick = function () {
+    var open = $("t-wrap").className.indexOf("hide") < 0;
+    $("t-wrap").className = open ? "scroll hide" : "scroll";
+    this.textContent = open ? "낱낱이 보기 켜기" : "낱낱이 보기 끄기";
+  };
+  $("t-present").onclick = function () {
+    paintPresent(window.__wiseRows || []);
+    show("present");
+  };
+  $("p-close").onclick = function () { show("teacher"); };
   $("t-lock").onclick = function () {
     dbPut(me.room + "/meta/locked", true).then(function () { alert("방을 잠갔어요."); });
   };
@@ -472,6 +1679,46 @@ border:2.5px solid var(--line);color:var(--ink);font-size:14.5px;font-weight:700
     } else { fallbackCopy(code, done); }
   };
 
+  /* 상단바는 어느 화면에서나 계속 보인다. 링크는 새 창으로 열어 삽입 화면을 가두지 않는다. */
+  try {
+    var savedCode = localStorage.getItem(CODE_KEY);
+    if (savedCode && $("w-code")) { $("w-code").value = savedCode; }
+  } catch (e) {}
+
+  /* 미리보기 모드. 주소에 ?shot=화면이름 을 붙이면 둘러보기로 들어가 그 화면을 연다.
+     교사 안내 자료의 화면 캡처를 자동으로 뜨기 위한 것이다. fill=1 이면 예시값을 채운다. */
+  function shotMode() {
+    var q = "";
+    try { q = window.location && window.location.search ? window.location.search : ""; } catch (e) { return; }
+    if (q.indexOf("shot=") < 0) { return; }
+    var val = q.split("shot=")[1].split("&")[0];
+    try { val = decodeURIComponent(val); } catch (e) {}
+    $("w-nick").value = "미리보기";
+    enter(true);
+    if (q.indexOf("fill=1") >= 0 && typeof activityAutofill === "function") {
+      try { activityAutofill(); } catch (e) {}
+    }
+    if (val && val !== "stage") {
+      try { wiseGo(val); } catch (e) {}
+    }
+  }
+
+  try { shotMode(); } catch (e) {}
+
+  $("w-restart").onclick = function () {
+    if (timer) { clearInterval(timer); }
+    if (draftTimer) { clearInterval(draftTimer); }
+    show("gate");
+  };
+
+  /* 입장 화면에 이 활동을 소개하는 그림을 깐다. 혼자 열어 본 학생을 위한 것이다. */
+  if (typeof activityIntro === "function") {
+    try {
+      $("w-intro").innerHTML = activityIntro();
+      $("w-intro").className = "intro";
+    } catch (e) {}
+  }
+
   /* 자동 검사용 통로. 수업 화면에는 영향이 없다. */
   if (typeof window !== "undefined") {
     window.__wiseTest = {
@@ -480,6 +1727,7 @@ border:2.5px solid var(--line);color:var(--ink);font-size:14.5px;font-weight:700
       activityInit: activityInit,
       activityCollect: activityCollect,
       teacherSummary: teacherSummary,
+      presentHtml: (typeof presentHtml === "function") ? presentHtml : null,
       activityAutofill: (typeof activityAutofill === "function") ? activityAutofill : null,
       setMe: function (v) { me = v; }
     };

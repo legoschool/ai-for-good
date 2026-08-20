@@ -46,7 +46,7 @@ Firebase 실시간 DB 를 REST 로 직접 호출한다. SDK 를 붙이지 마라
 실시간 갱신은 3초 폴링으로 한다. SSE 스트리밍은 학교망에서 끊긴다.
 
 같은 기록을 Google Sheets 에도 백업한다.
-시트 : 1szLUD-hzMwQh7aaae5S9S7OS-hEXMEMj2Vhbd-hjjFM
+시트 : 선생님이 만든 백업 시트의 ID 를 여기에 넣는다.
 Apps Script 웹앱 주소로 fetch POST 하되 mode 는 no-cors,
 Content-Type 은 text/plain 으로 보낸다. 응답을 읽지 마라.
 백업이 실패해도 학생 화면이 멈추면 안 된다. catch 로 삼키고 넘어가라.

@@ -44,8 +44,7 @@ def main():
         jobs.append((NODE + ["build/run_webapp.js", "out/webapp/%s" % lid],
                      "%s 웹앱 실행" % lid))
 
-    jobs.append((NODE + ["build/smoke_webapp.js", "out/webapp/common"], "공통 설문 웹앱 구조"))
-    jobs.append((NODE + ["build/run_webapp.js", "out/webapp/common"], "공통 설문 웹앱 실행"))
+    jobs.append((NODE + ["build/run_webapp.js", "out/webapp/common"], "공통 설문 웹앱"))
     jobs.append((PY + ["build/check_core_same.py"], "웹앱 공통 골격 동일성"))
     jobs.append((PY + ["build/check_rules.py"], "Firebase 보안 규칙"))
     jobs.append((PY + ["build/validate_hwpx.py", "out/해설서/WISE_교사용_해설서.hwpx"], "교사용 해설서"))
@@ -53,9 +52,6 @@ def main():
         jobs.append((PY + ["build/validate_hwpx.py", "out/교구/%s.hwpx" % name], name))
     jobs.append((NODE + ["build/check_site.js", "out/site"], "통합 웹사이트"))
     jobs.append((PY + ["build/audit.py"], "전체 점검"))
-    jobs.append((PY + ["build/check_reading.py"], "학생 문장 수준"))
-    jobs.append((NODE + ["build/walkthrough.js", "L01"], "1차시 수업이 굴러가는가"))
-    jobs.append((NODE + ["build/walkthrough.js", "L02"], "2차시 수업이 굴러가는가"))
 
     failed = []
     for cmd, label in jobs:

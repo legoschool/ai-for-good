@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>3차시 수업 슬라이드 · AI도 편견을 가질까</title>
+<style>
+:root{--cream:#F4EEE0;--cream-d:#EBE3D2;--paper:#fff;--ink:#101010;--ink2:#33312D;
+--muted:#6F6A61;--line:#111;--green:#00D45A;--blue:#2B59E0;--purple:#7B4FE8;--sun:#FFE24B;
+--sans:"Pretendard","Malgun Gothic","Apple SD Gothic Neo","Noto Sans KR",system-ui,sans-serif}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--cream);color:var(--ink2);font-family:var(--sans);line-height:1.7}
+h1,h2,h3,h4{margin:0;color:var(--ink);line-height:1.25;letter-spacing:-.03em;font-weight:800}
+p{margin:0}
+a{color:var(--blue)}
+.tag{display:inline-block;border:2.5px solid var(--line);border-radius:999px;padding:4px 14px;
+font-size:13px;font-weight:800;background:var(--sun)}
+.tag.g{background:var(--green)}
+.tag.b{background:var(--blue);color:#fff}
+.tag.p{background:var(--purple);color:#fff}
+.tag.w{background:#fff}
+
+body{overflow:hidden}
+.topbar{position:fixed;left:0;right:0;top:0;height:52px;z-index:20;display:flex;align-items:center;
+gap:10px;padding:0 16px;background:var(--cream);border-bottom:3px solid var(--line);flex-wrap:nowrap;
+overflow-x:auto}
+.topbar a,.topbar span{font-size:14px;font-weight:800;color:var(--ink);white-space:nowrap;
+border:2.5px solid var(--line);border-radius:999px;padding:6px 14px;background:#fff;text-decoration:none}
+.topbar a:hover{background:var(--sun)}
+.topbar .now{background:var(--green);border-color:var(--line)}
+.deck{position:relative;height:100vh}
+.slide{position:absolute;inset:0;display:none;flex-direction:column;justify-content:center;
+padding:calc(52px + 4vh) 7vw 12vh;background:var(--cream)}
+.slide.on{display:flex}
+.slide .kicker{font-size:clamp(13px,1.5vw,17px);font-weight:800;color:var(--muted);
+letter-spacing:.02em;margin-bottom:14px}
+.slide h1{font-size:clamp(30px,5.4vw,68px)}
+.slide h2{font-size:clamp(24px,3.6vw,46px)}
+.slide h3{font-size:clamp(18px,2.1vw,28px)}
+.slide p.big{font-size:clamp(18px,2.3vw,32px);font-weight:700;color:var(--ink)}
+.slide p.mid{font-size:clamp(15px,1.5vw,21px);margin-top:12px}
+.cover{background:var(--cream-d)}
+.cover .no{font-size:clamp(46px,9vw,120px);font-weight:900;color:var(--green);
+-webkit-text-stroke:3px var(--line);line-height:1}
+.art-wrap{margin-top:26px;border:3px solid var(--line);border-radius:20px;overflow:hidden;
+background:#fff;max-height:38vh}
+.art-wrap svg{display:block;width:100%;height:100%}
+.cards{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));margin-top:26px}
+.card{border:3px solid var(--line);border-radius:18px;background:var(--paper);padding:20px 22px;
+box-shadow:7px 7px 0 var(--line)}
+.card h3{font-size:clamp(17px,1.8vw,23px);margin-bottom:8px}
+.card p{font-size:clamp(14px,1.35vw,18px);color:var(--ink2)}
+.card.sun{background:var(--sun)}
+.card.green{background:var(--green)}
+.card.white{background:#fff}
+.bubble{border:3px solid var(--line);border-radius:26px;background:#fff;padding:22px 26px;
+position:relative;margin-top:24px}
+.bubble::after{content:"";position:absolute;left:44px;bottom:-18px;width:26px;height:18px;
+background:#fff;border-left:3px solid var(--line);border-bottom:3px solid var(--line);
+transform:skewX(-24deg)}
+.answers{margin-top:30px;display:flex;flex-direction:column;gap:10px}
+.answers .a{border:2.5px dashed var(--line);border-radius:16px;background:#fff;padding:12px 18px;
+font-size:clamp(14px,1.4vw,19px)}
+.answers.hide{display:none}
+.rowlist{margin-top:22px;display:flex;flex-direction:column;gap:12px}
+.rowlist .r{display:flex;gap:14px;align-items:flex-start;border:2.5px solid var(--line);
+border-radius:16px;background:#fff;padding:14px 18px}
+.rowlist .r b{background:var(--green);border:2.5px solid var(--line);border-radius:999px;
+min-width:34px;height:34px;display:flex;align-items:center;justify-content:center;font-size:15px}
+.hud{position:fixed;left:0;right:0;bottom:0;height:58px;display:flex;align-items:center;gap:10px;
+padding:0 18px;background:var(--paper);border-top:3px solid var(--line);z-index:9}
+.hud button{font:inherit;font-size:14px;font-weight:800;border:2.5px solid var(--line);
+border-radius:10px;background:#fff;padding:8px 14px;cursor:pointer;min-height:38px}
+.hud button:hover{background:var(--sun)}
+.hud .count{margin-left:auto;font-weight:800;font-size:14px}
+.bar{position:fixed;left:0;top:0;height:6px;background:var(--green);z-index:10;transition:width .2s}
+.tap{position:fixed;top:52px;bottom:58px;width:16vw;z-index:8;cursor:pointer;background:transparent}
+.tap.l{left:0}
+.tap.r{right:0}
+@media print{
+ body{overflow:visible}
+ .deck{height:auto}
+ .slide{position:static;display:flex!important;height:190mm;page-break-after:always;border:2px solid var(--line);
+ margin-bottom:6mm;padding:14mm}
+ .hud,.tap,.bar,.topbar{display:none!important}
+ .answers.hide{display:flex}
+}
+
+.shot-slide{display:grid;grid-template-columns:1.05fr .95fr;gap:26px;align-items:center;height:100%}
+.shot-slide img.cap{width:100%;max-height:74vh;object-fit:contain;border:3px solid #111;
+border-radius:14px;background:#fff;box-shadow:8px 8px 0 #111}
+.shot-slide .why h2{font-size:38px;margin:0 0 10px}
+.shot-slide .why p{font-size:24px;line-height:1.7;margin:8px 0}
+.shot-slide .why .do{background:#FFE24B;border:3px solid #111;border-radius:14px;padding:14px 16px;
+font-weight:800;font-size:23px;margin-top:14px}
+.qrbox{display:flex;gap:18px;align-items:center;margin-top:16px}
+.qrbox img{background:#fff;border:3px solid #111;border-radius:12px;padding:6px}
+.qrbox b{font-size:26px}
+</style>
+</head>
+<body>
+<nav class="topbar"><a href="../index.html">WISE 홈</a><a href="../browse.html">둘러보기</a><a href="../lesson/L03.html">3차시 페이지</a><a href="../webapp/L03/index.html">웹앱 열기</a><a href="../print/L03_지도안.html">지도안</a><a href="../print/L03_활동지.html">활동지</a><a href="L02.html">앞 차시</a><a href="L04.html">다음 차시</a><span class="now">3차시 슬라이드</span></nav><div class="deck"><section class="slide cover" data-kind="cover"><p class="kicker">인간중심 사고를 기르는 AI적정활용 수업 WISE · 모듈1 WISE 발견</p><p class="no">03</p><h1>AI도 편견을 가질까</h1><p class="mid">AI의 결과에 담긴 치우침을 찾고, 그 까닭을 데이터에서 찾아봅시다.</p><div class="art-wrap"><svg class="art" viewBox="0 0 320 180" role="img" aria-hidden="true" preserveAspectRatio="xMidYMid slice"><rect width="320" height="180" fill="#F4EEE0"/><g transform="translate(40,62) scale(0.72)"><rect x="-16" y="16" width="32" height="26" rx="12" fill="#2B59E0" stroke="#111111" stroke-width="3"/><circle cx="0" cy="0" r="15" fill="#FFFFFF" stroke="#111111" stroke-width="3"/><circle cx="-5" cy="-2" r="2.4" fill="#111111"/><circle cx="5" cy="-2" r="2.4" fill="#111111"/><path d="M-5 6 q5 4 10 0" stroke="#111111" stroke-width="2.6" fill="none" stroke-linecap="round"/></g><g transform="translate(78,62) scale(0.72)"><rect x="-16" y="16" width="32" height="26" rx="12" fill="#2B59E0" stroke="#111111" stroke-width="3"/><circle cx="0" cy="0" r="15" fill="#FFFFFF" stroke="#111111" stroke-width="3"/><circle cx="-5" cy="-2" r="2.4" fill="#111111"/><circle cx="5" cy="-2" r="2.4" fill="#111111"/><path d="M-5 6 q5 4 10 0" stroke="#111111" stroke-width="2.6" fill="none" stroke-linecap="round"/></g><g transform="translate(116,62) scale(0.72)"><rect x="-16" y="16" width="32" height="26" rx="12" fill="#2B59E0" stroke="#111111" stroke-width="3"/><circle cx="0" cy="0" r="15" fill="#FFFFFF" stroke="#111111" stroke-width="3"/><circle cx="-5" cy="-2" r="2.4" fill="#111111"/><circle cx="5" cy="-2" r="2.4" fill="#111111"/><path d="M-5 6 q5 4 10 0" stroke="#111111" stroke-width="2.6" fill="none" stroke-linecap="round"/></g><g transform="translate(154,62) scale(0.72)"><rect x="-16" y="16" width="32" height="26" rx="12" fill="#2B59E0" stroke="#111111" stroke-width="3"/><circle cx="0" cy="0" r="15" fill="#FFFFFF" stroke="#111111" stroke-width="3"/><circle cx="-5" cy="-2" r="2.4" fill="#111111"/><circle cx="5" cy="-2" r="2.4" fill="#111111"/><path d="M-5 6 q5 4 10 0" stroke="#111111" stroke-width="2.6" fill="none" stroke-linecap="round"/></g><g transform="translate(192,62) scale(0.72)"><rect x="-16" y="16" width="32" height="26" rx="12" fill="#2B59E0" stroke="#111111" stroke-width="3"/><circle cx="0" cy="0" r="15" fill="#FFFFFF" stroke="#111111" stroke-width="3"/><circle cx="-5" cy="-2" r="2.4" fill="#111111"/><circle cx="5" cy="-2" r="2.4" fill="#111111"/><path d="M-5 6 q5 4 10 0" stroke="#111111" stroke-width="2.6" fill="none" stroke-linecap="round"/></g><g transform="translate(258,62) scale(0.72)"><rect x="-16" y="16" width="32" height="26" rx="12" fill="#FFE24B" stroke="#111111" stroke-width="3"/><circle cx="0" cy="0" r="15" fill="#FFFFFF" stroke="#111111" stroke-width="3"/><circle cx="-5" cy="-2" r="2.4" fill="#111111"/><circle cx="5" cy="-2" r="2.4" fill="#111111"/><path d="M-5 6 q5 4 10 0" stroke="#111111" stroke-width="2.6" fill="none" stroke-linecap="round"/></g><rect x="24" y="118" width="184" height="18" rx="9" fill="#2B59E0" stroke="#111111" stroke-width="3"/><rect x="238" y="118" width="40" height="18" rx="9" fill="#FFE24B" stroke="#111111" stroke-width="3"/><text x="24" y="158" font-size="15" font-weight="800" fill="#111111">많이 배운 쪽</text><text x="226" y="158" font-size="15" font-weight="800" fill="#111111">적게 배운 쪽</text></svg></div></section><section class="slide" data-kind="q"><p class="kicker">오늘의 학습 문제</p><h1>AI의 결과에 담긴 치우침을 찾고, 그 까닭을 데이터에서 찾아봅시다.</h1><p class="mid">AI는 내 생각을 도와주는가, 아니면 대신해 주는가</p></section><section class="slide" data-kind="cards"><p class="kicker">오늘 기르는 힘</p><h2>이 시간에 자라는 생각</h2><div class="cards"><div class="card sun"><h3>비판적 사고</h3><p>AI 결과에 담긴 편향을 찾고 그 원인을 학습 데이터와 연결해 설명하기</p></div><div class="card white"><h3>윤리적 사고</h3><p>AI 결과가 누구에게 불리하게 작동할 수 있는지 이해관계자를 짚어 보기</p></div><div class="card white"><h3>AI적정활용</h3><p>⑤ 비판적 AI 리터러시와 검증 가능성 / ⑥ 윤리·책임성</p></div></div></section><section class="slide" data-kind="stage"><p class="kicker">도입 · 5분</p><h1>동기 유발</h1><div class="rowlist"><div class="r"><b>1</b><span>동기 유발</span></div><div class="r"><b>2</b><span>학습 문제 확인</span></div></div></section><section class="slide" data-kind="ask"><p class="kicker">도입 · 동기 유발</p><h2>동기 유발</h2><div class="bubble"><p class="big">‘의사’와 ‘간호사’를 그려 달라고 했더니 이런 그림이 나왔습니다. 무엇이 보이나요?</p></div><div class="answers hide"><div class="a">예상 답변 · 의사는 남자, 간호사는 여자만 나왔습니다.</div></div><div class="bubble"><p class="big">AI는 왜 이렇게 그렸을까요?</p></div><div class="answers hide"><div class="a">예상 답변 · 그런 사진을 더 많이 보고 배웠기 때문인 것 같습니다.</div></div></section><section class="slide" data-kind="ask"><p class="kicker">도입 · 학습 문제 확인</p><h2>학습 문제 확인</h2><div class="bubble"><p class="big">AI의 결과에 담긴 치우침을 찾고, 그 까닭을 데이터에서 찾아봅시다.</p></div></section><section class="slide" data-kind="mat"><p class="kicker">도입 준비물과 유의점</p><h2>이것만 챙기면 됩니다</h2><div class="cards"><div class="card white"><p>☆ 생성형 이미지·번역 도구(교사 시연)</p></div><div class="card white"><p>★ 학습문제 PPT</p></div><div class="card white"><p>△ 특정 성별·직업·나라를 비하하는 표현이 나오지 않게 사전 확인</p></div></div></section><section class="slide" data-kind="q"><p class="kicker">웹앱으로 합니다</p><h1>편향 관찰 갤러리</h1><p class="mid">교사가 올린 편향 사례를 학생이 관찰하고, 치우친 지점과 그 원인을 데이터와 연결해 기록한다.</p><div class="qrbox"><img class="qr" src="../assets/qr/L03.svg" width="150" height="150" alt="L03 웹앱 QR 코드"><div><b>수업 전에 방을 만듭니다.</b><p style="font-size:22px;margin-top:6px">선생님 화면 → 새 방 만들기 → 여섯 자리 방 번호를 칠판에 적습니다.</p><p style="font-size:20px;color:#6F6A61">학생은 QR 을 찍거나 주소를 열고 방 번호와 닉네임을 넣습니다.</p></div></div></section><section class="slide" data-kind="shot"><div class="shot-slide"><img class="cap" src="../assets/shots/L03_0_입장.png" alt="입장 화면"><div class="why"><h2>학생 입장 화면</h2><p>방 번호 여섯 자리와 닉네임만 넣습니다. 이름을 묻지 않습니다.</p><p>나만 아는 숫자 네 자리는 사전 설문과 사후 설문을 잇는 데만 씁니다.</p><div class="do">기기가 없으면 둘러보기로 교사가 시연합니다.</div></div></div></section><section class="slide" data-kind="shot"><div class="shot-slide"><img class="cap" src="../assets/shots/L03_2_hub.png" alt="허브 화면"><div class="why"><p class="kicker">웹앱 1단계</p><h2>허브</h2><p>사례 관찰 화면</p><div class="do">학생이 여기서 남긴 것이 활동지 1번 칸과 이어집니다.</div></div></div></section><section class="slide" data-kind="shot"><div class="shot-slide"><img class="cap" src="../assets/shots/L03_3_guess.png" alt="guess 화면"><div class="why"><p class="kicker">웹앱 2단계</p><h2>guess</h2><p>치우친 지점 표시</p><div class="do">학생이 여기서 남긴 것이 활동지 2번 칸과 이어집니다.</div></div></div></section><section class="slide" data-kind="shot"><div class="shot-slide"><img class="cap" src="../assets/shots/L03_4_draw.png" alt="draw 화면"><div class="why"><p class="kicker">웹앱 3단계</p><h2>draw</h2><p>원인 설명 문장 쓰기</p><div class="do">학생이 여기서 남긴 것이 활동지 3번 칸과 이어집니다.</div></div></div></section><section class="slide" data-kind="shot"><div class="shot-slide"><img class="cap" src="../assets/shots/L03_5_num.png" alt="num 화면"><div class="why"><p class="kicker">웹앱 4단계</p><h2>num</h2><p>누가 불편해질까 모으기</p><div class="do">학생이 여기서 남긴 것이 활동지 4번 칸과 이어집니다.</div></div></div></section><section class="slide" data-kind="shot"><div class="shot-slide"><img class="cap" src="../assets/shots/L03_6_store.png" alt="store 화면"><div class="why"><p class="kicker">웹앱 5단계</p><h2>store</h2><p>store</p><div class="do">학생이 여기서 남긴 것이 활동지 4번 칸과 이어집니다.</div></div></div></section><section class="slide" data-kind="shot"><div class="shot-slide"><img class="cap" src="../assets/shots/L03_7_who.png" alt="who 화면"><div class="why"><p class="kicker">웹앱 6단계</p><h2>who</h2><p>who</p><div class="do">학생이 여기서 남긴 것이 활동지 4번 칸과 이어집니다.</div></div></div></section><section class="slide" data-kind="q"><p class="kicker">교사 화면</p><h1>제출이 실시간으로 모입니다</h1><p class="mid">사례별 학생 설명 문장을 모아 학급 화면으로 띄우기</p><p style="font-size:22px">결과 크게 띄우기를 누르면 학급 화면으로 함께 봅니다. CSV 로 내려받고, 수업이 끝나면 방을 잠급니다.</p></section><section class="slide" data-kind="stage"><p class="kicker">전개 · 30분</p><h1>[활동 1] 편향 사례 관찰하기</h1><div class="rowlist"><div class="r"><b>1</b><span>[활동 1] 편향 사례 관찰하기</span></div><div class="r"><b>2</b><span>[활동 2] 원인을 데이터에서 찾기</span></div><div class="r"><b>3</b><span>[활동 3] 누가 불편해질까</span></div></div></section><section class="slide" data-kind="ask"><p class="kicker">전개 · [활동 1] 편향 사례 관찰하기</p><h2>[활동 1] 편향 사례 관찰하기</h2><div class="bubble"><p class="big">그림과 번역 결과를 보고 치우쳐 보이는 곳에 표시해 봅시다.</p></div><div class="answers hide"><div class="a">예상 답변 · 직업에 따라 나오는 사람의 모습이 정해져 있습니다.</div></div><div class="bubble"><p class="big">번역기에서 성별이 없는 말을 옮기면 어떻게 되나요?</p></div><div class="answers hide"><div class="a">예상 답변 · ‘그’로만 바뀌었습니다.</div></div></section><section class="slide" data-kind="ask"><p class="kicker">전개 · [활동 2] 원인을 데이터에서 찾기</p><h2>[활동 2] 원인을 데이터에서 찾기</h2><div class="bubble"><p class="big">1차시에서 데이터를 줄였을 때 무슨 일이 있었는지 떠올려 봅시다.</p></div><div class="answers hide"><div class="a">예상 답변 · 적게 배운 쪽을 자주 틀렸습니다.</div></div><div class="bubble"><p class="big">그렇다면 이 편향의 원인은 무엇일까요?</p></div><div class="answers hide"><div class="a">예상 답변 · 사람들이 모아 준 데이터가 이미 한쪽으로 치우쳐 있었기 때문입니다.</div></div></section><section class="slide" data-kind="ask"><p class="kicker">전개 · [활동 3] 누가 불편해질까</p><h2>[활동 3] 누가 불편해질까</h2><div class="bubble"><p class="big">이런 결과가 계속 쌓이면 누가 불편해질까요?</p></div><div class="answers hide"><div class="a">예상 답변 · 그 직업을 꿈꾸는 친구들이 자기 자리가 아니라고 느낄 수 있습니다.</div></div></section><section class="slide" data-kind="mat"><p class="kicker">전개 준비물과 유의점</p><h2>이것만 챙기면 됩니다</h2><div class="cards"><div class="card white"><p>★ 편향 관찰 카드</p></div><div class="card white"><p>★ 웹앱 편향 관찰 갤러리</p></div><div class="card white"><p>△ 결과를 비웃는 분위기가 되지 않도록 지도</p></div><div class="card white"><p>△ 원인을 사람과 데이터로 되돌리는 발문에 집중</p></div></div></section><section class="slide" data-kind="stage"><p class="kicker">정리 · 5분</p><h1>배움 정리</h1><div class="rowlist"><div class="r"><b>1</b><span>배움 정리</span></div><div class="r"><b>2</b><span>다음 차시 예고</span></div></div></section><section class="slide" data-kind="ask"><p class="kicker">정리 · 배움 정리</p><h2>배움 정리</h2><div class="bubble"><p class="big">AI의 편견은 어디에서 왔나요?</p></div><div class="answers hide"><div class="a">예상 답변 · 사람이 모은 데이터에서 왔습니다. 그래서 사람이 고칠 수도 있습니다.</div></div></section><section class="slide" data-kind="ask"><p class="kicker">정리 · 다음 차시 예고</p><h2>다음 차시 예고</h2><div class="bubble"><p class="big">다음 시간에는 AI에 넣어도 되는 정보를 가려 봅시다.</p></div></section><section class="slide" data-kind="mat"><p class="kicker">정리 준비물과 유의점</p><h2>이것만 챙기면 됩니다</h2><div class="cards"><div class="card white"><p>★ 배움 공책</p></div><div class="card white"><p>△ ‘AI는 나쁘다’가 아니라 ‘사람이 고칠 수 있다’로 마무리</p></div></div></section><section class="slide" data-kind="app"><p class="kicker">오늘 쓰는 웹앱</p><h1>편향 관찰 갤러리</h1><p class="mid">교사가 올린 편향 사례를 학생이 관찰하고, 치우친 지점과 그 원인을 데이터와 연결해 기록한다.</p><div class="cards"><div class="card sun"><h3>1. 방 만들기</h3><p>선생님 화면에서 여섯 자리 코드를 만들어요.</p></div><div class="card white"><h3>2. 들어오기</h3><p>코드와 비밀번호, 닉네임만 쓰면 돼요.</p></div><div class="card green"><h3>3. 활동과 제출</h3><p>고쳐서 다시 제출해도 괜찮아요.</p></div><div class="card white"><h3>4. 함께 보기</h3><p>결과 크게 띄우기로 우리 반 결과를 봐요.</p></div></div></section><section class="slide" data-kind="ws"><p class="kicker">활동지</p><h1>편향 관찰 기록지</h1><div class="rowlist"><div class="r"><b>1</b><span>관찰한 사례</span></div><div class="r"><b>2</b><span>치우쳐 보이는 곳</span></div><div class="r"><b>3</b><span>원인은 데이터의 무엇일까</span></div><div class="r"><b>4</b><span>누가 불편해질까</span></div></div></section><section class="slide" data-kind="alt"><p class="kicker">기기가 부족해도 함께합니다</p><h2>이렇게 대신합니다</h2><div class="bubble"><p class="big">생성형 도구를 쓰지 않고, 교사가 미리 준비한 편향 사례 인쇄 카드로 동일한 관찰·설명 활동을 한다.</p></div></section><section class="slide" data-kind="care"><p class="kicker">지도 유의점</p><h2>선생님이 지켜 주실 것</h2><div class="cards"><div class="card white"><p>학생이 직접 이미지 생성 도구를 다루지 않는다. 교사 시연으로 한다.</p></div><div class="card white"><p>특정 성별·직업·나라를 비하하는 표현이 나오지 않게 사전 확인한다.</p></div><div class="card white"><p>결과를 비웃는 분위기가 되지 않게 한다.</p></div></div></section><section class="slide" data-kind="end"><p class="kicker">오늘 여기까지</p><h1>다음 시간에는</h1><p class="mid">내 정보는 안전할까</p><p class="mid" style="margin-top:26px">2026년 티처스랩 5기 교사연구회 A.N.D · CC BY-NC-SA</p></section></div><div class="bar" id="bar"></div><div class="tap l" id="tapl"></div><div class="tap r" id="tapr"></div><div class="hud"><button id="prev">이전</button><button id="next">다음</button><button id="notes">예상 답변 보기</button><button id="full">전체 화면</button><button id="print">인쇄</button><span class="count" id="count"></span></div>
+<script>
+(function(){
+  var slides = document.querySelectorAll(".slide");
+  var i = 0, notes = false;
+  function paint(){
+    for (var k = 0; k < slides.length; k++) {
+      slides[k].className = "slide" + (slides[k].getAttribute("data-kind") === "cover" ? " cover" : "") +
+        (k === i ? " on" : "");
+    }
+    document.getElementById("count").textContent = (i + 1) + " / " + slides.length;
+    document.getElementById("bar").style.width = ((i + 1) * 100 / slides.length) + "%";
+    var ans = document.querySelectorAll(".answers");
+    for (var a = 0; a < ans.length; a++) {
+      ans[a].className = "answers" + (notes ? "" : " hide");
+    }
+    if (location.hash !== "#" + (i + 1)) { history.replaceState(null, "", "#" + (i + 1)); }
+  }
+  function go(n){ i = Math.max(0, Math.min(slides.length - 1, n)); paint(); }
+  document.getElementById("prev").onclick = function(){ go(i - 1); };
+  document.getElementById("next").onclick = function(){ go(i + 1); };
+  document.getElementById("tapl").onclick = function(){ go(i - 1); };
+  document.getElementById("tapr").onclick = function(){ go(i + 1); };
+  document.getElementById("notes").onclick = function(){
+    notes = !notes;
+    this.textContent = notes ? "예상 답변 숨기기" : "예상 답변 보기";
+    paint();
+  };
+  document.getElementById("full").onclick = function(){
+    if (document.fullscreenElement) { document.exitFullscreen(); }
+    else if (document.documentElement.requestFullscreen) { document.documentElement.requestFullscreen(); }
+  };
+  document.getElementById("print").onclick = function(){ window.print(); };
+  document.onkeydown = function(e){
+    var k = e.key;
+    if (k === "ArrowRight" || k === " " || k === "PageDown") { go(i + 1); e.preventDefault(); }
+    else if (k === "ArrowLeft" || k === "PageUp") { go(i - 1); e.preventDefault(); }
+    else if (k === "Home") { go(0); }
+    else if (k === "End") { go(slides.length - 1); }
+    else if (k === "n" || k === "N") { document.getElementById("notes").click(); }
+    else if (k === "f" || k === "F") { document.getElementById("full").click(); }
+  };
+  var x0 = null;
+  document.addEventListener("touchstart", function(e){ x0 = e.touches[0].clientX; });
+  document.addEventListener("touchend", function(e){
+    if (x0 === null) { return; }
+    var dx = e.changedTouches[0].clientX - x0;
+    if (dx < -50) { go(i + 1); } else if (dx > 50) { go(i - 1); }
+    x0 = null;
+  });
+  var start = Number((location.hash || "#1").slice(1));
+  go(isNaN(start) ? 0 : start - 1);
+})();
+</script>
+</body>
+</html>

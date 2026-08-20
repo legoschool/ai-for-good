@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>7차시 지도안 · 우리 반 AI 약속 만들기</title>
+<style>
+:root{--cream:#F4EEE0;--cream-d:#EBE3D2;--paper:#fff;--ink:#101010;--ink2:#33312D;
+--muted:#6F6A61;--line:#111;--green:#00D45A;--blue:#2B59E0;--purple:#7B4FE8;--sun:#FFE24B;
+--sans:"Pretendard","Malgun Gothic","Apple SD Gothic Neo","Noto Sans KR",system-ui,sans-serif}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--cream);color:var(--ink2);font-family:var(--sans);line-height:1.7}
+h1,h2,h3,h4{margin:0;color:var(--ink);line-height:1.25;letter-spacing:-.03em;font-weight:800}
+p{margin:0}
+a{color:var(--blue)}
+.tag{display:inline-block;border:2.5px solid var(--line);border-radius:999px;padding:4px 14px;
+font-size:13px;font-weight:800;background:var(--sun)}
+.tag.g{background:var(--green)}
+.tag.b{background:var(--blue);color:#fff}
+.tag.p{background:var(--purple);color:#fff}
+.tag.w{background:#fff}
+
+body{background:var(--cream-d);padding:18px}
+.sheet{width:210mm;min-height:297mm;margin:0 auto 18px;background:#fff;border:3px solid var(--line);
+border-radius:8px;padding:16mm 14mm;font-size:13.5px}
+.sheet h1{font-size:26px}
+.sheet h2{font-size:18px;margin:22px 0 10px;padding-bottom:6px;border-bottom:3px solid var(--line)}
+.sheet h3{font-size:15px;margin:14px 0 6px}
+.head{display:flex;gap:16px;align-items:center;border:3px solid var(--line);border-radius:16px;
+padding:14px 18px;background:var(--cream)}
+.head .no{font-size:34px;font-weight:900;color:var(--green);-webkit-text-stroke:2px var(--line);
+line-height:1;min-width:96px}
+.head .art{width:150px;border:2.5px solid var(--line);border-radius:12px;overflow:hidden;background:#fff}
+.head .art svg{display:block;width:100%;height:84px}
+table{width:100%;border-collapse:collapse;margin-top:8px;font-size:12.5px}
+th,td{border:1.5px solid var(--line);padding:7px 9px;vertical-align:top;text-align:left}
+th{background:var(--cream);font-weight:800;color:var(--ink)}
+td.stage{background:var(--sun);font-weight:800;text-align:center;width:52px}
+.qa{margin:0 0 6px}
+.qa .q{font-weight:800;color:var(--ink)}
+.qa .a{color:var(--muted)}
+.note{border:2.5px solid var(--line);border-radius:12px;background:var(--sun);padding:12px 14px;
+margin-top:12px;font-size:12.5px}
+.note.g{background:#E6F7EC}
+.note.b{background:#EEF2FF}
+ul{margin:6px 0;padding-left:18px}
+li{margin:3px 0}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.foot{margin-top:22px;border-top:2px solid var(--line);padding-top:8px;color:var(--muted);font-size:11.5px}
+
+/* 활동지 */
+.ws .band{border:3px solid var(--line);border-radius:16px;padding:14px 16px;margin-top:14px;background:#fff}
+.ws .band.sun{background:#FFFBEA}
+.ws .band.green{background:#F0FCF5}
+.ws .band h3{display:flex;gap:8px;align-items:center;font-size:16px}
+.ws .band h3 span.n{background:var(--green);border:2.5px solid var(--line);border-radius:999px;
+width:28px;height:28px;display:inline-flex;align-items:center;justify-content:center;font-size:14px}
+.lines{margin-top:10px}
+.lines div{border-bottom:1.5px dashed var(--line);height:26px}
+.boxes{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));margin-top:10px}
+.boxes .b{border:2.5px solid var(--line);border-radius:12px;min-height:74px;padding:8px 10px;
+font-size:12px;color:var(--muted)}
+.checks{margin-top:10px;display:flex;flex-direction:column;gap:6px}
+.checks label{display:flex;gap:8px;align-items:flex-start;font-size:13px}
+.checks i{display:inline-block;width:16px;height:16px;border:2.5px solid var(--line);border-radius:4px;
+flex:none;margin-top:3px}
+.sample{margin-top:8px;border:2px dashed var(--line);border-radius:10px;background:var(--cream);
+padding:8px 10px;font-size:12.5px;color:var(--ink2)}
+.sample span{display:inline-block;background:var(--sun);border:2px solid var(--line);border-radius:999px;
+padding:1px 8px;font-size:11px;font-weight:800;margin-right:8px}
+.namebar{display:flex;gap:10px;margin-top:12px}
+.namebar div{flex:1;border:2.5px solid var(--line);border-radius:10px;padding:8px 10px;font-size:12px;
+color:var(--muted)}
+@media print{
+ body{background:#fff;padding:0}
+ .sheet{border:none;border-radius:0;margin:0;width:auto;min-height:auto;padding:10mm 8mm}
+ .sheet + .sheet{page-break-before:always}
+ .toolbar{display:none}
+}
+.toolbar{position:sticky;top:0;z-index:20;max-width:210mm;margin:0 auto 12px;display:flex;
+gap:8px;flex-wrap:wrap;background:var(--cream-d);padding:10px 0}
+.toolbar a,.toolbar button{font:inherit;font-size:14px;font-weight:800;border:2.5px solid var(--line);
+border-radius:10px;background:#fff;padding:9px 14px;cursor:pointer;text-decoration:none;color:var(--ink)}
+.toolbar a:hover,.toolbar button:hover{background:var(--sun)}
+
+.appuse{background:#EAF4FF;border:2px solid var(--line);border-radius:10px;padding:8px 10px;
+margin:0 0 8px;font-size:12.5px;font-weight:700;color:var(--ink)}
+.appuse-s{margin:4px 0 0;font-size:11.5px;font-weight:800;color:var(--blue)}
+/* 활동지는 학생이 본다. 초등 5·6학년이 읽을 크기로 키운다. */
+.sheet.ws{font-size:16.5px;line-height:1.85}
+.ws h1{font-size:32px}
+.ws .band{padding:18px 20px;margin-top:18px}
+.ws .band h3{font-size:21px;gap:10px}
+.ws .band h3 span.n{width:34px;height:34px;font-size:19px}
+.ws .band p{font-size:16.5px;line-height:1.8}
+.ws .lead{font-size:18px;font-weight:800;color:var(--ink);margin:2px 0 10px}
+.ws .sample{font-size:16px;background:#FFFBEA;border:2.5px solid var(--line);border-radius:12px;
+padding:10px 12px;margin:10px 0}
+.ws .sample span{display:inline-block;background:var(--sun);border:2px solid var(--line);
+border-radius:999px;padding:2px 10px;font-size:14px;font-weight:900;margin-right:8px}
+.ws .checks label{font-size:17px;gap:10px;align-items:center}
+.ws .checks i{width:22px;height:22px;border-radius:6px}
+.ws .namebar div{font-size:15px;padding:12px 12px}
+.ws .rule{margin:34px 0;border-bottom-width:2.5px}
+.ws .rule:first-of-type{margin-top:20px}
+.ws .boxes .b{font-size:15px;min-height:78px}
+.ws table{font-size:15px}
+.ws .appbox{padding:16px 18px}
+.ws .appbox p{font-size:14.5px}
+@media print{.sheet.ws{font-size:16px}.ws .band h3{font-size:20px}}
+
+.appbox{border:2px solid #111;border-radius:12px;padding:14px 16px;margin:12px 0;background:#FCFBF7}
+.appbox .row{display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.appbox img.qr{border:2px solid #111;border-radius:10px;background:#fff;padding:4px}
+.appshots{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:10px}
+.appshots figure{margin:0}
+.appshots img{width:100%;height:150px;object-fit:cover;object-position:top center;
+border:2px solid #111;border-radius:10px;background:#fff}
+.appshots figcaption{font-size:12px;font-weight:700;margin-top:4px;text-align:center}
+@media print{.appshots img{height:120px}}
+</style>
+</head>
+<body>
+<div class="toolbar"><a href="../index.html">WISE 홈</a><a href="../lesson/L07.html">7차시 페이지</a><a href="../deck/L07.html">수업 슬라이드</a><a href="L07_활동지.html">활동지</a><a href="../webapp/L07/index.html">웹앱</a><button onclick="window.print()">인쇄하기</button></div><div class="sheet"><div class="head"><div class="no">07</div><div style="flex:1"><h1>우리 반 AI 약속 만들기</h1><p style="margin-top:6px">우리 반이 함께 지킬 AI 약속 8조항을 만들어 봅시다.</p><div class="meta"><span class="tag g">모듈2 WISE 판단</span><span class="tag">학교자율시간 1차시</span><span class="tag w">약속 카드, 학급 토의판</span></div></div><div class="art"><svg class="art" viewBox="0 0 320 180" role="img" aria-hidden="true" preserveAspectRatio="xMidYMid slice"><rect width="320" height="180" fill="#F4EEE0"/><rect x="26" y="22" width="150" height="136" rx="10" fill="#FFFFFF" stroke="#111111" stroke-width="3"/><text x="44" y="52" font-size="17" font-weight="900" fill="#111111">우리 반 약속</text><circle cx="48" cy="70" r="6" fill="#00D45A" stroke="#111111" stroke-width="2.5"/><path d="M62 70 h96" stroke="#111111" stroke-width="5" stroke-linecap="round"/><circle cx="48" cy="92" r="6" fill="#00D45A" stroke="#111111" stroke-width="2.5"/><path d="M62 92 h96" stroke="#111111" stroke-width="5" stroke-linecap="round"/><circle cx="48" cy="114" r="6" fill="#00D45A" stroke="#111111" stroke-width="2.5"/><path d="M62 114 h96" stroke="#111111" stroke-width="5" stroke-linecap="round"/><circle cx="48" cy="136" r="6" fill="#00D45A" stroke="#111111" stroke-width="2.5"/><path d="M62 136 h96" stroke="#111111" stroke-width="5" stroke-linecap="round"/><path d="M212 108 v-34 a8 8 0 0 1 16 0 v34z" fill="#00D45A" stroke="#111111" stroke-width="3" stroke-linejoin="round"/><rect x="208" y="106" width="24" height="26" rx="8" fill="#00D45A" stroke="#111111" stroke-width="3"/><path d="M250 96 v-34 a8 8 0 0 1 16 0 v34z" fill="#2B59E0" stroke="#111111" stroke-width="3" stroke-linejoin="round"/><rect x="246" y="94" width="24" height="26" rx="8" fill="#2B59E0" stroke="#111111" stroke-width="3"/><path d="M288 112 v-34 a8 8 0 0 1 16 0 v34z" fill="#7B4FE8" stroke="#111111" stroke-width="3" stroke-linejoin="round"/><rect x="284" y="110" width="24" height="26" rx="8" fill="#7B4FE8" stroke="#111111" stroke-width="3"/></svg></div></div><div class="appbox"><div class="row"><img class="qr" src="../assets/qr/L07.svg" width="104" height="104" alt="L07 웹앱 QR 코드"><div style="flex:1;min-width:220px"><strong>★ 웹앱 우리 반 AI 약속</strong><p style="margin:4px 0">8가지 기준별로 모둠이 조항을 제안하고, 학급이 투표해 우리 반 AI 약속 8조항을 확정한다.</p><p style="margin:4px 0;font-size:13px">주소 : legoschool.github.io/wise-ai/webapp/L07/ · <a href="../webapp/L07/index.html">바로 열기</a> · <a href="../guide/L07.html">사용 안내</a></p><p style="margin:4px 0;font-size:13px">수업 전에 <b>선생님 화면 → 새 방 만들기</b>로 방 번호를 만들고 칠판에 적습니다. 학생은 QR 을 찍어 들어옵니다.</p></div></div><div class="appshots"><figure><img src="../assets/shots/L07_2_hub.png" alt="허브 화면"><figcaption>허브</figcaption></figure><figure><img src="../assets/shots/L07_3_sense.png" alt="sense 화면"><figcaption>sense</figcaption></figure><figure><img src="../assets/shots/L07_4_draft.png" alt="draft 화면"><figcaption>draft</figcaption></figure></div></div><h2>1. 학습 목표</h2><ul><li>좋은 약속은 금지 목록이 아니라 어떤 조건이면 되는지를 담은 판단 기준이다 (지식·이해)</li><li>인간의 가치와 공정성에 맞는 AI 활용 약속을 만들기 (과정·기능)</li><li>공동체의 가치를 함께 만드는 데 기여하려는 자세 (가치·태도)</li></ul><div class="note g"><strong>이 시간의 핵심</strong> 학생이 스스로 판단하고 그 까닭을 말하게 합니다. 교사가 정답을 먼저 말하지 않습니다. 판단이 갈리는 자리가 이 수업의 알맹이입니다.</div><h2>2. 시간 배분</h2><table><tr><th style='width:90px'>시각</th><th style='width:70px'>단계</th><th style='width:56px'>시간</th><th>무엇을 하나</th></tr><tr><td>0분 ~ 5분</td><td class='stage'>도입</td><td>5분</td><td>동기 유발</td></tr><tr><td>5분 ~ 15분</td><td class='stage'>전개 1</td><td>10분</td><td>[활동 1] 여덟 가지 기준 살펴보기</td></tr><tr><td>15분 ~ 25분</td><td class='stage'>전개 2</td><td>10분</td><td>[활동 2] 모둠 조항 초안 쓰기</td></tr><tr><td>25분 ~ 35분</td><td class='stage'>전개 3</td><td>10분</td><td>[활동 3] 학급 토의와 확정</td></tr><tr><td>35분 ~ 40분</td><td class='stage'>정리</td><td>5분</td><td>배움 정리</td></tr></table><h2>3. 이 시간에 기르는 힘</h2><table><tr><th style='width:120px'>중점 역량</th><th>지식·이해</th><th>과정·기능</th><th>가치·태도</th></tr><tr><td><strong>윤리적 사고</strong></td><td>좋은 약속은 금지 목록이 아니라 어떤 조건이면 되는지를 담은 판단 기준이다.</td><td>인간의 가치와 공정성에 맞는 AI 활용 약속을 만들기</td><td>AI 활용의 결과에 대해 책임감을 느끼려는 자세</td></tr><tr><td><strong>사회·관계적 사고</strong></td><td>의견이 다를 때 대화로 결론을 만드는 것이 합의이다.</td><td>모둠과 학급 토의로 공동의 약속에 합의하기</td><td>공동체의 가치를 함께 만드는 데 기여하려는 자세</td></tr></table><p style="margin-top:6px;color:var(--muted);font-size:12px">보조 역량 : 통합적 사고</p><div class="note b"><strong>AI적정활용 기준</strong> ① ~ ⑧ 전체<br><strong>실행 원칙</strong> 0. 인간다움 우선 원칙</div><h2>4. 교수·학습 과정</h2><table><tr><th style='width:52px'>단계</th><th style='width:150px'>학습 내용</th><th>교사 발문과 예상 답변</th></tr><tr><td class="stage">도입 5분</td><td><strong>동기 유발</strong></td><td><div class="qa"><p class="q">발문 · 지난 시간 분류표를 다시 봅시다. 우리 반이 가장 많이 헷갈린 것은 무엇이었나요?</p><p class="a">예상 답변 · 글쓰기를 도와달라고 하는 경우였습니다.</p></div><div class="qa"><p class="q">발문 · 매번 헷갈리지 않으려면 무엇이 있어야 할까요?</p><p class="a">예상 답변 · 우리 반이 함께 정한 기준이 필요합니다.</p></div></td></tr><tr><td class="stage"></td><td><strong>학습 문제 확인</strong></td><td><div class="qa"><p class="q">발문 · 우리 반이 함께 지킬 AI 약속 8조항을 만들어 봅시다.</p></div></td></tr><tr><td class="stage"></td><td>준비물과 유의점</td><td><ul><li>☆ 6차시 분류 결과 사진</li><li>★ 학습문제 PPT</li><li>△ 교사가 완성된 조항을 먼저 주지 않기</li></ul></td></tr><tr><td class="stage">전개 30분</td><td><strong>[활동 1] 여덟 가지 기준 살펴보기</strong></td><td><p class="appuse"><b>★ 웹앱</b> 기준 8개 안내 화면 · 학생이 여기에 남긴 것이 활동지 1번 칸이 된다.</p><div class="qa"><p class="q">발문 · 어른들이 만든 여덟 가지 기준을 우리 말로 바꿔 봅시다. ‘학습자 주체성’은 무슨 뜻일까요?</p><p class="a">예상 답변 · 내 생각을 먼저 만들고 나서 AI에게 물어보라는 뜻인 것 같습니다.</p></div><div class="qa"><p class="q">발문 · ‘디지털 웰빙’은 우리 말로 무엇이라 할까요?</p><p class="a">예상 답변 · 마음이 힘들 때는 AI 말고 사람에게 말하라는 뜻입니다.</p></div></td></tr><tr><td class="stage"></td><td><strong>[활동 2] 모둠 조항 초안 쓰기</strong></td><td><p class="appuse"><b>★ 웹앱</b> 조항 제안 입력 화면 · 학생이 여기에 남긴 것이 활동지 2번 칸이 된다.</p><div class="qa"><p class="q">발문 · 모둠마다 두 가지 기준을 맡아 우리 반이 지킬 문장으로 써 봅시다.</p><p class="a">예상 답변 · ‘이름과 사진은 넣지 않는다’로 정했습니다.</p></div><div class="qa"><p class="q">발문 · ‘하지 마라’ 대신 ‘이렇게 하면 된다’로 바꿀 수 있을까요?</p><p class="a">예상 답변 · ‘별명을 써서 물어본다’로 고쳤습니다.</p></div></td></tr><tr><td class="stage"></td><td><strong>[활동 3] 학급 토의와 확정</strong></td><td><p class="appuse"><b>★ 웹앱</b> 제안 모아 투표 화면 · 학생이 여기에 남긴 것이 활동지 3번 칸이 된다.</p><div class="qa"><p class="q">발문 · 제안된 문장을 함께 다듬고 8조항을 투표로 확정합시다.</p><p class="a">예상 답변 · 비슷한 두 문장을 하나로 합쳤습니다.</p></div></td></tr><tr><td class="stage"></td><td>준비물과 유의점</td><td><ul><li>★ 약속 카드</li><li>★ 웹앱 우리 반 AI 약속(제안·투표)</li><li>△ 여덟 가지 기준은 이름만 소개하고 뜻은 학생 말로 정리하게 하기</li><li>△ 소수 의견도 기록으로 남기기</li></ul></td></tr><tr><td class="stage">정리 5분</td><td><strong>배움 정리</strong></td><td><div class="qa"><p class="q">발문 · 우리가 만든 약속 중 가장 마음에 드는 조항은 무엇인가요?</p><p class="a">예상 답변 · 내 생각을 먼저 쓰고 물어본다는 조항입니다.</p></div></td></tr><tr><td class="stage"></td><td><strong>다음 차시 예고</strong></td><td><div class="qa"><p class="q">발문 · 다음 시간에는 이 약속을 다른 사람에게 알려 봅시다.</p></div></td></tr><tr><td class="stage"></td><td>준비물과 유의점</td><td><ul><li>★ 우리 반 AI 약속 8조항</li><li>△ 교실에 크게 게시하고 이후 차시마다 점검</li></ul></td></tr></table><h2>5. 판서 계획</h2><div class="note b">학습 문제 : 우리 반이 함께 지킬 AI 약속 8조항을 만들어 봅시다.<br>활동 1. 여덟 가지 기준 살펴보기<br>활동 2. 모둠 조항 초안 쓰기<br>활동 3. 학급 토의와 확정<br>정리 : 우리가 만든 약속 중 가장 마음에 드는 조항은 무엇인가요?<br>오늘 쓰는 웹앱 : 우리 반 AI 약속</div><h2>6. 웹앱 운영</h2><p><strong>우리 반 AI 약속</strong> · 8가지 기준별로 모둠이 조항을 제안하고, 학급이 투표해 우리 반 AI 약속 8조항을 확정한다.</p><ul><li>기준 8개 안내</li><li>조항 제안 입력</li><li>제안 모아 투표</li><li>확정 8조항 게시</li></ul><div class="note g"><strong>교사 화면</strong> 기준별 제안 목록, 투표 결과, 확정 조항 내려받기<br><strong>방 만들기</strong> 선생님 화면 → 새 방 만들기 → 여섯 자리 코드를 복사해 학생에게 알려 줍니다. 수업이 끝나면 방 잠그기를 누릅니다.</div><h2>7. 기기가 없어도 함께하는 길</h2><div class="note">웹앱 없이 모둠 종이 카드로 제안하고 칠판 스티커 투표로 확정한다.</div><h2>8. 지도 유의점</h2><ul><li>교사가 완성된 조항을 먼저 주지 않는다.</li><li>여덟 가지 기준은 이름만 소개하고 뜻은 학생 말로 정리하게 한다.</li><li>소수 의견도 기록으로 남긴다.</li></ul><div class="note"><strong>개인정보 지도</strong> 이름, 사진, 친구 이야기를 넣지 않도록 활동 전에 한 번 짚어 줍니다. 웹앱은 닉네임만 받고 실명과 학번을 묻지 않습니다.</div><h2>9. 학생 활동지 작성 예시</h2><p style="font-size:12.5px;color:var(--muted)">활동지에도 같은 예시가 실려 있습니다. 무엇을 쓰는지 먼저 보여 준 뒤 학생이 자기 말로 바꾸게 합니다.</p><table><tr><th style='width:170px'>활동지 칸</th><th>학생 작성 예시</th></tr><tr><td><strong>1. 우리 모둠이 맡은 기준</strong></td><td>내 생각을 먼저 만들고 나서 AI에게 물어보라는 뜻인 것 같습니다.</td></tr><tr><td><strong>2. 우리 말로 바꾼 뜻</strong></td><td>마음이 힘들 때는 AI 말고 사람에게 말하라는 뜻입니다.</td></tr><tr><td><strong>3. 조항 초안</strong></td><td>‘이름과 사진은 넣지 않는다’로 정했습니다.</td></tr><tr><td><strong>4. ‘하지 마라’를 ‘이렇게 하면 된다’로</strong></td><td>‘별명을 써서 물어본다’로 고쳤습니다.</td></tr></table><h2>10. 자주 나오는 어려움과 대처</h2><table><tr><th style='width:150px'>이런 일이 생기면</th><th>이렇게 합니다</th></tr><tr><td><strong>기기가 모자란다</strong></td><td>모둠에 한 대만 두고 기록 담당을 정한다. 판단은 모둠이 함께 하고 입력만 한 사람이 한다.</td></tr><tr><td><strong>인터넷이 끊긴다</strong></td><td>쓰던 내용은 그 기기에 남는다. 활동지에 먼저 쓰게 하고 연결이 돌아오면 제출한다.</td></tr><tr><td><strong>방 코드를 잃어버렸다</strong></td><td>선생님 화면에서 기존 방 열기를 누르고 코드를 넣으면 다시 열린다.</td></tr><tr><td><strong>닉네임이 겹친다</strong></td><td>막지 않는다. 뒤에 낸 제출이 반영되므로 닉네임 뒤에 숫자를 붙이게 한다.</td></tr><tr><td><strong>의견이 한쪽으로 쏠린다</strong></td><td>소수 의견을 먼저 듣는다. 결과 크게 띄우기로 분포를 보여 주고 까닭을 묻는다.</td></tr><tr><td><strong>시간이 모자란다</strong></td><td>활동 하나를 줄이고 정리 발문은 반드시 남긴다. 남은 활동은 활동지로 마무리한다.</td></tr></table><h2>11. 평가 기준</h2><table><tr><th style='width:110px'>역량</th><th>잘함</th><th>보통</th><th>도움 필요</th></tr><tr><td><strong>윤리적 사고</strong></td><td>인간의 가치와 공정성에 맞는 AI 활용 약속을 만들기. 스스로 해내고 그렇게 판단한 까닭을 설명한다</td><td>인간의 가치와 공정성에 맞는 AI 활용 약속을 만들기. 친구나 교사의 도움을 조금 받아 해낸다</td><td>인간의 가치와 공정성에 맞는 AI 활용 약속을 만들기. 예시를 함께 보며 한 단계씩 따라 한다</td></tr><tr><td><strong>사회·관계적 사고</strong></td><td>모둠과 학급 토의로 공동의 약속에 합의하기. 스스로 해내고 그렇게 판단한 까닭을 설명한다</td><td>모둠과 학급 토의로 공동의 약속에 합의하기. 친구나 교사의 도움을 조금 받아 해낸다</td><td>모둠과 학급 토의로 공동의 약속에 합의하기. 예시를 함께 보며 한 단계씩 따라 한다</td></tr></table><div class="note g"><strong>무엇을 보고 판단하나</strong> 웹앱 교사 화면의 제출 기록과 활동지, 그리고 판단이 갈린 자리에서 학생이 든 까닭을 함께 봅니다. 정답을 맞혔는지가 아니라 까닭을 댈 수 있는지를 봅니다.</div><h2>12. 산출물과 교육과정</h2><table><tr><th style='width:130px'>성취기준</th><td>[6도02-03] 연계 (학교자율시간)</td></tr><tr><th>학생 산출물</th><td>우리 반 AI 약속 8조항</td></tr><tr><th>평가 방법</th><td>관찰 평가, 활동지 평가</td></tr><tr><th>수업 도구</th><td>약속 카드, 학급 토의판</td></tr></table><p class="foot">인간중심 사고를 기르는 AI적정활용 수업 WISE · 2026년 티처스랩 5기 교사연구회 A.N.D · CC BY-NC-SA</p></div>
+<script></script>
+</body>
+</html>
