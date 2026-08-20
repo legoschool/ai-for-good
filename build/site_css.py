@@ -35,6 +35,12 @@ CSS = u"""/* WISE 통합 사이트 */
 *,*::before,*::after{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
 
+/* 좁은 화면에서 가로로 밀리지 않게. 긴 주소와 긴 낱말은 줄을 바꾼다.
+   가로 스크롤이 생기면 위 띠(.top)가 왼쪽으로 잘려 나간다. */
+img,svg,video,iframe,table{max-width:100%}
+code,kbd,samp,a{overflow-wrap:anywhere}
+p,li,h1,h2,h3,h4,td,th,figcaption{overflow-wrap:break-word}
+
 body{
   margin:0;
   background:var(--cream);
@@ -158,7 +164,7 @@ section.band.tight{padding:44px 0}
 
 /* 번호 스티커 */
 
-.stickers{display:grid;gap:20px;grid-template-columns:repeat(auto-fit,minmax(270px,1fr))}
+.stickers{display:grid;gap:20px;grid-template-columns:repeat(auto-fit,minmax(min(270px,100%),1fr))}
 .sticker{position:relative;border:2.5px solid var(--line);padding:26px 24px 60px;color:#fff;
   background:var(--sc,#2563EB);overflow:hidden;display:block}
 .sticker:hover{text-decoration:none}
@@ -175,7 +181,7 @@ section.band.tight{padding:44px 0}
 
 /* 역량 카드 */
 
-.skills{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.skills{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(min(280px,100%),1fr))}
 .skill{position:relative;border:2px solid var(--line);border-radius:14px;padding:22px;
   background:var(--sk,#EDF2FF)}
 .skill .lab{display:inline-block;background:var(--lab,#2B59E0);color:#fff;border:2px solid var(--line);
@@ -186,7 +192,7 @@ section.band.tight{padding:44px 0}
 
 /* 신호등 */
 
-.signals{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+.signals{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(min(230px,100%),1fr))}
 .signal{border:2.5px solid var(--line);background:var(--paper);padding:18px}
 .signal .dot{width:26px;height:26px;border-radius:50%;border:2.5px solid var(--line);
   background:var(--sg);margin-bottom:12px}
@@ -223,7 +229,7 @@ section.band.tight{padding:44px 0}
 .qa .q{font-weight:700;color:var(--ink)}
 .qa .a{color:var(--muted);font-size:15px;margin-left:12px}
 
-.dl{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.dl{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(min(200px,100%),1fr))}
 .dl a{display:block;border:2px solid var(--line);background:var(--cream);padding:14px 16px;
   font-weight:800;font-size:15px;color:var(--ink)}
 .dl a:hover{background:var(--green);text-decoration:none}
@@ -265,7 +271,7 @@ footer strong{color:var(--ink)}
 
 /* 자료 인용 */
 
-.refs{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin-top:14px}
+.refs{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(min(260px,100%),1fr));margin-top:14px}
 .ref{border:2.5px solid var(--line);border-radius:14px;background:var(--paper);padding:14px 16px}
 .ref .kind{display:inline-block;background:var(--sun);border:2px solid var(--line);border-radius:999px;
   padding:2px 10px;font-size:12px;font-weight:800;margin-bottom:8px}
@@ -291,7 +297,7 @@ footer strong{color:var(--ink)}
 
 /* 둘러보기 갤러리 */
 
-.gallery{display:grid;gap:20px;grid-template-columns:repeat(auto-fill,minmax(268px,1fr))}
+.gallery{display:grid;gap:20px;grid-template-columns:repeat(auto-fill,minmax(min(268px,100%),1fr))}
 .gcard{border:3px solid var(--line);background:var(--paper);border-radius:16px;overflow:hidden;
   display:flex;flex-direction:column;box-shadow:6px 6px 0 var(--line)}
 .gcard .shot{border-bottom:3px solid var(--line);background:var(--cream);aspect-ratio:16/9;
@@ -318,7 +324,7 @@ footer strong{color:var(--ink)}
 .who .badge{display:inline-block;background:var(--sun);border:2.5px solid var(--line);
   border-radius:999px;padding:3px 12px;font-size:13px;font-weight:900;margin-bottom:10px}
 
-.sigrow{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+.sigrow{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(min(150px,100%),1fr))}
 .sigrow .cell{border:3px solid var(--line);border-radius:16px;background:var(--paper);
   padding:18px;text-align:center}
 .sigrow .cell h3{font-size:17px;margin-top:10px}
@@ -335,6 +341,15 @@ footer strong{color:var(--ink)}
   .row .no{min-width:48px;font-size:12px}
 }
 
+/* 휴대폰. 메뉴 열두 칸이 네 줄로 접히면 붙박이 머리띠가 화면 절반을 덮는다.
+   한 줄로 두고 옆으로 밀어 보게 한다. 태블릿(700~820px)은 자리가 있어 그대로 접는다. */
+@media (max-width:700px){
+  .top .wrap{flex-wrap:nowrap;gap:12px}
+  .nav{margin-left:auto;width:auto;flex-wrap:nowrap;overflow-x:auto;min-width:0;
+    scrollbar-width:thin;-webkit-overflow-scrolling:touch}
+  .nav a{white-space:nowrap;padding:8px 10px}
+}
+
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 
 /* 웹앱 사용 안내 (build/make_guide.py) */
@@ -345,7 +360,7 @@ footer strong{color:var(--ink)}
 .steps3>li{margin:10px 0}
 .steps3 .btn{display:inline-block;margin-left:6px;padding:6px 14px;border:2.5px solid var(--line);
 border-radius:999px;background:var(--green);color:#111;font-weight:900;font-size:15px;text-decoration:none}
-.shots{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;margin-top:12px}
+.shots{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(240px,100%),1fr));gap:14px;margin-top:12px}
 .shots figure{margin:0;border:2.5px solid var(--line);border-radius:14px;overflow:hidden;background:#fff;
 box-shadow:4px 4px 0 var(--line)}
 .shots img{display:block;width:100%;height:220px;object-fit:cover;object-position:top center}
@@ -360,7 +375,7 @@ box-shadow:4px 4px 0 var(--line)}
 font-weight:800;text-decoration:none;color:var(--ink)}
 .dl a:hover{background:var(--sun)}
 .embed-slot{margin-top:12px;padding:14px;border:2px dashed var(--line);border-radius:14px;background:var(--cream-d)}
-.grid3{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;margin-top:16px}
+.grid3{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(260px,100%),1fr));gap:16px;margin-top:16px}
 .gcard{display:block;border:2.5px solid var(--line);border-radius:16px;background:#fff;overflow:hidden;
 text-decoration:none;color:var(--ink);box-shadow:5px 5px 0 var(--line)}
 .gcard:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--line)}
@@ -382,7 +397,7 @@ border-radius:14px;overflow:hidden;background:var(--cream-d)}
 .embed iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
 
 /* 참고자료 모음 (build/make_refs.py) */
-.refgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin-top:14px}
+.refgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(300px,100%),1fr));gap:16px;margin-top:14px}
 .refcard{border:2.5px solid var(--line);border-radius:16px;background:#fff;overflow:hidden;
 box-shadow:5px 5px 0 var(--line);display:flex;flex-direction:column}
 .refpic{display:block;margin:0;border-bottom:2.5px solid var(--line);background:var(--cream-d)}

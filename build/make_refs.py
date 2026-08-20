@@ -17,6 +17,7 @@ import os
 import sys
 
 import tasks as T
+from site_nav import top_bar, foot_bar
 
 T.setup_console()
 
@@ -46,15 +47,7 @@ PAGE = u"""<!doctype html>
 <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
-<header class="top">
-  <a class="brand" href="index.html">WISE</a>
-  <nav>
-    <a href="browse.html">둘러보기</a>
-    <a href="guide/index.html">웹앱 사용 안내</a>
-    <a href="apps.html">웹앱 모음</a>
-    <a href="refs.html" class="now">참고자료</a>
-  </nav>
-</header>
+%(top)s
 
 <main class="wrap">
 <article class="page">
@@ -96,7 +89,7 @@ PAGE = u"""<!doctype html>
 
 </article>
 </main>
-<footer class="foot">%(copyright)s</footer>
+%(foot)s
 </body>
 </html>
 """
@@ -160,7 +153,8 @@ def build(data, site):
         "program": esc(data["program"]["name"]),
         "groups": "".join(gh),
         "rows": "".join(rows),
-        "copyright": esc(data["program"]["copyrightLine"]),
+        "top": top_bar("", "refs.html"),
+        "foot": foot_bar(esc(data["program"]["copyrightLine"])),
     }
     path = os.path.join(site, "refs.html")
     with io.open(path, "w", encoding="utf-8", newline="\n") as f:

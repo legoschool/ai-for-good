@@ -104,7 +104,7 @@ letter-spacing:.02em;margin-bottom:14px}
 .art-wrap{margin-top:26px;border:3px solid var(--line);border-radius:20px;overflow:hidden;
 background:#fff;max-height:38vh}
 .art-wrap svg{display:block;width:100%;height:100%}
-.cards{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));margin-top:26px}
+.cards{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(min(220px,100%),1fr));margin-top:26px}
 .card{border:3px solid var(--line);border-radius:18px;background:var(--paper);padding:20px 22px;
 box-shadow:7px 7px 0 var(--line)}
 .card h3{font-size:clamp(17px,1.8vw,23px);margin-bottom:8px}
@@ -197,7 +197,7 @@ li{margin:3px 0}
 width:28px;height:28px;display:inline-flex;align-items:center;justify-content:center;font-size:14px}
 .lines{margin-top:10px}
 .lines div{border-bottom:1.5px dashed var(--line);height:26px}
-.boxes{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));margin-top:10px}
+.boxes{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(min(140px,100%),1fr));margin-top:10px}
 .boxes .b{border:2.5px solid var(--line);border-radius:12px;min-height:74px;padding:8px 10px;
 font-size:12px;color:var(--muted)}
 .checks{margin-top:10px;display:flex;flex-direction:column;gap:6px}
@@ -211,6 +211,13 @@ padding:1px 8px;font-size:11px;font-weight:800;margin-right:8px}
 .namebar{display:flex;gap:10px;margin-top:12px}
 .namebar div{flex:1;border:2.5px solid var(--line);border-radius:10px;padding:8px 10px;font-size:12px;
 color:var(--muted)}
+/* 휴대폰에서 종이 너비(210mm)가 화면을 넘겨 가로로 밀리는 것을 막는다.
+   인쇄할 때는 아래 @media print 가 다시 종이 크기로 되돌린다. */
+@media screen and (max-width:860px){
+ body{padding:10px}
+ .sheet{width:auto;max-width:100%;min-height:0;padding:18px 14px}
+ .toolbar{max-width:100%}
+}
 @media print{
  body{background:#fff;padding:0}
  .sheet{border:none;border-radius:0;margin:0;width:auto;min-height:auto;padding:10mm 8mm}
@@ -670,7 +677,7 @@ def app_box(lesson, rel="..", limit=3):
         u'<figure><img src="%s/assets/shots/%s" alt="%s 화면"><figcaption>%s</figcaption></figure>'
         % (rel, esc(x["file"]), esc(x["name"]), esc(x["name"])) for x in shots)
     return (u'<div class="appbox"><div class="row">%s'
-            u'<div style="flex:1;min-width:220px"><strong>★ 웹앱 %s</strong>'
+            u'<div style="flex:1;min-width:min(220px,100%%)"><strong>★ 웹앱 %s</strong>'
             u'<p style="margin:4px 0">%s</p>'
             u'<p style="margin:4px 0;font-size:13px">주소 : legoschool.github.io/wise-ai/webapp/%s/'
             u' · <a href="%s/webapp/%s/index.html">바로 열기</a>'

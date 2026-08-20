@@ -16,6 +16,7 @@ import make_refs
 import make_view
 import site_art as ART
 from site_css import CSS, DEFS, DOODLES, RIBBON
+from site_nav import NAV  # 머리띠 목록은 site_nav 한 곳에서만 고친다
 
 T.setup_console()
 
@@ -27,20 +28,6 @@ def esc(s):
             .replace(">", "&gt;").replace('"', "&quot;"))
 
 
-NAV = [
-    ("index.html", "홈"),
-    ("browse.html", "둘러보기"),
-    ("module/M1.html", "발견"),
-    ("module/M2.html", "판단"),
-    ("module/M3.html", "실천"),
-    ("skills.html", "인간중심 사고"),
-    ("apps.html", "12차시 웹앱"),
-    ("guide/index.html", "사용 안내"),
-    ("refs.html", "참고자료"),
-    ("survey.html", "자기인식 진단"),
-    ("admin.html", "관리자"),
-    ("about.html", "소개"),
-]
 
 SKILL_TINT = {
     "중점": ("#E6F7EC", "#0E9F57"),

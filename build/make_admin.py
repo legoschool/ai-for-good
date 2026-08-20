@@ -52,6 +52,11 @@ display:flex;gap:8px;align-items:center;padding:10px 16px;flex-wrap:wrap}
 .top a,.top button{font-size:14px;font-weight:800;color:var(--ink);background:#fff;
 border:2.5px solid var(--line);border-radius:999px;padding:8px 14px;text-decoration:none;cursor:pointer}
 .top a:hover,.top button:hover{background:var(--sun)}
+/* 좁은 화면에서 단추가 세 줄로 접혀 붙박이 띠가 화면을 덮었다. 한 줄로 두고 옆으로 민다. */
+@media (max-width:700px){
+.top{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:thin;-webkit-overflow-scrolling:touch}
+.top a,.top button,.top .pill{white-space:nowrap;flex:0 0 auto}
+}
 .wrap{max-width:1040px;margin:0 auto;padding:22px}
 .card{background:var(--paper);border:3px solid var(--line);border-radius:16px;padding:20px;
 margin-bottom:16px;box-shadow:6px 6px 0 var(--line)}
@@ -117,11 +122,11 @@ font-size:14px;margin-top:12px}
     <p class="muted">교사가 만든 방 번호를 넣으면 이 브라우저에만 저장됩니다.
       방 번호를 모르면 아무 자료도 읽히지 않습니다.</p>
     <div class="row">
-      <div style="flex:1;min-width:160px"><label for="app">차시</label>
+      <div style="flex:1;min-width:min(160px,100%%)"><label for="app">차시</label>
         <select id="app">%(options)s</select></div>
-      <div style="flex:1;min-width:160px"><label for="room">방 번호 6자리</label>
+      <div style="flex:1;min-width:min(160px,100%%)"><label for="room">방 번호 6자리</label>
         <input id="room" inputmode="numeric" maxlength="6" placeholder="예: 482913"></div>
-      <div style="flex:1;min-width:120px"><label for="tag">학급 이름표</label>
+      <div style="flex:1;min-width:min(120px,100%%)"><label for="tag">학급 이름표</label>
         <input id="tag" maxlength="12" placeholder="예: 5학년 1반"></div>
     </div>
     <div class="row" style="margin-top:12px">

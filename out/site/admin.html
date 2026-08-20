@@ -16,6 +16,11 @@ display:flex;gap:8px;align-items:center;padding:10px 16px;flex-wrap:wrap}
 .top a,.top button{font-size:14px;font-weight:800;color:var(--ink);background:#fff;
 border:2.5px solid var(--line);border-radius:999px;padding:8px 14px;text-decoration:none;cursor:pointer}
 .top a:hover,.top button:hover{background:var(--sun)}
+/* 좁은 화면에서 단추가 세 줄로 접혀 붙박이 띠가 화면을 덮었다. 한 줄로 두고 옆으로 민다. */
+@media (max-width:700px){
+.top{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:thin;-webkit-overflow-scrolling:touch}
+.top a,.top button,.top .pill{white-space:nowrap;flex:0 0 auto}
+}
 .wrap{max-width:1040px;margin:0 auto;padding:22px}
 .card{background:var(--paper);border:3px solid var(--line);border-radius:16px;padding:20px;
 margin-bottom:16px;box-shadow:6px 6px 0 var(--line)}
@@ -81,11 +86,11 @@ font-size:14px;margin-top:12px}
     <p class="muted">교사가 만든 방 번호를 넣으면 이 브라우저에만 저장됩니다.
       방 번호를 모르면 아무 자료도 읽히지 않습니다.</p>
     <div class="row">
-      <div style="flex:1;min-width:160px"><label for="app">차시</label>
+      <div style="flex:1;min-width:min(160px,100%)"><label for="app">차시</label>
         <select id="app"><option value="survey">공통 · 사전·사후 설문</option><option value="data-lab">1차시 · 데이터 실험실</option><option value="verify-lab">2차시 · AI 검증 실험실</option><option value="bias-gallery">3차시 · 편향 관찰 갤러리</option><option value="info-sorter">4차시 · 정보 분류 카드</option><option value="helper-or-doer">5차시 · 보조·대행 분류판</option><option value="signal-judges">6차시 · AI 신호등 판정단</option><option value="class-pledge">7차시 · 우리 반 AI 약속</option><option value="pledge-board">8차시 · 약속 선포 게시판</option><option value="three-step-writing">9차시 · 3단계 글쓰기 기록판</option><option value="habit-check">10차시 · 사용 습관 자가 점검</option><option value="good-project-board">11차시 · AI for Good 프로젝트 보드</option><option value="reflect-share">12차시 · 프로젝트 발표와 성찰</option></select></div>
-      <div style="flex:1;min-width:160px"><label for="room">방 번호 6자리</label>
+      <div style="flex:1;min-width:min(160px,100%)"><label for="room">방 번호 6자리</label>
         <input id="room" inputmode="numeric" maxlength="6" placeholder="예: 482913"></div>
-      <div style="flex:1;min-width:120px"><label for="tag">학급 이름표</label>
+      <div style="flex:1;min-width:min(120px,100%)"><label for="tag">학급 이름표</label>
         <input id="tag" maxlength="12" placeholder="예: 5학년 1반"></div>
     </div>
     <div class="row" style="margin-top:12px">
