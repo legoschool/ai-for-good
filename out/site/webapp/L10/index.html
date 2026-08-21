@@ -1736,8 +1736,13 @@ white-space:nowrap;text-decoration:none;cursor:pointer;box-shadow:none}
       return;
     }
 
+    /* 활동이 번호를 따로 들고 있으면 그것이 맞다.
+       설문은 사후에 별명으로 사전 기록을 찾아 번호를 바꿔 끼운다.
+       이때 입장 화면 번호를 그대로 보내면 시트에서 사전과 사후가 이어지지 않는다. */
+    var useCode = (payload && payload.code) ? payload.code : me.code;
+
     var record = {
-      nick: me.nick, group: me.group, code: me.code, app: APP,
+      nick: me.nick, group: me.group, code: useCode, app: APP,
       room: me.room, at: Date.now(), payload: payload
     };
 
