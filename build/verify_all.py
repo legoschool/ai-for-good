@@ -17,7 +17,7 @@ NODE = ["node"]
 
 def run(cmd, label):
     try:
-        p = subprocess.run(cmd, cwd=T.ROOT, capture_output=True, timeout=180)
+        p = subprocess.run(cmd, cwd=T.ROOT, capture_output=True, timeout=1500)  # 드라이브 위에서 전수 대조(audit)는 십 분을 넘긴다
     except Exception as e:
         return (label, 1, str(e))
     out = (p.stdout + p.stderr).decode("utf-8", "replace").strip()

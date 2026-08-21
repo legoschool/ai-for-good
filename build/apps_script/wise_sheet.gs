@@ -9,7 +9,7 @@
  * 설계 근거 : spec/20_기록과_효과성_측정.md
  * 붙여 넣는 법 : 같은 문서의 4절과 인수인계서 3-3 절을 본다.
  *
- * 2026년 티처스랩 5기 교사연구회 A.N.D · CC BY-NC-SA
+ * 2026년 G-DEAL A.N.D · CC BY-NC-SA
  */
 
 var SHEET_ID = '1szLUD-hzMwQh7aaae5S9S7OS-hEXMEMj2Vhbd-hjjFM';
@@ -410,4 +410,128 @@ function countRows(vals, when) {
     if (String(vals[i][4] || '사전') === when) { n += 1; }
   }
   return n;
+}
+
+/* ================================================================
+   정리 도구. 시트 편집기에서 사람이 직접 실행한다. 웹앱은 부르지 않는다.
+   ---------------------------------------------------------------
+   1) 점검하기()      무엇이 몇 줄 겹쳤는지 보여만 준다. 아무것도 바꾸지 않는다.
+   2) 겹친행지우기()  시각까지 똑같은 행만 지운다. 안전한 정리다.
+   3) 최신만남기기()  방·닉네임마다 마지막 제출만 남긴다. 고쳐 낸 것이 있을 때 쓴다.
+
+   ※ 지우기 전에 파일 > 사본 만들기 로 사본을 떠 두는 것을 권한다.
+   ================================================================ */
+
+/** 차시 탭 이름 목록. */
+function lessonTabs_() {
+  var out = [];
+  for (var lid in LESSON_COLS) { if (LESSON_COLS.hasOwnProperty(lid)) { out.push(lid); } }
+  return out;
+}
+
+/** 탭 하나를 읽어 머리글을 뺀 값과 크기를 돌려준다. */
+function body_(name) {
+  var sh = book().getSheetByName(name);
+  if (!sh || sh.getLastRow() < 2) { return null; }
+  var w = sh.getLastColumn();
+  return { sh: sh, w: w, vals: sh.getRange(2, 1, sh.getLastRow() - 1, w).getValues() };
+}
+
+/** 남길 행만 다시 써 넣는다. */
+function rewrite_(b, keep) {
+  b.sh.getRange(2, 1, b.vals.length, b.w).clearContent();
+  if (keep.length) { b.sh.getRange(2, 1, keep.length, b.w).setValues(keep); }
+}
+
+/** 탭마다 어떤 칸이 '누구의 어느 제출인가'를 가리키는지. 0부터 센다. */
+var KEYS_ = {
+  '설문':      { room: 1, nick: 3, when: 4, time: 0 },
+  '제출_통합': { room: 3, nick: 5, when: -1, time: 0 },
+  '차시':      { room: 1, nick: 3, when: -1, time: 0 }
+};
+
+function keyOf_(name) { return KEYS_[name] || KEYS_['차시']; }
+
+function sameKey_(row, k, withTime) {
+  var parts = [String(row[k.room]), String(row[k.nick])];
+  if (k.when >= 0) { parts.push(String(row[k.when])); }
+  if (withTime) { parts.push(String(row[k.time])); }
+  return parts.join('|');
+}
+
+/** 무엇이 겹쳤는지 세어만 본다. */
+function 점검하기() {
+  var names = ['설문', '제출_통합'].concat(lessonTabs_());
+  var out = [];
+  for (var i = 0; i < names.length; i++) {
+    var b = body_(names[i]);
+    if (!b) { out.push(names[i] + ' : 비어 있음'); continue; }
+    var k = keyOf_(names[i]), seen = {}, dup = 0, people = {};
+    for (var r = 0; r < b.vals.length; r++) {
+      if (!String(b.vals[r][k.nick])) { continue; }
+      var full = sameKey_(b.vals[r], k, true);
+      if (seen[full]) { dup += 1; } else { seen[full] = true; }
+      people[sameKey_(b.vals[r], k, false)] = true;
+    }
+    out.push(names[i] + ' : 행 ' + b.vals.length + ' · 사람 ' + count(people) + ' · 똑같이 겹친 행 ' + dup);
+  }
+  var msg = out.join('
+');
+  Logger.log(msg);
+  return msg;
+}
+
+/** 시각까지 똑같은 행만 지운다. */
+function 겹친행지우기() {
+  var names = ['설문', '제출_통합'].concat(lessonTabs_());
+  var out = [];
+  for (var i = 0; i < names.length; i++) {
+    var b = body_(names[i]);
+    if (!b) { continue; }
+    var k = keyOf_(names[i]), seen = {}, keep = [];
+    for (var r = 0; r < b.vals.length; r++) {
+      if (!String(b.vals[r][k.nick])) { keep.push(b.vals[r]); continue; }
+      var key = sameKey_(b.vals[r], k, true);
+      if (seen[key]) { continue; }
+      seen[key] = true;
+      keep.push(b.vals[r]);
+    }
+    var gone = b.vals.length - keep.length;
+    if (gone) { rewrite_(b, keep); }
+    out.push(names[i] + ' : ' + gone + '행 지움 (' + keep.length + '행 남음)');
+  }
+  var msg = out.join('
+');
+  Logger.log(msg);
+  return msg;
+}
+
+/** 방·닉네임(설문은 사전사후까지)마다 마지막 제출만 남긴다. */
+function 최신만남기기() {
+  var names = ['설문', '제출_통합'].concat(lessonTabs_());
+  var out = [];
+  for (var i = 0; i < names.length; i++) {
+    var b = body_(names[i]);
+    if (!b) { continue; }
+    var k = keyOf_(names[i]), last = {};
+    for (var r = 0; r < b.vals.length; r++) {
+      if (!String(b.vals[r][k.nick])) { continue; }
+      var key = sameKey_(b.vals[r], k, false);
+      var t = String(b.vals[r][k.time]);
+      if (!last[key] || t >= last[key].t) { last[key] = { t: t, row: b.vals[r] }; }
+    }
+    var keep = [];
+    for (var r2 = 0; r2 < b.vals.length; r2++) {
+      if (!String(b.vals[r2][k.nick])) { keep.push(b.vals[r2]); continue; }
+      var key2 = sameKey_(b.vals[r2], k, false);
+      if (last[key2] && last[key2].row === b.vals[r2]) { keep.push(b.vals[r2]); }
+    }
+    var gone = b.vals.length - keep.length;
+    if (gone) { rewrite_(b, keep); }
+    out.push(names[i] + ' : ' + gone + '행 지움 (' + keep.length + '행 남음)');
+  }
+  var msg = out.join('
+');
+  Logger.log(msg);
+  return msg;
 }

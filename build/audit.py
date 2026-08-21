@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """전체 점검. 산출물 무결성, 비밀값 잔존, 자리표시자, 사본 일치를 본다."""
+import concurrent.futures as cf
 import hashlib, io, os, re, subprocess, sys, zipfile
 import tasks as T
 T.setup_console()
@@ -73,22 +74,40 @@ gone = ["AIzaSyBVP4GHK3tClhSbr01Sv" + "CTHZnh9wLWmgdU", "30613" + "8692167",
         "G-6ZBK5" + "NTVDG", "firebasestor" + "age.app", "firebase" + "app.com"]
 texts = walk(ROOT, (".md", ".py", ".js", ".html", ".json", ".css", ".txt"))
 texts = [p for p in texts if ".git" not in p and "node_modules" not in p]
+# 예전에는 검색어마다 파일 전체를 다시 읽었다. 여섯 바퀴를 도는 셈이라
+# 구글 드라이브 위에서 십 분을 넘겼다. 이제 파일을 한 번만 읽고 전부 본다.
+# 틀(build/)과 이 점검기 자신은 자리표시자를 갖고 있는 것이 맞다.
+# 문제가 되는 것은 산출물에 남았을 때뿐이므로 자리표시자는 out/ 에서만 본다.
+hits_by_token = dict((t, []) for t in gone)
+ph = []
+out_mark = os.sep + "out" + os.sep
+
+def scan_one(path):
+    """파일 하나를 읽고 걸린 검색어를 돌려준다."""
+    try:
+        body = io.open(path, encoding="utf-8", errors="ignore").read()
+    except Exception:
+        return None
+    found = [t for t in gone if t in body]
+    holder = (out_mark in path and "PASTE_YOUR_APPS_SCRIPT_DEPLOY_URL" in body)
+    return (os.path.relpath(path, ROOT), found, holder)
+
+# 구글 드라이브는 파일 하나 여는 데 기다리는 시간이 길다. 한 줄로 읽으면 십 분을 넘긴다.
+# 여러 개를 한꺼번에 열어 기다리는 시간을 겹친다.
+with cf.ThreadPoolExecutor(max_workers=16) as ex:
+    for got in ex.map(scan_one, texts):
+        if not got:
+            continue
+        rel, found, holder = got
+        for token in found:
+            hits_by_token[token].append(rel)
+        if holder:
+            ph.append(rel)
+
 for token in gone:
-    hits = []
-    for p in texts:
-        try:
-            if token in io.open(p, encoding="utf-8", errors="ignore").read():
-                hits.append(os.path.relpath(p, ROOT))
-        except Exception: pass
+    hits = hits_by_token[token]
     print("  %s %-42s %d건" % ("OK " if not hits else "NG ", token[:40], len(hits)))
     if hits: bad("제거했어야 할 값이 남아 있다 : %s -> %s" % (token, hits[:3]))
-
-ph = []
-for p in texts:
-    try:
-        if "PASTE_YOUR_APPS_SCRIPT_DEPLOY_URL" in io.open(p, encoding="utf-8", errors="ignore").read():
-            ph.append(os.path.relpath(p, ROOT))
-    except Exception: pass
 print("  -- 시트 백업 주소 자리표시자 : %d개 파일" % len(ph))
 if ph: warn("Apps Script 배포 URL 이 아직 자리표시자다. 시트 백업이 동작하지 않는다 (%d개 파일)" % len(ph))
 

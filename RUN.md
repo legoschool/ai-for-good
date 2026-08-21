@@ -125,4 +125,4 @@ py -3 build/next_task.py
 
 ---
 
-2026년 티처스랩 5기 교사연구회 A.N.D (Analog aNd Digital)
+2026년 G-DEAL A.N.D (Analog aNd Digital)

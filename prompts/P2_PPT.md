@@ -37,4 +37,4 @@ build/make_ppt.py <차시번호>
 
 ---
 
-2026년 티처스랩 5기 교사연구회 A.N.D · CC BY-NC-SA
+2026년 G-DEAL A.N.D · CC BY-NC-SA
