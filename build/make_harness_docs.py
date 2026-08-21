@@ -12,7 +12,7 @@ import tasks as T
 
 T.setup_console()
 
-FOOT = "\n---\n\n2026년 티처스랩 5기 교사연구회 A.N.D · CC BY-NC-SA\n"
+FOOT = "\n---\n\n2026년 G-DEAL A.N.D · CC BY-NC-SA\n"
 
 DOCS = {}
 

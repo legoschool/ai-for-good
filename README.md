@@ -4,7 +4,7 @@
 
 > **AI는 내 생각을 도와주는가, 대신해 주는가**
 
-2026년 티처스랩 5기 교사연구회 **A.N.D** (Analog aNd Digital)
+2026년 **G-DEAL A.N.D** (Analog aNd Digital)
 이운희(진해신항초) · 윤희류(황산초) · 손혜림(용호초) · 최소은(방곡초)
 
 ---
@@ -199,4 +199,4 @@ py -3 -m http.server 8765
 
 ---
 
-2026년 티처스랩 5기 교사연구회 A.N.D · CC BY-NC-SA
+2026년 G-DEAL A.N.D · CC BY-NC-SA

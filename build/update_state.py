@@ -72,7 +72,7 @@ def render_state_md(tasks, state):
     a("")
     a("---")
     a("")
-    a("2026년 티처스랩 5기 교사연구회 A.N.D · CC BY-NC-SA")
+    a("2026년 G-DEAL A.N.D · CC BY-NC-SA")
     a("")
 
     with io.open(T.STATE_MD, "w", encoding="utf-8") as f:

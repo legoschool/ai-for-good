@@ -288,7 +288,7 @@ def shell(title, css, body, script=""):
 """ % (esc(title), css, body, script)
 
 
-FOOT = u"2026년 티처스랩 5기 교사연구회 A.N.D · CC BY-NC-SA"
+FOOT = u"2026년 G-DEAL A.N.D · CC BY-NC-SA"
 
 
 # ---------------------------------------------------------------- 슬라이드

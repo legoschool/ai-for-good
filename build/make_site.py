@@ -509,10 +509,10 @@ def survey_page(data):
       '<p>1차시 전과 12차시 뒤에 같은 문항으로 묻습니다.</p></div>'
       % (esc(s["scale"]), esc(s["title"])))
     a('<div class="panel"><div class="scroll"><table>'
-      "<tr><th>번호</th><th>문항</th><th>연계 휴먼스킬</th><th>채점</th></tr>")
+      "<tr><th>번호</th><th>문항</th><th>연계 휴먼스킬</th></tr>")
     for i in s["items"]:
-        a("<tr><td>%d</td><td>%s</td><td>%s</td><td>%s</td></tr>"
-          % (i["no"], esc(i["text"]), esc(i["skill"]), esc(i["scoring"])))
+        a("<tr><td>%d</td><td>%s</td><td>%s</td></tr>"
+          % (i["no"], esc(i["text"]), esc(i["skill"])))
     a('</table></div><div class="note">%s</div></div>' % esc(s["note"]))
     a('<div class="panel"><h2>자유응답</h2><ul>')
     for o in s["openItems"]:

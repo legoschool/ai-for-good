@@ -378,11 +378,12 @@ def survey_activity(data):
   var OPTS = ["전혀 아니다", "아니다", "보통이다", "그렇다", "매우 그렇다"];
 
   function activityHtml() {
-    var h = '<div class="card"><h2>나만 아는 숫자 4자리</h2>' +
-      '<p class="muted">사전 설문과 사후 설문을 이어 보는 데만 써요. ' +
-      '비밀번호가 아니에요. 열두 시간 뒤에도 같은 숫자를 써 주세요.</p>' +
-      '<input id="s-code" inputmode="numeric" maxlength="4" placeholder="예: 0412">' +
-      '<p class="muted" id="s-code-msg" style="margin-top:6px"></p></div>';
+    var h = '<div class="card"><h2>내 번호</h2>' +
+      '<p class="muted">사전 설문과 사후 설문을 이어 보는 데만 씁니다. ' +
+      '앱이 자동으로 만들어 두었어요. <b>외우지 않아도 되고 고치지 않아도 됩니다.</b></p>' +
+      '<input id="s-code" inputmode="numeric" maxlength="4" placeholder="자동">' +
+      '<p class="muted" id="s-code-msg" style="margin-top:6px"></p>' +
+      '<div id="s-link" style="margin-top:10px"></div></div>';
     h += '<div class="card"><h2>언제 하는 설문인가요</h2>' +
       '<div class="row">' +
       '<button type="button" class="chip pick" data-i="when" data-v="0" style="width:auto;margin:0">사전 (1차시 전)</button>' +
@@ -482,15 +483,54 @@ def survey_activity(data):
       if (raw.charAt(i) >= "0" && raw.charAt(i) <= "9") { got += raw.charAt(i); }
     }
     if (got.length === 4) {
-      $("s-code-msg").innerHTML = '<span class="ok">좋아요. 사후 설문에서도 ' + got + ' 을 써 주세요.</span>';
+      $("s-code-msg").innerHTML = '<span class="ok">내 번호는 ' + got +
+        ' 이에요. 그대로 두면 됩니다.</span>';
     } else {
-      $("s-code-msg").innerHTML = '<span class="warn">숫자 네 자리를 넣어 주세요. ' +
-        '넣지 않으면 사전과 사후를 이어 볼 수 없어요. 학급 평균에는 그대로 들어가요.</span>';
+      $("s-code-msg").innerHTML = '<span class="warn">번호가 비었어요. ' +
+        '아래 단추를 누르면 새로 만들어 줍니다. 번호가 없어도 학급 평균에는 들어가요.</span>';
     }
+  }
+
+  /* 열두 주 뒤에 번호를 외우고 있는 아이는 거의 없다.
+     그래서 사후를 고르면 같은 방에서 '같은 별명'으로 낸 사전 응답을 찾아 번호를 이어 준다.
+     아이는 늘 쓰던 별명만 그대로 쓰면 된다. 못 찾으면 선생님 화면의 명단으로 해결한다. */
+  var linkTried = false;
+
+  function sameNick(a, b) {
+    return String(a || "").replace(/[ 	]/g, "").toLowerCase() ===
+           String(b || "").replace(/[ 	]/g, "").toLowerCase();
+  }
+
+  function linkPrior() {
+    if (linkTried || me.solo || !me.room || me.room === "solo") { return; }
+    linkTried = true;
+    var box = $("s-link");
+    if (box) { box.innerHTML = '<span class="muted">열두 주 전 기록을 찾는 중이에요...</span>'; }
+    dbGet(me.room + "/entries").then(function (data) {
+      var found = null;
+      for (var k in data || {}) {
+        var r = data[k] || {};
+        var p = r.payload || {};
+        if (p.when === "사전" && sameNick(r.nick, me.nick) && p.code) { found = r; }
+      }
+      if (!box) { return; }
+      if (found) {
+        if ($("s-code")) { $("s-code").value = found.payload.code; }
+        paintCode();
+        box.innerHTML = '<span class="ok">열두 주 전에 <b>' + esc(found.nick) +
+          '</b> 이름으로 낸 사전 설문을 찾았어요. 번호를 그대로 이어 붙였습니다.</span>';
+      } else {
+        box.innerHTML = '<span class="muted">이 방에서 같은 별명으로 낸 사전 설문을 찾지 못했어요. ' +
+          '괜찮아요. 그대로 답하면 됩니다. 이어 보기가 필요하면 선생님께 말씀드리세요.</span>';
+      }
+    })["catch"](function () {
+      if (box) { box.innerHTML = ""; }
+    });
   }
 
   function paint() {
     paintCode();
+    if (pick.when === "1") { linkPrior(); }
     var btns = document.querySelectorAll("#activity .pick");
     for (var i = 0; i < btns.length; i++) {
       var k = btns[i].getAttribute("data-i");
@@ -562,7 +602,27 @@ def survey_activity(data):
         (a1 === null ? "-" : a1.toFixed(2)) + "</td><td>" +
         (a2 === null ? "-" : a2.toFixed(2)) + "</td><td>" + d + "</td></tr>";
     }
-    return h + "</table></div>";
+    h += "</table></div>";
+
+    /* 이어보기 명단. 아이가 번호를 잊고 별명도 바꿔 버렸을 때 선생님이 쓰는 마지막 안전망이다.
+       별명과 번호만 있고 응답 내용은 없다. 사전 설문 뒤에 한 번 인쇄해 두면 된다. */
+    var roll = [];
+    for (var r = 0; r < list.length; r++) {
+      var pr = list[r].payload || {};
+      if (pr.when !== "사전") { continue; }
+      roll.push({ nick: list[r].nick, code: pr.code || "" });
+    }
+    if (roll.length) {
+      h += '<h3 style="margin-top:22px">이어보기 명단 (사전 ' + roll.length + '명)</h3>';
+      h += '<p class="muted">별명과 번호만 있습니다. 답한 내용은 들어 있지 않아요. ' +
+        '사전 설문을 마친 뒤 한 번 인쇄해 두면, 열두 주 뒤에 번호를 잊은 학생을 이어 줄 수 있습니다.</p>';
+      h += '<div class="scroll"><table><tr><th>별명</th><th>번호</th></tr>';
+      for (var q2 = 0; q2 < roll.length; q2++) {
+        h += "<tr><td>" + esc(roll[q2].nick) + "</td><td>" + esc(roll[q2].code) + "</td></tr>";
+      }
+      h += "</table></div>";
+    }
+    return h;
   }
 """ % (A.js(items), A.js(opens))
 

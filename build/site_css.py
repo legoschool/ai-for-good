@@ -352,6 +352,30 @@ footer strong{color:var(--ink)}
 
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 
+/* 글로 읽는 쪽 (사용 안내 make_guide.py, 참고자료 make_refs.py)
+   .page .card .lead .note .muted 에 규칙이 없어서 글이 화면 폭 끝까지 늘어졌다.
+   줄 길이를 읽기 좋은 만큼으로 묶고, 마디마다 흰 상자와 사이 공간을 준다. */
+.page{max-width:880px;margin:0 auto;padding:30px 0 44px}
+.page>h1{font-size:clamp(28px,4vw,40px);margin:0 0 8px;letter-spacing:-.03em}
+.page h2{font-size:clamp(20px,2.4vw,25px);margin:0 0 14px;letter-spacing:-.02em}
+.page h3{font-size:18px;margin:20px 0 6px}
+.page p{margin:0 0 14px;font-size:17px;line-height:1.85;max-width:66ch}
+.page p:last-child{margin-bottom:0}
+.page .lead{font-size:19px;line-height:1.8;color:var(--ink2);margin:0 0 26px;max-width:64ch}
+.page .card{border:2.5px solid var(--line);border-radius:18px;background:var(--paper);
+padding:24px 26px;margin:0 0 22px;box-shadow:5px 5px 0 var(--line)}
+.page .card>h2{padding-bottom:10px;border-bottom:2.5px solid var(--line)}
+.page .note{border:2px solid var(--line);border-radius:12px;background:var(--cream);
+padding:14px 16px;margin-top:16px;font-size:16px;line-height:1.8}
+.page .note b{display:inline-block;margin-bottom:4px}
+.muted{color:var(--muted)}
+.page .muted{font-size:15.5px}
+@media (max-width:700px){
+  .page{padding:20px 0 32px}
+  .page .card{padding:18px 16px;border-radius:14px;box-shadow:3px 3px 0 var(--line)}
+  .page p,.page .lead{font-size:16.5px;max-width:none}
+}
+
 /* 웹앱 사용 안내 (build/make_guide.py) */
 .crumb{font-size:15px;font-weight:800;color:var(--muted);margin:0 0 4px}
 .pillrow{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
