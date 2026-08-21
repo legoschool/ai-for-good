@@ -450,6 +450,7 @@ def survey_activity(data):
 
   function activityInit(saved) {
     prior = saved;
+    linkTried = false;   /* 학생이 바뀌면 다시 찾는다. 모둠에 기기가 한 대일 때 필요하다. */
     if (saved && saved.pick) { pick = saved.pick; }
     var btns = document.querySelectorAll("#activity .pick");
     for (var i = 0; i < btns.length; i++) {
