@@ -211,7 +211,10 @@ font-size:14px;margin-top:12px}
       .then(function (obj) { done(obj); })
       ["catch"](function () {
         var cbName = "wiseCb" + Math.floor(Math.random() * 100000);
-        var timer = setTimeout(function () { fail("시트를 읽지 못했습니다."); }, 12000);
+        /* 학생 제출이 몰리는 동안에는 시트가 느려진다. 12초는 짧아서 자주 시간 초과가 났다. */
+        var timer = setTimeout(function () {
+          fail("시트가 아직 응답하지 않습니다. 제출이 몰리는 중일 수 있어요. 잠시 뒤 다시 눌러 주세요.");
+        }, 45000);
         window[cbName] = function (obj) {
           clearTimeout(timer);
           done(obj);
@@ -219,7 +222,7 @@ font-size:14px;margin-top:12px}
         };
         var sc = document.createElement("script");
         sc.src = url + "&callback=" + cbName;
-        sc.onerror = function () { clearTimeout(timer); fail("시트를 읽지 못했습니다."); };
+        sc.onerror = function () { clearTimeout(timer); fail("시트를 읽지 못했습니다. 잠시 뒤 다시 눌러 주세요."); };
         document.body.appendChild(sc);
       });
   }
