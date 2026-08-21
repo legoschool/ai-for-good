@@ -221,6 +221,9 @@ white-space:nowrap;text-decoration:none;cursor:pointer;box-shadow:none}
     <p class="muted">방을 만들면 여섯 자리 번호가 나옵니다. 학생에게 번호만 알려 주세요.</p>
     <label for="w-pw">선생님 비밀번호 4자리 (이 화면을 다시 열 때 씁니다)</label>
     <input id="w-pw" inputmode="numeric" maxlength="4" placeholder="예: 1234">
+    <label for="w-tag" style="margin-top:10px">학급 이름표 (안 써도 됩니다)</label>
+    <input id="w-tag" maxlength="30" placeholder="예: 진해신항초 6학년 1반">
+    <p class="muted">기록 시트의 방 목록에 그대로 남습니다. 학급이 여럿일 때 어느 방인지 가려내는 데 씁니다.</p>
     <div class="row" style="margin-top:12px">
       <button id="t-make">새 방 만들기</button>
       <button id="t-open" class="ghost">기존 방 열기</button>
@@ -325,13 +328,14 @@ white-space:nowrap;text-decoration:none;cursor:pointer;box-shadow:none}
   }
 
   /* 방을 만들었다는 것만 시트에 알린다. 학생 응답은 보내지 않는다. */
-  function sheetRoom(room) {
+  function sheetRoom(room, tag) {
     try {
       if (SHEET_ENDPOINT.indexOf("http") !== 0) { return; }
       fetch(SHEET_ENDPOINT, {
         method: "POST", mode: "no-cors",
         headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify({ rooms: [{ app: APP, room: room, at: Date.now() }] })
+        body: JSON.stringify({ rooms: [{ app: APP, room: room, at: Date.now(),
+          tag: tag || "" }] })
       })["catch"](function () {});
     } catch (e) {}
   }
@@ -1656,7 +1660,11 @@ white-space:nowrap;text-decoration:none;cursor:pointer;box-shadow:none}
     var pw = onlyDigits($("w-pw").value, 4) || "0000";
     wiseBusy(true, "방을 만드는 중");
     dbPut(code + "/meta", { app: APP, pw: pw, at: Date.now(), locked: false })
-      .then(function () { wiseBusy(false); sheetRoom(code); teacherOpen(code, pw); })
+      .then(function () {
+        wiseBusy(false);
+        sheetRoom(code, $("w-tag") ? $("w-tag").value.trim() : "");
+        teacherOpen(code, pw);
+      })
       ["catch"](function () {
         wiseBusy(false);
         alert("방을 만들지 못했어요. 인터넷을 확인해 주세요.");
