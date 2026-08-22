@@ -268,7 +268,7 @@ white-space:nowrap;text-decoration:none;cursor:pointer;box-shadow:none}
     <p class="muted" id="t-note"></p>
     <div id="t-summary"></div>
     <div class="row" style="margin-top:12px">
-      <button id="t-detail" class="plain">낱낱이 보기 켜기</button>
+      <button id="t-detail" class="plain">한 명씩 보기</button>
     </div>
     <div class="scroll hide" id="t-wrap" style="margin-top:12px"><table id="t-table"></table></div>
   </div>
@@ -849,7 +849,7 @@ __ACTIVITY__
   $("t-detail").onclick = function () {
     var open = $("t-wrap").className.indexOf("hide") < 0;
     $("t-wrap").className = open ? "scroll hide" : "scroll";
-    this.textContent = open ? "낱낱이 보기 켜기" : "낱낱이 보기 끄기";
+    this.textContent = open ? "한 명씩 보기" : "한 명씩 보기 닫기";
   };
   $("t-present").onclick = function () {
     paintPresent(window.__wiseRows || []);
