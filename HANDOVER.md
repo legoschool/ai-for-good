@@ -1073,7 +1073,7 @@ https://docs.google.com/spreadsheets/d/<시트ID>/export?format=xlsx
 
 
 **표어를 물음으로 바꿨다.** `AI는 내 생각을 도와주는가, 대신해 주는가`
-→ **`AI는 내 생각을 도와주는 걸까요, 대신해 주는 걸까요`**
+→ **`AI는 내 생각의 길잡이일까요, 아니면 내 생각의 대리인일까요`**
 
 `data/lessons.json` 의 `subtitle` 에서 나오지만, 홈 화면 큰 글씨는
 `make_site.py` 에 **따로 적혀 있었다**(`<h1>AI는 내 생각을 …`). 표어를 바꿀 때는 두 곳을 함께 본다.

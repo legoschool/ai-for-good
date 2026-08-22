@@ -175,7 +175,8 @@ def home(data):
 
     a('<div class="hero">%s<div class="wrap">' % DOODLES)
     a('<p class="kicker">%s</p>' % esc(prog["team"]))
-    a("<h1>AI는 내 생각을 <em>도와주는 걸까요</em>,<br>아니면 <em>대신해 주는 걸까요</em></h1>")
+    a("<h1>AI는 내 생각의 <em>길잡이</em>일까요,<br>아니면 내 생각의 <em>대리인</em>일까요</h1>")
+    a('<p class="lede" style="font-weight:800">우리는 AI와 어떤 관계를 맺고 살아야 할까요?</p>')
     a('<p class="lede">%s · 초등 5·6학년 12차시</p>' % esc(prog["name"]))
     a('<div class="facts"><span>지도안 12편</span><span>활동지 12종</span>'
       '<span>수업용 PPT 12세트</span><span>수업 웹앱 12개</span></div>')

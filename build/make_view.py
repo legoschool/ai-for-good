@@ -431,7 +431,7 @@ def deck(lesson, data):
 
     s.append(slide("q",
                    u'<p class="kicker">오늘의 학습 문제</p><h1>%s</h1>'
-                   u'<p class="mid">AI는 내 생각을 도와주는 걸까요, 아니면 대신해 주는 걸까요</p>'
+                   u'<p class="mid">AI는 내 생각의 길잡이일까요, 아니면 내 생각의 대리인일까요</p>'
                    % esc(lesson["problem"])))
 
     focus = lesson["humanSkills"]["focus"]

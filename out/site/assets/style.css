@@ -52,8 +52,12 @@ a:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
 
 .top{background:var(--cream);border-bottom:2px solid var(--line);position:sticky;top:0;z-index:40}
 .top .wrap{display:flex;align-items:center;gap:10px 26px;min-height:68px;flex-wrap:wrap}
-.brand{font-weight:900;font-size:19px;color:var(--ink);letter-spacing:-.03em;white-space:nowrap}
-.brand em{font-style:normal;background:var(--green);padding:0 6px;border:2px solid var(--line)}
+/* 로고는 밑줄을 긋지 않는다. 밑줄이 생기면 옆 초록 상자와 붙어 겹쳐 보였다. */
+.brand{font-weight:900;font-size:19px;color:var(--ink);letter-spacing:-.03em;white-space:nowrap;
+  display:inline-flex;align-items:center;gap:7px;text-decoration:none}
+.brand:hover{text-decoration:none}
+.brand em{font-style:normal;background:var(--green);padding:1px 7px;border:2px solid var(--line);
+  display:inline-block;line-height:1.35}
 .nav{display:flex;gap:4px;flex-wrap:wrap;margin-left:auto}
 .nav a{padding:8px 13px;color:var(--ink2);font-size:15px;font-weight:700;border:2px solid transparent}
 .nav a:hover{text-decoration:none;border-color:var(--line);background:var(--paper)}
