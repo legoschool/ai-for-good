@@ -535,3 +535,69 @@ function 최신만남기기() {
   Logger.log(msg);
   return msg;
 }
+
+/** 방코드 6자리·학생코드 4자리의 앞자리 0 을 되살리고 텍스트로 굳힌다.
+    정리 함수가 값을 다시 쓸 때 0 이 떨어져 나가는 것을 바로잡는다. */
+function 코드되살리기() {
+  var plan = [{ name: '설문', room: 1, code: 2 },
+              { name: '제출_통합', room: 3, code: 4 },
+              { name: '방목록', room: 3, code: -1 }];
+  var tabs = lessonTabs_();
+  for (var i = 0; i < tabs.length; i++) { plan.push({ name: tabs[i], room: 1, code: 2 }); }
+  var out = [];
+  for (var p = 0; p < plan.length; p++) {
+    var b = body_(plan[p].name);
+    if (!b) { continue; }
+    var changed = 0;
+    for (var r = 0; r < b.vals.length; r++) {
+      var before = String(b.vals[r][plan[p].room]);
+      var after = pad_(before, 6);
+      if (after !== before) { b.vals[r][plan[p].room] = after; changed += 1; }
+      if (plan[p].code >= 0) {
+        var cb = String(b.vals[r][plan[p].code]);
+        var ca = pad_(cb, 4);
+        if (ca !== cb) { b.vals[r][plan[p].code] = ca; changed += 1; }
+      }
+    }
+    b.sh.getRange(2, plan[p].room + 1, b.vals.length, 1).setNumberFormat('@');
+    if (plan[p].code >= 0) { b.sh.getRange(2, plan[p].code + 1, b.vals.length, 1).setNumberFormat('@'); }
+    b.sh.getRange(2, 1, b.vals.length, b.w).setValues(b.vals);
+    out.push(plan[p].name + ' : ' + changed + '칸 되살림');
+  }
+  var msg = out.join('
+');
+  Logger.log(msg);
+  return msg;
+}
+
+function pad_(v, n) {
+  var s = String(v == null ? '' : v).replace(/^'/, '').trim();
+  if (!s || !/^[0-9]+$/.test(s)) { return s; }
+  while (s.length < n) { s = '0' + s; }
+  return s;
+}
+
+/** 값만 지워져 남은 빈 줄을 실제로 없앤다. */
+function 빈행지우기() {
+  var names = ['방목록'].concat(allTabs_()), out = [];
+  for (var i = 0; i < names.length; i++) {
+    var sh = book().getSheetByName(names[i]);
+    if (!sh || sh.getLastRow() < 2) { continue; }
+    var vals = sh.getRange(2, 1, sh.getLastRow() - 1, sh.getLastColumn()).getValues();
+    var live = 0;
+    for (var r = 0; r < vals.length; r++) {
+      for (var c = 0; c < vals[r].length; c++) {
+        if (String(vals[r][c]).length) { live = r + 1; break; }
+      }
+    }
+    var gone = vals.length - live;
+    if (gone > 0) { sh.deleteRows(live + 2, gone); }
+    out.push(names[i] + ' : 빈 줄 ' + gone + '개 없앰 (' + live + '줄 남음)');
+  }
+  var msg = out.join('
+');
+  Logger.log(msg);
+  return msg;
+}
+
+function allTabs_() { return ['설문', '제출_통합'].concat(lessonTabs_()); }
